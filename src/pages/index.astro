@@ -1,178 +1,242 @@
 ---
-import { Image } from "astro:assets";
-import fs from "node:fs";
-import path from "node:path";
-
 import Layout from "../layouts/Layout.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import ScrollReveal from "../components/ScrollReveal.astro";
-import ThemeToggle from "../components/ThemeToggle.astro";
-
-import heroImage from "../assets/images/hero.jpg";
-import aiSummitImage from "../assets/images/ai-summit.jpg";
-import hackathonImage from "../assets/images/hackathon.jpg";
-
-const hasResume = fs.existsSync(path.join(process.cwd(), "public", "resume.pdf"));
-
-const projects = [
-  {
-    title: "Adversarial Robustness Testing",
-    summary:
-      "Built a framework to attack production-grade image classifiers (ResNet-34, DenseNet-121) using FGSM, PGD, and localized patch methods, measuring how easily models can be fooled by imperceptible pixel changes. PGD dropped top-1 accuracy from 76% to 0.2% while staying within a perturbation bound too small to see. Attacks transferred across architectures at 90%+ success, meaning an attacker wouldn't need access to the target model at all. Built solo in PyTorch, evaluated on ImageNet-1K.",
-    stack: ["PyTorch", "ImageNet-1K", "FGSM / PGD", "Security"],
-    href: "https://github.com/fzinnah17/neural-network-jailbreak",
-  },
-  {
-    title: "Mojo vs CUDA: GPU Kernel Benchmarking",
-    summary:
-      "Co-built a benchmark comparing Mojo's emerging GPU compiler stack against PyTorch's mature CUDA backend on real Transformer inference workloads (GEMM, Softmax, LayerNorm). Found Mojo's compiler-generated kernels beat cuBLAS on compute-bound GEMM operations by 1.7–1.9x, while PyTorch stayed faster on memory-bound ops like LayerNorm. Net result: Mojo wins on large models where GEMM dominates runtime; PyTorch wins on small models where kernel overhead matters more. My contribution was the MAX-Graph baseline and PyTorch-to-MAX weight extraction pipeline.",
-    stack: ["Mojo", "CUDA", "MAX Graph", "Transformer inference"],
-  },
-  {
-    title: "Call Analytics Pipeline",
-    summary:
-      "Designed a speech-to-text + LLM pipeline for analyzing customer service calls at scale: Azure Whisper for transcription, GPT-4 for scoring and feedback generation, and multi-threaded batch processing with dynamic API key rotation. Cut manager review time from 6 hours to 1 hour per 100 calls and dropped feedback turnaround from 5–7 days to under 36 hours. The processing path is in-memory by design so audio and transcript data do not persist after a run.",
-    stack: ["Python", "Azure Whisper", "GPT-4", "Concurrency"],
-  },
-  {
-    title: "Cloud-to-On-Prem Routing Gateway",
-    summary:
-      "Built a dynamic reverse proxy connecting cloud applications to on-prem systems, replacing a portal-based connection method capped at 25 endpoints with a code-based relay that routes to unlimited destinations. Routing rules live in a cache-aside table store instead of hardcoded config, so new routes deploy without a code push. Handles 1M+ daily requests with validation against path traversal and protocol downgrade attacks at the middleware layer.",
-    stack: ["C# / .NET", "Azure Relay", "Table Storage", "Security"],
-  },
-];
+import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
+import IdentityBlock from "../components/IdentityBlock.astro";
 ---
 
-<Layout title="Farnaz Zinnah — AI Systems Engineer">
-  <header class="sticky top-0 z-50 border-b backdrop-blur-xl" style="border-color: var(--border); background: color-mix(in srgb, var(--bg) 84%, transparent);">
-    <nav class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 md:px-8" aria-label="Primary navigation">
-      <a href="#top" class="font-mono text-sm font-semibold tracking-tight">FZ<span class="text-accent-cyan">.</span></a>
-      <div class="flex items-center gap-1 sm:gap-3">
-        <a href="#work" class="hidden rounded-full px-3 py-2 text-sm sm:inline-block muted hover:text-current">Work</a>
-        <a href="#governance" class="hidden rounded-full px-3 py-2 text-sm md:inline-block muted hover:text-current">Governance</a>
-        <a href="#contact" class="hidden rounded-full px-3 py-2 text-sm sm:inline-block muted hover:text-current">Contact</a>
-        <ThemeToggle />
-      </div>
-    </nav>
-  </header>
-
-  <main id="top" class="mx-auto max-w-6xl px-5 pb-24 pt-16 md:px-8 md:pt-24">
-    <section class="grid min-h-[68vh] items-center gap-12 lg:grid-cols-[1.25fr_0.75fr]" aria-labelledby="hero-title">
-      <div class="max-w-3xl">
-        <p class="mb-5 font-mono text-xs uppercase tracking-[0.22em] text-accent-cyan">AI systems · security · infrastructure</p>
-        <h1 id="hero-title" class="text-5xl font-bold tracking-[-0.045em] sm:text-6xl lg:text-7xl">Farnaz Zinnah</h1>
-        <p class="mt-6 max-w-2xl text-xl leading-8 sm:text-2xl sm:leading-9">
-          AI Systems Engineer — <span class="text-gradient font-semibold">building, breaking, and governing</span> AI systems.
+<Layout
+  title="Farnaz Zinnah — AI Systems Engineer"
+  description="AI Systems Engineer working across AI infrastructure, adversarial machine learning, distributed systems, and AI governance."
+>
+  <main
+    class="mx-auto max-w-4xl space-y-20 px-6 pt-16 pb-28 md:pt-20 lg:pr-12 lg:pb-20"
+  >
+    <section
+      class="grid min-h-[55vh] items-center gap-12 md:grid-cols-2"
+      aria-labelledby="hero-title"
+    >
+      <div class="space-y-5">
+        <p
+          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+        >
+          AI Systems · Security · Infrastructure
         </p>
-        <p class="muted mt-5 text-sm sm:text-base">NYU Tandon · MS Computer Engineering (in progress)</p>
 
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#work" class="rounded-full bg-gradient-to-r from-accent-violet to-accent-cyan px-5 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5">See selected work</a>
-          <a href="https://github.com/fzinnah17" target="_blank" rel="noreferrer" class="rounded-full border px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5" style="border-color: var(--border-strong);">GitHub ↗</a>
-        </div>
-      </div>
+        <h1
+          id="hero-title"
+          class="text-4xl font-bold leading-tight tracking-tight md:text-5xl"
+        >
+          Farnaz Zinnah
+        </h1>
 
-      <ScrollReveal rotate={2} class="mx-auto w-full max-w-sm lg:ml-auto">
-        <figure class="surface overflow-hidden rounded-[1.75rem] p-2">
-          <Image src={heroImage} alt="Placeholder for Farnaz's portfolio hero photo" widths={[480, 720]} sizes="(max-width: 1024px) 80vw, 360px" class="aspect-[4/5] w-full rounded-[1.35rem] object-cover" loading="eager" />
-          <figcaption class="muted px-3 pb-2 pt-3 font-mono text-[11px]">Replace: src/assets/images/hero.jpg</figcaption>
-        </figure>
-      </ScrollReveal>
-    </section>
-
-    <section id="work" class="scroll-mt-24 py-24 md:py-32" aria-labelledby="work-title">
-      <div class="mb-10 flex items-end justify-between gap-6 border-b pb-4" style="border-color: var(--border);">
-        <div>
-          <p class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan">01 / Selected Work</p>
-          <h2 id="work-title" class="text-3xl font-semibold tracking-tight md:text-4xl">Systems that ship — and systems that fail safely.</h2>
-        </div>
-      </div>
-
-      <div class="grid gap-5 md:grid-cols-2">
-        {projects.map((project) => <ProjectCard {...project} />)}
-      </div>
-    </section>
-
-    <section id="governance" class="scroll-mt-24 grid gap-10 py-24 md:py-32 lg:grid-cols-[1.1fr_0.9fr] lg:items-center" aria-labelledby="governance-title">
-      <div>
-        <p class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan">02 / Architecture &amp; Governance</p>
-        <h2 id="governance-title" class="text-3xl font-semibold tracking-tight md:text-4xl">AI Architecture &amp; Governance Review</h2>
-        <p class="muted mt-6 text-base leading-8 md:text-lg">
-          Sit on the review side of AI deployment decisions — evaluating proposed AI and automation systems against risk criteria before they ship: data sensitivity, PII/PHI exposure, third-party integration risk, and on-prem access controls. The adversarial attacks work above is not unrelated to this: understanding how models fail is what makes evaluating whether one is safe to deploy possible in the first place.
+        <p class="max-w-md text-lg leading-8 text-paper/80">
+          I build AI systems, break them on purpose to see how they fail, and
+          help decide which ones are actually safe to ship.
         </p>
+
+        <a
+          href="#work"
+          class="inline-flex items-center gap-2 border border-accent-cyan/50 px-4 py-2.5 font-mono text-sm text-accent-cyan transition-colors hover:border-accent-cyan hover:bg-accent-cyan/5"
+        >
+          See selected work
+          <span aria-hidden="true">→</span>
+        </a>
       </div>
 
-      <ScrollReveal rotate={-2} class="mx-auto w-full max-w-lg">
-        <figure class="surface overflow-hidden rounded-[1.75rem] p-2">
-          <Image src={aiSummitImage} alt="Placeholder for an AI conference or architecture photo" widths={[560, 900]} sizes="(max-width: 1024px) 90vw, 440px" class="aspect-[4/3] w-full rounded-[1.35rem] object-cover" />
-          <figcaption class="muted px-3 pb-2 pt-3 font-mono text-[11px]">Replace: src/assets/images/ai-summit.jpg</figcaption>
-        </figure>
-      </ScrollReveal>
+      <IdentityBlock />
     </section>
 
-    <section class="py-24 md:py-32" aria-labelledby="other-work-title">
-      <div class="mb-8 border-b pb-4" style="border-color: var(--border);">
-        <p class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan">03 / Other Work</p>
-        <h2 id="other-work-title" class="text-3xl font-semibold tracking-tight md:text-4xl">More things I have built.</h2>
+    <section
+      id="experience"
+      class="space-y-5"
+      aria-labelledby="experience-title"
+    >
+      <div class="border-b border-white/10 pb-3">
+        <p
+          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+        >
+          Experience
+        </p>
+
+        <h2 id="experience-title" class="text-2xl font-semibold tracking-tight">
+          Building AI systems in production.
+        </h2>
       </div>
 
-      <div class="grid gap-4">
-        <div class="rounded-2xl border p-5 md:grid md:grid-cols-[0.35fr_1fr] md:gap-8" style="border-color: var(--border); background: var(--surface);">
-          <p class="font-mono text-xs text-accent-cyan">SDLC automation</p>
-          <p class="muted mt-2 leading-7 md:mt-0">Multi-agent workflow for SharePoint↔ADO synchronization, AI-assisted story elaboration, and RAG-based QA.</p>
-        </div>
-        <div class="rounded-2xl border p-5 md:grid md:grid-cols-[0.35fr_1fr] md:gap-8" style="border-color: var(--border); background: var(--surface);">
-          <p class="font-mono text-xs text-accent-cyan">Infrastructure risk</p>
-          <p class="muted mt-2 leading-7 md:mt-0">Drone imagery risk pipeline combining computer vision with weather data for infrastructure risk scoring on GCP.</p>
-        </div>
-        <div class="rounded-2xl border p-5 md:grid md:grid-cols-[0.35fr_1fr] md:gap-8" style="border-color: var(--border); background: var(--surface);">
-          <p class="font-mono text-xs text-accent-cyan">AI governance</p>
-          <p class="muted mt-2 leading-7 md:mt-0">Enterprise AI governance agent for risk classification using Gemini and Vertex AI.</p>
-        </div>
-      </div>
-    </section>
+      <div class="space-y-3">
+        <div
+          class="flex flex-col gap-1 font-mono text-sm text-paper/60 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <span class="text-paper/80"> Con Edison — AI Systems Engineer </span>
 
-    <section class="grid gap-10 py-24 md:py-32 lg:grid-cols-[0.85fr_1.15fr] lg:items-center" aria-labelledby="mentorship-title">
-      <ScrollReveal rotate={2} class="order-2 mx-auto w-full max-w-lg lg:order-1">
-        <figure class="surface overflow-hidden rounded-[1.75rem] p-2">
-          <Image src={hackathonImage} alt="Placeholder for a hackathon or teaching photo" widths={[560, 900]} sizes="(max-width: 1024px) 90vw, 440px" class="aspect-[4/3] w-full rounded-[1.35rem] object-cover" />
-          <figcaption class="muted px-3 pb-2 pt-3 font-mono text-[11px]">Replace: src/assets/images/hackathon.jpg</figcaption>
-        </figure>
-      </ScrollReveal>
+          <span> Dec 2022 – Present </span>
+        </div>
 
-      <div class="order-1 lg:order-2">
-        <p class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan">04 / Teaching &amp; Mentorship</p>
-        <h2 id="mentorship-title" class="text-3xl font-semibold tracking-tight md:text-4xl">Technical depth is better when it is shared.</h2>
-        <p class="muted mt-6 text-base leading-8 md:text-lg">
-          Taught data structures, clean code, and design patterns to 50+ students as a CodePath Tech Fellow, hitting a 94 NPS and getting the contract renewed four semesters straight. Currently an AI Ethics Mentor with CUNY Tech Prep and a hackathon mentor for HackMIT and Columbia DevFest.
+        <p class="max-w-3xl leading-7 text-paper/80">
+          Building and governing AI and automation systems in Enterprise
+          Architecture, from production LLM pipelines to formal risk review of
+          proposed AI deployments.
         </p>
       </div>
+
+      <p class="border-t border-white/10 pt-4 text-sm text-paper/55">
+        NYU Tandon, MS Computer Engineering (in progress)
+        <span aria-hidden="true"> · </span>
+        CCNY, BE Computer Engineering
+      </p>
     </section>
 
-    <section id="contact" class="scroll-mt-24 py-24 text-center md:py-32" aria-labelledby="contact-title">
-      <div class="surface mx-auto max-w-3xl rounded-3xl px-6 py-12 md:px-12 md:py-16">
-        <p class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan">05 / Contact</p>
-        <h2 id="contact-title" class="text-3xl font-semibold tracking-tight md:text-4xl">Want to talk systems, ML infrastructure, or model security?</h2>
-        <p class="muted mx-auto mt-5 max-w-xl leading-7">I am always interested in thoughtful engineering work where reliability, security, and AI meet.</p>
+    <section
+      id="work"
+      class="scroll-mt-24 space-y-6"
+      aria-labelledby="work-title"
+    >
+      <div class="border-b border-white/10 pb-3">
+        <p
+          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+        >
+          Selected Work
+        </p>
 
-        <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <a href="mailto:farnazsamia@gmail.com" class="rounded-full border px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5" style="border-color: var(--border-strong);">Email</a>
-          <a href="https://linkedin.com/in/farnaz-zinnah" target="_blank" rel="noreferrer" class="rounded-full border px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5" style="border-color: var(--border-strong);">LinkedIn ↗</a>
-          <a href="https://github.com/fzinnah17" target="_blank" rel="noreferrer" class="rounded-full border px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5" style="border-color: var(--border-strong);">GitHub ↗</a>
-          {hasResume ? (
-            <a href="/resume.pdf" download class="rounded-full bg-gradient-to-r from-accent-violet to-accent-cyan px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5">Download Resume</a>
-          ) : (
-            <span class="cursor-not-allowed rounded-full border px-4 py-2 text-sm muted" style="border-color: var(--border);" title="Add public/resume.pdf to enable this link">Resume: add PDF</span>
-          )}
-        </div>
+        <h2 id="work-title" class="text-2xl font-semibold tracking-tight">
+          Things I have built, measured, and tried to break.
+        </h2>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        <ExpandableProjectCard
+          size="large"
+          title="Adversarial Robustness Testing"
+          hook="Dropped top-1 accuracy from 76% → 0.2% with perturbations too small to see."
+          metric="76% → 0.2%"
+          details="I wanted to know how easily a production-grade image classifier could be fooled. Turns out: very. A PGD attack dropped accuracy from 76% to 0.2%, and the attack transferred to a completely different architecture more than 90% of the time. Built solo in PyTorch and evaluated on ImageNet-1K."
+          stack={["PyTorch", "ImageNet-1K", "FGSM", "PGD", "Security"]}
+          href="https://github.com/fzinnah17/neural-network-jailbreak"
+        />
+
+        <ExpandableProjectCard
+          title="Mojo vs CUDA"
+          hook="Mojo's compiler-generated kernels beat cuBLAS by 1.7–1.9x on compute-heavy GEMM workloads."
+          metric="1.7–1.9x"
+          details="Mojo is still young, so I wanted to see how its compiler-generated GPU kernels actually stack up against CUDA's mature optimization stack. On compute-heavy operations, Mojo won by 1.7–1.9x. On memory-bound operations, CUDA still had the edge. Co-built for HPML coursework; my contribution focused on the MAX Graph baseline and PyTorch-to-MAX weight extraction pipeline."
+          stack={["Mojo", "CUDA", "MAX Graph", "Transformer inference"]}
+        />
+
+        <ExpandableProjectCard
+          title="Call Analytics Pipeline"
+          hook="Cut manager review time from 6 hours → 1 hour per 100 calls."
+          metric="6 hours → 1 hour"
+          details="Managers were spending about six hours reviewing 100 customer service calls by hand. I built a speech-to-text and LLM pipeline that reduced that review time to about one hour and shortened feedback turnaround. The processing path is intentionally in-memory so audio and transcripts do not persist after processing."
+          stack={["Python", "Azure Whisper", "GPT-4", "Concurrency"]}
+        />
+
+        <ExpandableProjectCard
+          title="Cloud-to-On-Prem Gateway"
+          hook="Replaced a 25-endpoint cap → unlimited code-based routing."
+          metric="25-endpoint cap → unlimited"
+          details="The previous method for connecting cloud applications to on-prem systems topped out at 25 endpoints. I built a code-based relay that can route to as many destinations as needed, handles more than one million requests a day, and stores routing rules separately so new routes can be added without changing application code."
+          stack={["C# / .NET", "Azure Relay", "Table Storage", "Security"]}
+        />
+      </div>
+    </section>
+
+    <section
+      id="governance"
+      class="scroll-mt-24 border-y border-white/10 py-10"
+      aria-labelledby="governance-title"
+    >
+      <div class="max-w-3xl space-y-4">
+        <p
+          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+        >
+          Architecture &amp; Governance
+        </p>
+
+        <h2 id="governance-title" class="text-2xl font-semibold tracking-tight">
+          The other side of the table.
+        </h2>
+
+        <p class="leading-8 text-paper/80">
+          Part of my job is reviewing AI and automation systems before they
+          ship, checking things like data sensitivity, PII exposure, third-party
+          integrations, and access controls. The adversarial attacks work above
+          feeds into this directly. It is hard to judge whether a model is safe
+          to deploy if you have never tried to break one.
+        </p>
+      </div>
+    </section>
+
+    <section class="space-y-5" aria-labelledby="other-work-title">
+      <div class="border-b border-white/10 pb-3">
+        <p
+          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+        >
+          Other Work
+        </p>
+
+        <h2 id="other-work-title" class="text-2xl font-semibold tracking-tight">
+          Smaller systems, same curiosity.
+        </h2>
+      </div>
+
+      <ul class="divide-y divide-white/10">
+        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
+          <span class="font-mono text-sm text-accent-cyan">
+            SDLC automation
+          </span>
+
+          <span class="leading-7 text-paper/75">
+            Multi-agent workflow for SharePoint ↔ ADO synchronization,
+            AI-assisted story elaboration, and RAG-based QA.
+          </span>
+        </li>
+
+        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
+          <span class="font-mono text-sm text-accent-cyan">
+            Infrastructure risk
+          </span>
+
+          <span class="leading-7 text-paper/75">
+            Drone-imagery pipeline combining computer vision with weather data
+            for infrastructure risk scoring on GCP.
+          </span>
+        </li>
+
+        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
+          <span class="font-mono text-sm text-accent-cyan">
+            AI governance agent
+          </span>
+
+          <span class="leading-7 text-paper/75">
+            Enterprise risk-classification tooling built with Gemini and Vertex
+            AI.
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <section
+      class="border-y border-white/10 py-10"
+      aria-labelledby="mentorship-title"
+    >
+      <div class="max-w-3xl space-y-4">
+        <p
+          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+        >
+          Teaching &amp; Mentorship
+        </p>
+
+        <h2 id="mentorship-title" class="text-2xl font-semibold tracking-tight">
+          Technical depth is better when it is shared.
+        </h2>
+
+        <p class="leading-8 text-paper/80">
+          I've taught 50+ students data structures and clean code as a CodePath
+          Tech Fellow, keeping a 94 NPS and getting renewed four semesters in a
+          row. These days I mentor for CUNY Tech Prep's AI Ethics program, plus
+          hackathons at HackMIT and Columbia DevFest.
+        </p>
       </div>
     </section>
   </main>
-
-  <footer class="border-t" style="border-color: var(--border);">
-    <div class="muted mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 text-xs sm:flex-row sm:items-center sm:justify-between md:px-8">
-      <p>© {new Date().getFullYear()} Farnaz Zinnah.</p>
-      <p class="font-mono">Astro · Tailwind · static by default</p>
-    </div>
-  </footer>
 </Layout>
