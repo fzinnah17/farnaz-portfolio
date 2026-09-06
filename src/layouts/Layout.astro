@@ -1,7 +1,10 @@
 ---
 import "../styles/global.css";
 
+import CommandPalette from "../components/CommandPalette.astro";
+import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import ScrollProgress from "../components/ScrollProgress.astro";
 import SocialRail from "../components/SocialRail.astro";
 
 interface Props {
@@ -13,32 +16,43 @@ const {
   title,
   description = "AI Systems Engineer building, breaking, and governing AI systems.",
 } = Astro.props;
+
+const site = Astro.site ?? new URL("https://farnaz-portfolio.vercel.app");
+
+const canonicalUrl = new URL(Astro.url.pathname, site);
+const ogImageUrl = new URL("/og-image.png", site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <script is:inline>
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.classList.remove("dark");
+        }
+      } catch {}
+    </script>
+
     <title>{title}</title>
 
     <meta name="description" content={description} />
-
     <meta name="robots" content="index, follow" />
-
     <meta name="theme-color" content="#0B0E14" />
+
+    <link rel="canonical" href={canonicalUrl} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <meta property="og:type" content="website" />
-
     <meta property="og:title" content={title} />
-
     <meta property="og:description" content={description} />
-
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
 
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -46,14 +60,34 @@ const {
 
     <meta name="twitter:description" content={description} />
 
-    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:image" content={ogImageUrl} />
   </head>
 
   <body id="top">
+    <a href="#main" class="skip-link"> Skip to content </a>
+
+    <ScrollProgress />
+
     <Header />
 
     <slot />
 
+    <Footer />
+
     <SocialRail />
+
+    <CommandPalette />
+
+    <script is:inline>
+      console.log(
+        "%cLooking for something?",
+        "color:#06B6D4;font-family:monospace;font-size:14px;",
+      );
+
+      console.log(
+        "%cAstro + TypeScript + Tailwind. Source: github.com/fzinnah17/farnaz-portfolio",
+        "color:#7C3AED;font-family:monospace;font-size:12px;",
+      );
+    </script>
   </body>
 </html>
