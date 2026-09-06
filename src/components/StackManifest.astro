@@ -1,28 +1,53 @@
 ---
-const dependencies = [
-    ["torch", "adversarial ML, PGD and FGSM attacks"],
-    ["mojo", "GPU kernels and CUDA benchmarking"],
-    ["azure-openai", "production LLM pipelines"],
-    ["azure-table-storage", "caching and dynamic routing"],
-    ["google-cloud-vision", "multimodal detection pipelines"],
-    ["rag-agents", "retrieval and agent orchestration"],
-];
+const groups = [
+    {
+        heading: "azure",
+        items: [
+            ["azure-ai-foundry", "managed model inference"],
+            ["azure-openai", "production LLM workflows"],
+            ["azure-key-vault", "runtime secret resolution"],
+            ["azure-storage", "blob and routing configuration"],
+        ],
+    },
+    {
+        heading: "gcp",
+        items: [
+            ["vertex-ai", "Gemini workflows"],
+            ["cloud-vision", "image analysis"],
+            ["video-intelligence", "video analysis"],
+        ],
+    },
+    {
+        heading: "other",
+        items: [
+            ["torch", "adversarial robustness testing"],
+            ["mojo", "GPU kernel benchmarking"],
+            ["rag-agents", "retrieval and agent orchestration"],
+        ],
+    },
+] as const;
 ---
 
 <div
-    class="overflow-x-auto rounded-lg border border-paper/10 bg-paper/[0.03] p-5 font-mono text-xs leading-7 sm:text-sm"
+    class="overflow-x-auto rounded-lg border border-border bg-surface p-5 font-mono text-xs leading-7 sm:text-sm"
 >
-    <div class="mb-2 text-paper/70"># stack.txt</div>
+    <div class="text-muted"># stack.txt</div>
 
     {
-        dependencies.map(([technology, note]) => (
-            <div class="min-w-max">
-                <span class="text-accent-cyan">{technology}</span>
+        groups.map((group) => (
+            <div class="mt-3">
+                <div class="text-secondary"># {group.heading}</div>
 
-                <span class="text-paper/70">
-                    {"  # "}
-                    {note}
-                </span>
+                {group.items.map(([pkg, note]) => (
+                    <div class="min-w-max">
+                        <span class="text-accent-cyan">{pkg}</span>
+
+                        <span class="text-muted">
+                            {"  # "}
+                            {note}
+                        </span>
+                    </div>
+                ))}
             </div>
         ))
     }
