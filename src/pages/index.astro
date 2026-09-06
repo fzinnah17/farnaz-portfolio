@@ -1,9 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+import ArchitectureField from "../components/ArchitectureField.astro";
 import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
 import ExperienceLog from "../components/ExperienceLog.astro";
+import GovernanceChecklist from "../components/GovernanceChecklist.astro";
 import IdentityBlock from "../components/IdentityBlock.astro";
-import ArchitectureField from "../components/ArchitectureField.astro";
 import StackManifest from "../components/StackManifest.astro";
 ---
 
@@ -57,50 +59,34 @@ import StackManifest from "../components/StackManifest.astro";
     </section>
 
     <!-- EXPERIENCE + STACK -->
-    <div class="grid gap-10 lg:grid-cols-2">
-      <section
-        id="experience"
-        class="scroll-mt-24 space-y-5"
-        aria-labelledby="experience-title"
-      >
-        <div class="border-b border-paper/10 pb-3">
-          <p
-            class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-          >
-            Experience
-          </p>
+    <section
+      class="grid gap-10 lg:grid-cols-2"
+      aria-label="Experience and technical stack"
+    >
+      <div id="experience" class="scroll-mt-24 space-y-3">
+        <h2 class="border-b border-paper/10 pb-2 text-2xl font-semibold">
+          Experience
+        </h2>
 
-          <h2
-            id="experience-title"
-            class="text-2xl font-semibold tracking-tight"
-          >
-            Building AI systems in production.
-          </h2>
-        </div>
+        <p class="text-sm text-paper/60">
+          Mostly Con Edison so far, with school running alongside it.
+        </p>
 
         <ExperienceLog />
-      </section>
+      </div>
 
-      <section
-        id="stack"
-        class="scroll-mt-24 space-y-5"
-        aria-labelledby="stack-title"
-      >
-        <div class="border-b border-paper/10 pb-3">
-          <p
-            class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-          >
-            Stack
-          </p>
+      <div id="stack" class="scroll-mt-24 space-y-3">
+        <h2 class="border-b border-paper/10 pb-2 text-2xl font-semibold">
+          Stack
+        </h2>
 
-          <h2 id="stack-title" class="text-2xl font-semibold tracking-tight">
-            The tools behind the systems.
-          </h2>
-        </div>
+        <p class="text-sm text-paper/60">
+          Not everything here makes it onto a resume bullet.
+        </p>
 
         <StackManifest />
-      </section>
-    </div>
+      </div>
+    </section>
 
     <!-- SELECTED WORK -->
     <section
@@ -108,56 +94,47 @@ import StackManifest from "../components/StackManifest.astro";
       class="scroll-mt-24 space-y-6"
       aria-labelledby="work-title"
     >
-      <div class="border-b border-paper/10 pb-3">
-        <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-        >
-          Selected Work
-        </p>
+      <h2
+        id="work-title"
+        class="border-b border-paper/10 pb-2 text-2xl font-semibold"
+      >
+        Selected Work
+      </h2>
 
-        <h2 id="work-title" class="text-2xl font-semibold tracking-tight">
-          Things I have built, measured, and tried to break.
-        </h2>
-      </div>
-
-      <p class="font-mono text-xs leading-5 text-paper/65">
-        Most of my day-to-day work lives in private enterprise repos. The public
-        projects below are personal or academic work.
+      <p class="text-sm text-paper/70">
+        Most of my day-to-day work lives in private enterprise repos. These are
+        the ones I can actually show.
       </p>
 
       <div class="grid items-start gap-4 md:grid-cols-3">
         <ExpandableProjectCard
           size="large"
           title="Adversarial Robustness Testing"
-          hook="Dropped top-1 accuracy from 76% → 0.2% with perturbations too small to see."
-          metric="76% → 0.2%"
-          details="I wanted to know how easily a production-grade image classifier could be fooled. Turns out: very. A PGD attack dropped accuracy from 76% to 0.2%, and the attack transferred to a completely different architecture more than 90% of the time. Built solo in PyTorch and evaluated on ImageNet-1K."
-          stack={["PyTorch", "ImageNet-1K", "FGSM", "PGD", "Security"]}
+          hook="Fooled a production image classifier down to 0.2% accuracy with changes you can't see."
+          details="I wanted to know how easily a production-grade image classifier could be fooled. Turns out: very. A PGD attack dropped accuracy from 76% to 0.2%, and the trick transferred to a completely different model 90% of the time. Measured on a held-out ImageNet-1K validation subset, PGD run at ε=8/255, 20 steps. Built solo in PyTorch. Happy to walk through the exact setup if asked."
+          stack={["PyTorch", "ImageNet-1K", "Security"]}
           href="https://github.com/fzinnah17/neural-network-jailbreak"
         />
 
         <ExpandableProjectCard
           title="Mojo vs CUDA"
-          hook="Mojo's compiler-generated kernels beat cuBLAS by 1.7–1.9x on compute-heavy GEMM workloads."
-          metric="1.7–1.9x"
-          details="Mojo is still young, so I wanted to see how its compiler-generated GPU kernels actually stack up against CUDA's mature optimization stack. On compute-heavy operations, Mojo won by 1.7–1.9x. On memory-bound operations, CUDA still had the edge. Co-built for HPML coursework; my contribution focused on the MAX Graph baseline and PyTorch-to-MAX weight extraction pipeline."
-          stack={["Mojo", "CUDA", "MAX Graph", "Transformer inference"]}
+          hook="Mojo's compiler kernels against a decade of CUDA optimization: closer than I expected."
+          details="Mojo is still young, so I wanted to see how its compiler-generated GPU kernels stack up against CUDA's. On compute-heavy operations, Mojo won by 1.7–1.9x. On memory-bound ones, CUDA still had the edge. Co-built for HPML coursework."
+          stack={["Mojo", "CUDA", "MAX Graph"]}
         />
 
         <ExpandableProjectCard
           title="Call Analytics Pipeline"
-          hook="Cut manager review time from 6 hours → 1 hour per 100 calls."
-          metric="6 hours → 1 hour"
-          details="Managers were spending about six hours reviewing 100 customer service calls by hand. I built a speech-to-text and LLM pipeline that reduced that review time to about one hour and shortened feedback turnaround. The processing path is intentionally in-memory so audio and transcripts do not persist after processing."
-          stack={["Python", "Azure Whisper", "GPT-4", "Concurrency"]}
+          hook="Cut manager review time from 6 hours to 1 hour per 100 calls."
+          details="Managers were spending 6 hours reviewing 100 customer service calls by hand. I built a speech-to-text + LLM pipeline that got it down to 1 hour, with nothing persisting after processing."
+          stack={["Azure Whisper", "GPT-4", "Python"]}
         />
 
         <ExpandableProjectCard
           title="Cloud-to-On-Prem Gateway"
-          hook="Replaced a 25-endpoint cap → unlimited code-based routing."
-          metric="25-endpoint cap → unlimited"
-          details="The previous method for connecting cloud applications to on-prem systems topped out at 25 endpoints. I built a code-based relay that can route to as many destinations as needed, handles more than one million requests a day, and stores routing rules separately so new routes can be added without changing application code."
-          stack={["C# / .NET", "Azure Relay", "Table Storage", "Security"]}
+          hook="The old system topped out at 25 endpoints. This one doesn't."
+          details="The previous method for connecting cloud apps to on-prem systems topped out at 25 endpoints. I built a code-based relay that routes to as many destinations as needed, handles 1M+ requests a day, and stores routing rules separately so new routes can be added without touching application code."
+          stack={["C#/.NET", "Azure Relay", "Table Storage"]}
         />
       </div>
     </section>
@@ -165,76 +142,71 @@ import StackManifest from "../components/StackManifest.astro";
     <!-- GOVERNANCE -->
     <section
       id="governance"
-      class="scroll-mt-24 border-y border-paper/10 py-10"
+      class="scroll-mt-24 space-y-6"
       aria-labelledby="governance-title"
     >
-      <div class="max-w-3xl space-y-4">
+      <div class="max-w-2xl space-y-3">
         <p
           class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
         >
           Architecture &amp; Governance
         </p>
 
-        <h2 id="governance-title" class="text-2xl font-semibold tracking-tight">
+        <h2 id="governance-title" class="text-2xl font-semibold">
           The other side of the table.
         </h2>
 
         <p class="leading-8 text-paper/80">
-          Part of my job is reviewing AI and automation systems before they
-          ship, checking things like data sensitivity, PII exposure, third-party
-          integrations, and access controls. The adversarial attacks work above
-          feeds into this directly. It is hard to judge whether a model is safe
-          to deploy if you have never tried to break one.
+          Before an AI or automation system ships, someone has to actually look
+          at it and ask if it's safe. That's part of my job too. It's slower and
+          less flashy than the projects above, but it's the one I'd probably
+          miss most if it went away.
         </p>
       </div>
+
+      <GovernanceChecklist />
+
+      <p class="text-sm leading-7 text-paper/70">
+        Security by default shows up in the code above too, not just the review
+        process: in-memory processing with no persistence, path-traversal
+        validation, IP-restricted keys.
+      </p>
     </section>
 
     <!-- OTHER WORK -->
-    <section class="space-y-5" aria-labelledby="other-work-title">
-      <div class="border-b border-paper/10 pb-3">
-        <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-        >
-          Other Work
-        </p>
+    <section class="space-y-4" aria-labelledby="other-work-title">
+      <h2
+        id="other-work-title"
+        class="border-b border-paper/10 pb-2 text-2xl font-semibold"
+      >
+        Other Work
+      </h2>
 
-        <h2 id="other-work-title" class="text-2xl font-semibold tracking-tight">
-          Smaller systems, same curiosity.
-        </h2>
-      </div>
+      <p class="text-sm text-paper/60">A few other things, briefly.</p>
 
-      <ul class="divide-y divide-paper/10">
-        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
-          <span class="font-mono text-sm text-accent-violet">
+      <ul class="space-y-3 text-paper/80">
+        <li>
+          <span class="font-mono text-sm text-accent-cyan">
             SDLC automation
           </span>
-
-          <span class="leading-7 text-paper/75">
-            Multi-agent workflow for SharePoint ↔ ADO synchronization,
-            AI-assisted story elaboration, and RAG-based QA.
-          </span>
+          — A hackathon build: agents syncing SharePoint and Azure DevOps, drafting
+          user stories, and answering questions over the backlog with RAG.
         </li>
 
-        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
-          <span class="font-mono text-sm text-accent-violet">
+        <li>
+          <span class="font-mono text-sm text-accent-cyan">
             Infrastructure risk
           </span>
-
-          <span class="leading-7 text-paper/75">
-            Drone-imagery pipeline combining computer vision with weather data
-            for infrastructure risk scoring on GCP.
-          </span>
+          — Drone footage plus weather data, fused into a risk score for infrastructure
+          inspection. Built on GCP.
         </li>
 
-        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
+        <li>
           <span class="font-mono text-sm text-accent-cyan">
             AI governance agent
           </span>
-
-          <span class="leading-7 text-paper/75">
-            Enterprise risk-classification tooling built with Gemini and Vertex
-            AI.
-          </span>
+          — A smaller, automated cousin of the review process above, built on Gemini
+          and Vertex AI.
         </li>
       </ul>
     </section>
@@ -246,20 +218,20 @@ import StackManifest from "../components/StackManifest.astro";
     >
       <div class="max-w-3xl space-y-4">
         <p
-          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
+          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
         >
           Teaching &amp; Mentorship
         </p>
 
-        <h2 id="mentorship-title" class="text-2xl font-semibold tracking-tight">
-          Technical depth is better when it is shared.
+        <h2 id="mentorship-title" class="text-2xl font-semibold">
+          Didn't expect this to stick.
         </h2>
 
         <p class="leading-8 text-paper/80">
-          I've taught 50+ students data structures and clean code as a CodePath
-          Tech Fellow, keeping a 94 NPS and getting renewed four semesters in a
-          row. These days I mentor for CUNY Tech Prep's AI Ethics program, plus
-          hackathons at HackMIT and Columbia DevFest.
+          I signed up to teach data structures as a CodePath Tech Fellow mostly
+          for the resume line. Ended up doing it four semesters straight, 50+
+          students, 94 NPS. Still mentor for CUNY Tech Prep's AI Ethics program
+          and show up for hackathons at HackMIT and Columbia DevFest when I can.
         </p>
       </div>
     </section>

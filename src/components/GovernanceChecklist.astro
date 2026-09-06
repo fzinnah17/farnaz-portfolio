@@ -1,0 +1,34 @@
+---
+const criteria = [
+    {
+        label: "Data sensitivity",
+        note: "what's actually flowing through the system, and how sensitive it is",
+    },
+    {
+        label: "PII / PHI exposure",
+        note: "whether personal or health data touches the pipeline, and how it's handled",
+    },
+    {
+        label: "Third-party integration risk",
+        note: "what an external vendor or API can see, store, or fail on",
+    },
+    {
+        label: "Access controls",
+        note: "who can reach the system, and what happens if that access is misused",
+    },
+];
+---
+
+<div class="divide-y divide-paper/10 rounded-lg border border-paper/10">
+    {
+        criteria.map((criterion) => (
+            <div class="flex flex-col gap-1 p-4 sm:flex-row sm:items-baseline sm:gap-4">
+                <span class="shrink-0 font-mono text-sm text-accent-cyan sm:w-56">
+                    {criterion.label}
+                </span>
+
+                <span class="text-sm text-paper/70">{criterion.note}</span>
+            </div>
+        ))
+    }
+</div>
