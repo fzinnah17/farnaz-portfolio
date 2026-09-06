@@ -1,11 +1,25 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: var(--site-background);
-  --color-paper: var(--site-foreground);
+  /* New semantic theme tokens. */
+  --color-bg: var(--theme-bg);
+  --color-surface: var(--theme-surface);
+  --color-border: var(--theme-border);
 
-  --color-accent-cyan: #06b6d4;
-  --color-accent-violet: #7c3aed;
+  --color-text: var(--theme-text);
+  --color-secondary: var(--theme-text-secondary);
+  --color-muted: var(--theme-text-muted);
+
+  --color-accent-cyan: var(--theme-accent-cyan);
+  --color-accent-violet: var(--theme-accent-violet);
+
+  /*
+   * Compatibility aliases.
+   * These keep any not-yet-migrated component from breaking while
+   * we remove opacity-based paper/ink usage from the important UI.
+   */
+  --color-ink: var(--theme-bg);
+  --color-paper: var(--theme-text);
 
   --font-sans:
     "Inter",
@@ -26,16 +40,34 @@
     monospace;
 }
 
+/* Light mode */
 :root {
-  --site-background: #f7f7f4;
-  --site-foreground: #111827;
+  --theme-bg: #faf9f6;
+  --theme-surface: #f1efe9;
+  --theme-border: #d6d3ca;
+
+  --theme-text: #17181c;
+  --theme-text-secondary: #45474d;
+  --theme-text-muted: #6b6d73;
+
+  --theme-accent-violet: #6d28d9;
+  --theme-accent-cyan: #0e7490;
 
   color-scheme: light;
 }
 
+/* Dark mode */
 :root.dark {
-  --site-background: #0b0e14;
-  --site-foreground: #f6f5f1;
+  --theme-bg: #0b0e14;
+  --theme-surface: #12151c;
+  --theme-border: #2a2d34;
+
+  --theme-text: #f6f5f1;
+  --theme-text-secondary: #c9c8c3;
+  --theme-text-muted: #9c9b96;
+
+  --theme-accent-violet: #7c3aed;
+  --theme-accent-cyan: #06b6d4;
 
   color-scheme: dark;
 }
@@ -46,15 +78,15 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--site-background);
+  background: var(--theme-bg);
 }
 
 body {
   min-width: 320px;
   margin: 0;
 
-  background: var(--site-background);
-  color: var(--site-foreground);
+  background: var(--theme-bg);
+  color: var(--theme-text);
 
   font-family: var(--font-sans);
 
@@ -66,8 +98,16 @@ body {
     color 180ms ease;
 }
 
+button,
+input,
+summary {
+  font: inherit;
+}
+
 ::selection {
-  background: rgb(6 182 212 / 24%);
+  background: color-mix(in srgb,
+      var(--theme-accent-cyan) 24%,
+      transparent);
 }
 
 a {
@@ -84,24 +124,38 @@ summary::-webkit-details-marker {
   display: none;
 }
 
+.text-gradient {
+  background: linear-gradient(135deg,
+      var(--theme-accent-violet),
+      var(--theme-accent-cyan));
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+}
+
+/* Visible only when keyboard focused. */
 .skip-link {
   position: fixed;
   left: 1rem;
   top: 1rem;
+
   z-index: 100;
 
   padding: 0.75rem 1rem;
 
-  border: 1px solid rgb(6 182 212 / 50%);
+  border: 1px solid var(--theme-accent-cyan);
   border-radius: 0.375rem;
 
-  background: var(--site-background);
-  color: #06b6d4;
+  background: var(--theme-bg);
+  color: var(--theme-accent-cyan);
 
   font-family: var(--font-mono);
   font-size: 0.875rem;
 
   transform: translateY(-200%);
+
   transition: transform 150ms ease;
 }
 
@@ -113,7 +167,7 @@ a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
 input:focus-visible {
-  outline: 2px solid #06b6d4;
+  outline: 2px solid var(--theme-accent-cyan);
   outline-offset: 3px;
 }
 
