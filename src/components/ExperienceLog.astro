@@ -1,0 +1,46 @@
+---
+const entries = [
+    {
+        date: "2022-12 → now",
+        label: "Con Edison — AI Systems Engineer",
+        detail: "Building and governing AI and automation systems in Enterprise Architecture, from production LLM pipelines to formal risk review of proposed AI deployments.",
+    },
+    {
+        date: "in progress",
+        label: "NYU Tandon — MS Computer Engineering",
+        detail: "Graduate work across high-performance ML systems, systems engineering, and computer engineering.",
+    },
+    {
+        date: "completed",
+        label: "CCNY — BE Computer Engineering",
+        detail: "Undergraduate foundation across software, computer systems, and computer engineering.",
+    },
+];
+---
+
+<div>
+    {
+        entries.map((entry) => (
+            <details class="group border-l-2 border-paper/10 py-3 pl-4 transition-colors hover:border-accent-cyan/60">
+                <summary class="flex cursor-pointer list-none flex-wrap items-baseline gap-x-3">
+                    <span class="font-mono text-xs text-paper/55">
+                        {entry.date}
+                    </span>
+
+                    <span class="font-medium text-paper">{entry.label}</span>
+
+                    <span
+                        aria-hidden="true"
+                        class="ml-auto text-xs text-accent-cyan transition-transform group-open:rotate-90"
+                    >
+                        ▸
+                    </span>
+                </summary>
+
+                <p class="mt-2 max-w-3xl text-sm leading-7 text-paper/75">
+                    {entry.detail}
+                </p>
+            </details>
+        ))
+    }
+</div>
