@@ -4,31 +4,20 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout
   title="404 — Farnaz Zinnah"
-  description="The requested page could not be found."
+  description="The requested route could not be found."
 >
   <main
-    class="mx-auto flex min-h-[calc(100vh-4rem)] max-w-3xl items-center px-6 py-20"
+    id="main"
+    class="mx-auto flex min-h-[70vh] max-w-4xl flex-col items-center justify-center space-y-4 px-6 text-center"
   >
-    <div>
-      <p class="font-mono text-sm uppercase tracking-[0.2em] text-accent-cyan">
-        404
-      </p>
+    <p class="font-mono text-sm text-accent-cyan">status: 404</p>
 
-      <h1 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">
-        That route doesn't exist.
-      </h1>
+    <h1 class="text-3xl font-bold">This route doesn't exist.</h1>
 
-      <p class="mt-5 max-w-xl leading-7 text-paper/65">
-        The page may have moved, or the link may be wrong.
-      </p>
+    <p class="text-paper/70">Probably a bad link, not a bad deploy.</p>
 
-      <a
-        href="/"
-        class="mt-8 inline-flex items-center gap-2 border border-accent-cyan/50 px-4 py-2.5 font-mono text-sm text-accent-cyan transition-colors hover:border-accent-cyan hover:bg-accent-cyan/5"
-      >
-        Back to portfolio
-        <span aria-hidden="true">→</span>
-      </a>
-    </div>
+    <a href="/" class="font-mono text-sm text-accent-cyan hover:underline">
+      ← back to /
+    </a>
   </main>
 </Layout>
