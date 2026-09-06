@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
 import ExperienceLog from "../components/ExperienceLog.astro";
 import IdentityBlock from "../components/IdentityBlock.astro";
-import NetworkField from "../components/NetworkField.astro";
+import ArchitectureField from "../components/ArchitectureField.astro";
 import StackManifest from "../components/StackManifest.astro";
 ---
 
@@ -13,14 +13,14 @@ import StackManifest from "../components/StackManifest.astro";
 >
   <main
     id="main"
-    class="mx-auto max-w-4xl space-y-24 px-6 pt-10 pb-28 md:pt-14 lg:pr-12 lg:pb-20"
+    class="mx-auto max-w-6xl space-y-24 px-6 pt-10 pb-28 md:pt-14 lg:pr-12 lg:pb-20"
   >
     <!-- HERO -->
     <section
       class="relative isolate grid min-h-[55vh] items-center gap-12 overflow-hidden py-8 md:grid-cols-2"
       aria-labelledby="hero-title"
     >
-      <NetworkField />
+      <ArchitectureField />
 
       <div class="relative z-10 space-y-5">
         <p
@@ -56,47 +56,51 @@ import StackManifest from "../components/StackManifest.astro";
       </div>
     </section>
 
-    <!-- EXPERIENCE -->
-    <section
-      id="experience"
-      class="space-y-5"
-      aria-labelledby="experience-title"
-    >
-      <div class="border-b border-paper/10 pb-3">
-        <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
-        >
-          Experience
-        </p>
+    <!-- EXPERIENCE + STACK -->
+    <div class="grid gap-10 lg:grid-cols-2">
+      <section
+        id="experience"
+        class="scroll-mt-24 space-y-5"
+        aria-labelledby="experience-title"
+      >
+        <div class="border-b border-paper/10 pb-3">
+          <p
+            class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
+          >
+            Experience
+          </p>
 
-        <h2 id="experience-title" class="text-2xl font-semibold tracking-tight">
-          Building AI systems in production.
-        </h2>
-      </div>
+          <h2
+            id="experience-title"
+            class="text-2xl font-semibold tracking-tight"
+          >
+            Building AI systems in production.
+          </h2>
+        </div>
 
-      <ExperienceLog />
-    </section>
+        <ExperienceLog />
+      </section>
 
-    <!-- STACK -->
-    <section
-      id="stack"
-      class="scroll-mt-24 space-y-5"
-      aria-labelledby="stack-title"
-    >
-      <div class="border-b border-paper/10 pb-3">
-        <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
-        >
-          Stack
-        </p>
+      <section
+        id="stack"
+        class="scroll-mt-24 space-y-5"
+        aria-labelledby="stack-title"
+      >
+        <div class="border-b border-paper/10 pb-3">
+          <p
+            class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
+          >
+            Stack
+          </p>
 
-        <h2 id="stack-title" class="text-2xl font-semibold tracking-tight">
-          The tools behind the systems.
-        </h2>
-      </div>
+          <h2 id="stack-title" class="text-2xl font-semibold tracking-tight">
+            The tools behind the systems.
+          </h2>
+        </div>
 
-      <StackManifest />
-    </section>
+        <StackManifest />
+      </section>
+    </div>
 
     <!-- SELECTED WORK -->
     <section
@@ -106,7 +110,7 @@ import StackManifest from "../components/StackManifest.astro";
     >
       <div class="border-b border-paper/10 pb-3">
         <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
         >
           Selected Work
         </p>
@@ -121,7 +125,7 @@ import StackManifest from "../components/StackManifest.astro";
         projects below are personal or academic work.
       </p>
 
-      <div class="grid gap-4 md:grid-cols-3">
+      <div class="grid items-start gap-4 md:grid-cols-3">
         <ExpandableProjectCard
           size="large"
           title="Adversarial Robustness Testing"
@@ -189,7 +193,7 @@ import StackManifest from "../components/StackManifest.astro";
     <section class="space-y-5" aria-labelledby="other-work-title">
       <div class="border-b border-paper/10 pb-3">
         <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
         >
           Other Work
         </p>
@@ -201,7 +205,7 @@ import StackManifest from "../components/StackManifest.astro";
 
       <ul class="divide-y divide-paper/10">
         <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
-          <span class="font-mono text-sm text-accent-cyan">
+          <span class="font-mono text-sm text-accent-violet">
             SDLC automation
           </span>
 
@@ -212,7 +216,7 @@ import StackManifest from "../components/StackManifest.astro";
         </li>
 
         <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
-          <span class="font-mono text-sm text-accent-cyan">
+          <span class="font-mono text-sm text-accent-violet">
             Infrastructure risk
           </span>
 
@@ -242,7 +246,7 @@ import StackManifest from "../components/StackManifest.astro";
     >
       <div class="max-w-3xl space-y-4">
         <p
-          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
         >
           Teaching &amp; Mentorship
         </p>
