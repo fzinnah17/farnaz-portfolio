@@ -1,0 +1,111 @@
+---
+interface Tab {
+    id: string;
+    label: string;
+}
+
+interface Props {
+    tabs: Tab[];
+    id?: string;
+}
+
+const { tabs, id = "tabs" } = Astro.props;
+---
+
+<div data-tabs id={id}>
+    <div
+        role="tablist"
+        aria-label="Work sections"
+        class="mb-6 flex gap-1 overflow-x-auto border-b border-border"
+    >
+        {
+            tabs.map((tab, index) => (
+                <button
+                    role="tab"
+                    type="button"
+                    id={`${id}-tab-${tab.id}`}
+                    aria-controls={`${id}-panel-${tab.id}`}
+                    aria-selected={index === 0 ? "true" : "false"}
+                    tabindex={index === 0 ? 0 : -1}
+                    data-tab-btn={tab.id}
+                    data-active={index === 0 ? "true" : "false"}
+                    class="shrink-0 border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-secondary transition-colors hover:text-text data-[active=true]:border-accent-cyan data-[active=true]:text-text"
+                >
+                    {tab.label}
+                </button>
+            ))
+        }
+    </div>
+
+    <slot />
+</div>
+
+<script>
+    document.querySelectorAll<HTMLElement>("[data-tabs]").forEach((wrapper) => {
+        const buttons = Array.from(
+            wrapper.querySelectorAll<HTMLButtonElement>("[data-tab-btn]"),
+        );
+
+        const panels = Array.from(
+            wrapper.querySelectorAll<HTMLElement>("[data-tab-panel]"),
+        );
+
+        function activate(id: string) {
+            buttons.forEach((button) => {
+                const active = button.dataset.tabBtn === id;
+
+                button.setAttribute("aria-selected", String(active));
+
+                button.dataset.active = String(active);
+
+                button.tabIndex = active ? 0 : -1;
+            });
+
+            panels.forEach((panel) => {
+                panel.hidden = panel.dataset.tabPanel !== id;
+            });
+        }
+
+        buttons.forEach((button, index) => {
+            button.addEventListener("click", () => {
+                const id = button.dataset.tabBtn;
+
+                if (id) {
+                    activate(id);
+                }
+            });
+
+            button.addEventListener("keydown", (event) => {
+                let next = index;
+
+                if (event.key === "ArrowRight") {
+                    next = (index + 1) % buttons.length;
+                } else if (event.key === "ArrowLeft") {
+                    next = (index - 1 + buttons.length) % buttons.length;
+                } else if (event.key === "Home") {
+                    next = 0;
+                } else if (event.key === "End") {
+                    next = buttons.length - 1;
+                } else {
+                    return;
+                }
+
+                event.preventDefault();
+
+                const target = buttons[next];
+
+                if (!target) {
+                    return;
+                }
+
+                target.focus();
+
+                const id = target.dataset.tabBtn;
+
+                if (id) {
+                    activate(id);
+                }
+            });
+        });
+    });
+</script>

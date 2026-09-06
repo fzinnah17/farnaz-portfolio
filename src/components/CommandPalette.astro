@@ -1,40 +1,39 @@
 ---
-import fs from "node:fs";
-import path from "node:path";
-
 interface Command {
     label: string;
     scrollTarget?: string;
+    activateTab?: string;
     href?: string;
     newTab?: boolean;
 }
 
-const hasResume = fs.existsSync(
-    path.join(process.cwd(), "public", "resume.pdf"),
-);
+const resumeUrl =
+    "https://drive.google.com/file/d/1VfW9aVQ5eDtf3fz8kqHcRDLErVyC2w0L/view?usp=drive_link";
 
 const commands: Command[] = [
     {
         label: "Go to Work",
-        scrollTarget: "work",
+        scrollTarget: "worklab",
+        activateTab: "work",
     },
     {
         label: "Go to Stack",
         scrollTarget: "stack",
     },
     {
-        label: "Go to Governance",
-        scrollTarget: "governance",
+        label: "Go to Platforms",
+        scrollTarget: "platforms",
     },
-    ...(hasResume
-        ? [
-              {
-                  label: "Open Resume",
-                  href: "/resume.pdf",
-                  newTab: true,
-              },
-          ]
-        : []),
+    {
+        label: "Go to Governance",
+        scrollTarget: "worklab",
+        activateTab: "governance",
+    },
+    {
+        label: "Open Resume",
+        href: resumeUrl,
+        newTab: true,
+    },
     {
         label: "Open GitHub",
         href: "https://github.com/fzinnah17",
@@ -55,9 +54,9 @@ const commands: Command[] = [
 <dialog
     id="command-palette"
     data-command-palette
-    class="w-[min(32rem,calc(100%-2rem))] rounded-xl border border-paper/15 bg-ink p-0 text-paper shadow-2xl backdrop:bg-black/70"
+    class="w-[min(32rem,calc(100%-2rem))] rounded-xl border border-border bg-bg p-0 text-text shadow-2xl backdrop:bg-black/70"
 >
-    <div class="flex items-center border-b border-paper/10">
+    <div class="flex items-center border-b border-border">
         <label for="command-search" class="sr-only"> Search commands </label>
 
         <input
@@ -66,14 +65,14 @@ const commands: Command[] = [
             type="search"
             autocomplete="off"
             placeholder="Type a command..."
-            class="min-w-0 flex-1 bg-transparent px-4 py-3 font-mono text-sm text-paper outline-none placeholder:text-paper/40"
+            class="min-w-0 flex-1 bg-transparent px-4 py-3 font-mono text-sm text-text outline-none placeholder:text-muted"
         />
 
         <button
             type="button"
             data-command-close
             aria-label="Close command palette"
-            class="px-4 py-3 font-mono text-paper/50 hover:text-paper"
+            class="px-4 py-3 font-mono text-muted hover:text-text"
         >
             esc
         </button>
@@ -88,11 +87,12 @@ const commands: Command[] = [
                             type="button"
                             data-command-action
                             data-scroll-target={command.scrollTarget}
-                            class="flex w-full items-center justify-between px-4 py-2.5 text-left font-mono text-sm text-paper/75 hover:bg-paper/5 hover:text-paper focus:bg-paper/5"
+                            data-activate-tab={command.activateTab}
+                            class="flex w-full items-center justify-between px-4 py-2.5 text-left font-mono text-sm text-secondary hover:bg-surface hover:text-text focus:bg-surface"
                         >
                             {command.label}
 
-                            <span aria-hidden="true" class="text-paper/35">
+                            <span aria-hidden="true" class="text-muted">
                                 ↵
                             </span>
                         </button>
@@ -106,11 +106,11 @@ const commands: Command[] = [
                                     ? "noopener noreferrer"
                                     : undefined
                             }
-                            class="flex w-full items-center justify-between px-4 py-2.5 font-mono text-sm text-paper/75 hover:bg-paper/5 hover:text-paper focus:bg-paper/5"
+                            class="flex w-full items-center justify-between px-4 py-2.5 font-mono text-sm text-secondary hover:bg-surface hover:text-text focus:bg-surface"
                         >
                             {command.label}
 
-                            <span aria-hidden="true" class="text-paper/35">
+                            <span aria-hidden="true" class="text-muted">
                                 ↵
                             </span>
                         </a>
@@ -122,7 +122,7 @@ const commands: Command[] = [
         <li
             data-command-empty
             hidden
-            class="px-4 py-3 font-mono text-sm text-paper/45"
+            class="px-4 py-3 font-mono text-sm text-muted"
         >
             No matches
         </li>
