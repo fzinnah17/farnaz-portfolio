@@ -1,0 +1,102 @@
+---
+interface PlatformItem {
+    label: string;
+    detail: string;
+}
+
+const azure: PlatformItem[] = [
+    {
+        label: "Azure AI Foundry",
+        detail: "Deploying and calling language models through managed inference endpoints in production AI pipelines.",
+    },
+    {
+        label: "Azure OpenAI + Whisper",
+        detail: "Speech-to-text and LLM analysis pipelines with concurrent batch processing.",
+    },
+    {
+        label: "Azure Key Vault",
+        detail: "Secret-backed deployment configuration so credentials stay out of source control and pipeline definitions.",
+    },
+    {
+        label: "Azure Table & Blob Storage",
+        detail: "Cache-aside routing configuration and blob-backed document or application data flows.",
+    },
+    {
+        label: "Azure DevOps + Terraform",
+        detail: "CI/CD configuration resolved at deployment time against infrastructure provisioned as code.",
+    },
+    {
+        label: "Azure Computer Vision",
+        detail: "Computer-vision workflows for image and infrastructure analysis.",
+    },
+];
+
+const gcp: PlatformItem[] = [
+    {
+        label: "Vertex AI + Gemini",
+        detail: "Generative AI and risk-classification workflows built around managed Vertex AI services.",
+    },
+    {
+        label: "Cloud Vision API",
+        detail: "Object localization and image analysis for infrastructure-risk workflows.",
+    },
+    {
+        label: "Video Intelligence",
+        detail: "Video analysis and object tracking across frames for multimodal pipelines.",
+    },
+    {
+        label: "Cloud Storage",
+        detail: "Object storage for image and video inputs used by computer-vision workflows.",
+    },
+    {
+        label: "GCP architecture review",
+        detail: "Experience reviewing cloud data-platform architecture, controls, and deployment considerations before production use.",
+    },
+];
+---
+
+<div class="grid gap-4 md:grid-cols-2">
+    <article class="rounded-lg border border-paper/10 bg-paper/[0.02] p-5">
+        <h3 class="font-mono text-sm uppercase tracking-widest text-paper">
+            Azure
+        </h3>
+
+        <ul class="mt-4 space-y-3">
+            {
+                azure.map((item) => (
+                    <li>
+                        <p class="text-sm font-medium text-paper">
+                            {item.label}
+                        </p>
+
+                        <p class="mt-0.5 text-sm leading-6 text-paper/70">
+                            {item.detail}
+                        </p>
+                    </li>
+                ))
+            }
+        </ul>
+    </article>
+
+    <article class="rounded-lg border border-paper/10 bg-paper/[0.02] p-5">
+        <h3 class="font-mono text-sm uppercase tracking-widest text-paper">
+            GCP
+        </h3>
+
+        <ul class="mt-4 space-y-3">
+            {
+                gcp.map((item) => (
+                    <li>
+                        <p class="text-sm font-medium text-paper">
+                            {item.label}
+                        </p>
+
+                        <p class="mt-0.5 text-sm leading-6 text-paper/70">
+                            {item.detail}
+                        </p>
+                    </li>
+                ))
+            }
+        </ul>
+    </article>
+</div>
