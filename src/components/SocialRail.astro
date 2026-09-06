@@ -1,10 +1,6 @@
 ---
-import fs from "node:fs";
-import path from "node:path";
-
-const hasResume = fs.existsSync(
-    path.join(process.cwd(), "public", "resume.pdf"),
-);
+const resumeUrl =
+    "https://drive.google.com/file/d/1VfW9aVQ5eDtf3fz8kqHcRDLErVyC2w0L/view?usp=drive_link";
 
 const links = [
     {
@@ -22,15 +18,11 @@ const links = [
         href: "https://linkedin.com/in/farnaz-zinnah",
         external: true,
     },
-    ...(hasResume
-        ? [
-              {
-                  label: "Resume",
-                  href: "/resume.pdf",
-                  external: false,
-              },
-          ]
-        : []),
+    {
+        label: "Resume",
+        href: resumeUrl,
+        external: true,
+    },
 ];
 ---
 
