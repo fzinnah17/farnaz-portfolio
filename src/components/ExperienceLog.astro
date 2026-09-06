@@ -1,33 +1,43 @@
 ---
+import Icon from "./icons/Icon.astro";
+
 const entries = [
     {
-        date: "2022-12 → now",
+        icon: "briefcase",
+        date: "Dec 2022 → Present",
         label: "Con Edison — AI Systems Engineer",
         detail: "Building and governing AI and automation systems in Enterprise Architecture, from production LLM pipelines to formal risk review of proposed AI deployments.",
     },
     {
-        date: "in progress",
+        icon: "graduation",
+        date: "In progress",
         label: "NYU Tandon — MS Computer Engineering",
         detail: "Graduate work across high-performance ML systems, systems engineering, and computer engineering.",
     },
     {
-        date: "completed",
+        icon: "graduation",
+        date: "Completed",
         label: "CCNY — BE Computer Engineering",
         detail: "Undergraduate foundation across software, computer systems, and computer engineering.",
     },
-];
+] as const;
 ---
 
 <div>
     {
         entries.map((entry) => (
-            <details class="group border-l-2 border-paper/10 py-3 pl-4 transition-colors hover:border-accent-cyan/60">
-                <summary class="flex cursor-pointer list-none flex-wrap items-baseline gap-x-3">
-                    <span class="font-mono text-xs text-paper/70">
+            <details class="group border-l-2 border-border py-3 pl-4 transition-colors hover:border-accent-cyan">
+                <summary class="flex cursor-pointer list-none flex-wrap items-center gap-x-3 select-none">
+                    <Icon
+                        name={entry.icon}
+                        class="h-4 w-4 shrink-0 text-muted"
+                    />
+
+                    <span class="font-mono text-xs text-secondary">
                         {entry.date}
                     </span>
 
-                    <span class="font-medium text-paper">{entry.label}</span>
+                    <span class="font-medium text-text">{entry.label}</span>
 
                     <span
                         aria-hidden="true"
@@ -37,7 +47,7 @@ const entries = [
                     </span>
                 </summary>
 
-                <p class="mt-2 max-w-3xl text-sm leading-7 text-paper/75">
+                <p class="mt-2 pl-7 text-sm leading-7 text-text">
                     {entry.detail}
                 </p>
             </details>

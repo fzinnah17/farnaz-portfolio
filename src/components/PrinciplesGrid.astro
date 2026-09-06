@@ -1,0 +1,49 @@
+---
+import Icon from "./icons/Icon.astro";
+
+const principles = [
+    {
+        icon: "shield",
+        title: "No secrets in code",
+        note: "Configuration and credentials resolve at runtime instead of living in source.",
+    },
+    {
+        icon: "check",
+        title: "Validate at the boundary",
+        note: "Anything crossing a trust boundary gets checked before it reaches the rest of the system.",
+    },
+    {
+        icon: "eye",
+        title: "Fail loudly, not silently",
+        note: "Missing or invalid data gets surfaced rather than guessed at or quietly filled in.",
+    },
+    {
+        icon: "layers",
+        title: "Test the failure mode first",
+        note: "Before trusting a model or system, I want to know what makes it break.",
+    },
+] as const;
+---
+
+<div class="grid gap-4 sm:grid-cols-2">
+    {
+        principles.map((principle) => (
+            <article class="flex gap-3 rounded-lg border border-border bg-surface p-4">
+                <Icon
+                    name={principle.icon}
+                    class="mt-0.5 h-5 w-5 shrink-0 text-accent-violet"
+                />
+
+                <div>
+                    <h3 class="text-sm font-semibold text-text">
+                        {principle.title}
+                    </h3>
+
+                    <p class="mt-1 text-sm leading-6 text-secondary">
+                        {principle.note}
+                    </p>
+                </div>
+            </article>
+        ))
+    }
+</div>
