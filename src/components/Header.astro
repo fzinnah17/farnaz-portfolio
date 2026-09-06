@@ -10,21 +10,29 @@ import ThemeToggle from "./ThemeToggle.astro";
         aria-label="Primary navigation"
     >
         <a
-            href="#top"
+            href="/"
             class="font-mono text-sm font-semibold tracking-widest"
-            aria-label="Back to top"
+            aria-label="Home"
         >
             FZ<span class="text-accent-cyan">.</span>
         </a>
 
         <div class="flex items-center gap-5 text-sm text-paper/70">
-            <a href="#work" class="transition-colors hover:text-paper">
+            <button
+                type="button"
+                data-scroll-target="work"
+                class="transition-colors hover:text-accent-cyan"
+            >
                 Work
-            </a>
+            </button>
 
-            <a href="#governance" class="transition-colors hover:text-paper">
+            <button
+                type="button"
+                data-scroll-target="governance"
+                class="transition-colors hover:text-accent-cyan"
+            >
                 Governance
-            </a>
+            </button>
 
             <button
                 type="button"
@@ -40,3 +48,40 @@ import ThemeToggle from "./ThemeToggle.astro";
         </div>
     </nav>
 </header>
+
+<script>
+    document.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) {
+            return;
+        }
+
+        const trigger = target.closest<HTMLElement>("[data-scroll-target]");
+
+        if (!trigger) {
+            return;
+        }
+
+        const sectionId = trigger.dataset.scrollTarget;
+
+        if (!sectionId) {
+            return;
+        }
+
+        const section = document.getElementById(sectionId);
+
+        if (!section) {
+            return;
+        }
+
+        const reducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        section.scrollIntoView({
+            behavior: reducedMotion ? "auto" : "smooth",
+            block: "start",
+        });
+    });
+</script>
