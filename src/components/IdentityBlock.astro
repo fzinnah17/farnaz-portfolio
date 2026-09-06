@@ -1,0 +1,33 @@
+---
+const fields = [
+  ["role", "AI Systems Engineer"],
+  ["at Con Edison since", "Dec 2022"],
+  [
+    "currently curious about",
+    "adversarial ML, distributed systems, AI governance",
+  ],
+  ["status", "building something new"],
+] as const;
+---
+
+<div
+  class="rounded-lg border border-white/10 bg-white/[0.03] p-6 font-mono text-sm leading-7"
+  aria-label="Professional profile represented as structured data"
+>
+  <div class="text-paper/40">{"{"}</div>
+
+  {
+    fields.map(([key, value], index) => (
+      <div class="pl-4">
+        <span class="text-accent-cyan">"{key}"</span>
+        <span class="text-paper/40">: </span>
+        <span class="text-paper/80">"{value}"</span>
+        {index < fields.length - 1 && (
+          <span class="text-paper/40">,</span>
+        )}
+      </div>
+    ))
+  }
+
+  <div class="text-paper/40">{"}"}</div>
+</div>

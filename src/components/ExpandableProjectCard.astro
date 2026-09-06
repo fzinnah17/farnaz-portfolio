@@ -1,0 +1,102 @@
+---
+interface Props {
+    title: string;
+    hook: string;
+    details: string;
+    stack: string[];
+    metric?: string;
+    href?: string;
+    size?: "large" | "small";
+}
+
+const {
+    title,
+    hook,
+    details,
+    stack,
+    metric,
+    href,
+    size = "small",
+} = Astro.props;
+
+const spanClass = size === "large" ? "md:col-span-2" : "";
+
+const metricIndex = metric ? hook.indexOf(metric) : -1;
+
+const hookBefore =
+    metric && metricIndex >= 0 ? hook.slice(0, metricIndex) : hook;
+
+const hookAfter =
+    metric && metricIndex >= 0 ? hook.slice(metricIndex + metric.length) : "";
+---
+
+<article
+    class:list={[
+        "h-full rounded-lg border border-white/10 p-5 transition-colors hover:border-white/20",
+        spanClass,
+    ]}
+>
+    <h3 class="text-lg font-semibold tracking-tight">
+        {title}
+    </h3>
+
+    <p class="mt-2 text-sm leading-6 text-paper/70">
+        {hookBefore}
+
+        {
+            metric && metricIndex >= 0 && (
+                <strong class="font-semibold text-paper">{metric}</strong>
+            )
+        }
+
+        {hookAfter}
+    </p>
+
+    <details class="group mt-4">
+        <summary
+            class="flex cursor-pointer list-none items-center gap-1.5 font-mono text-xs text-accent-cyan select-none"
+        >
+            <span
+                aria-hidden="true"
+                class="transition-transform group-open:rotate-90"
+            >
+                ▸
+            </span>
+
+            details
+        </summary>
+
+        <div class="mt-4 border-t border-white/10 pt-4">
+            <p class="text-sm leading-7 text-paper/80">
+                {details}
+            </p>
+
+            <ul
+                class="mt-4 flex flex-wrap gap-2"
+                aria-label={`${title} technology stack`}
+            >
+                {
+                    stack.map((item) => (
+                        <li class="rounded border border-white/10 px-2 py-1 font-mono text-[11px] text-paper/55">
+                            {item}
+                        </li>
+                    ))
+                }
+            </ul>
+
+            {
+                href && (
+                    <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent-cyan hover:underline"
+                    >
+                        View code
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                )
+            }
+        </div>
+    </details>
+</article>
