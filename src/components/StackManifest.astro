@@ -12,13 +12,14 @@ const dependencies = [
 <div
     class="overflow-x-auto rounded-lg border border-paper/10 bg-paper/[0.03] p-5 font-mono text-xs leading-7 sm:text-sm"
 >
-    <div class="mb-2 text-paper/50"># stack.txt</div>
+    <div class="mb-2 text-paper/70"># stack.txt</div>
 
     {
         dependencies.map(([technology, note]) => (
             <div class="min-w-max">
-                <span class="text-accent-violet">{technology}</span>
-                <span class="text-paper/60">
+                <span class="text-accent-cyan">{technology}</span>
+
+                <span class="text-paper/70">
                     {"  # "}
                     {note}
                 </span>

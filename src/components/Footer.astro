@@ -1,16 +1,16 @@
 ---
-const buildDate = new Date().toISOString().slice(0, 10);
+const buildDate = new Date().toISOString().split("T")[0];
 ---
 
 <footer class="mx-auto max-w-6xl px-6 py-10 text-center">
-    <p class="font-mono text-xs tracking-wide text-paper/60">
+    <p class="font-mono text-xs tracking-wide text-paper/70">
         Crafted by Farnaz Zinnah
         <span aria-hidden="true"> · </span>
         © 2026
-        <span class="text-accent-violet" aria-hidden="true">♥</span>
+        <span class="text-accent-cyan" aria-hidden="true"> ♥ </span>
     </p>
 
-    <p class="mt-1 font-mono text-[10px] text-paper/40">
+    <p class="mt-1 font-mono text-[10px] text-paper/60">
         build {buildDate}
     </p>
 </footer>
