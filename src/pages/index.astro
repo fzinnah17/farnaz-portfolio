@@ -1,21 +1,28 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
+import ExperienceLog from "../components/ExperienceLog.astro";
 import IdentityBlock from "../components/IdentityBlock.astro";
+import NetworkField from "../components/NetworkField.astro";
+import StackManifest from "../components/StackManifest.astro";
 ---
 
 <Layout
   title="Farnaz Zinnah — AI Systems Engineer"
-  description="AI Systems Engineer working across AI infrastructure, adversarial machine learning, distributed systems, and AI governance."
+  description="AI Systems Engineer working across AI infrastructure, distributed systems, adversarial machine learning, and AI governance."
 >
   <main
-    class="mx-auto max-w-4xl space-y-20 px-6 pt-16 pb-28 md:pt-20 lg:pr-12 lg:pb-20"
+    id="main"
+    class="mx-auto max-w-4xl space-y-24 px-6 pt-10 pb-28 md:pt-14 lg:pr-12 lg:pb-20"
   >
+    <!-- HERO -->
     <section
-      class="grid min-h-[55vh] items-center gap-12 md:grid-cols-2"
+      class="relative isolate grid min-h-[55vh] items-center gap-12 overflow-hidden py-8 md:grid-cols-2"
       aria-labelledby="hero-title"
     >
-      <div class="space-y-5">
+      <NetworkField />
+
+      <div class="relative z-10 space-y-5">
         <p
           class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
         >
@@ -43,15 +50,18 @@ import IdentityBlock from "../components/IdentityBlock.astro";
         </a>
       </div>
 
-      <IdentityBlock />
+      <div class="relative z-10">
+        <IdentityBlock />
+      </div>
     </section>
 
+    <!-- EXPERIENCE -->
     <section
       id="experience"
       class="space-y-5"
       aria-labelledby="experience-title"
     >
-      <div class="border-b border-white/10 pb-3">
+      <div class="border-b border-paper/10 pb-3">
         <p
           class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
         >
@@ -63,35 +73,37 @@ import IdentityBlock from "../components/IdentityBlock.astro";
         </h2>
       </div>
 
-      <div class="space-y-3">
-        <div
-          class="flex flex-col gap-1 font-mono text-sm text-paper/60 sm:flex-row sm:items-center sm:justify-between"
-        >
-          <span class="text-paper/80"> Con Edison — AI Systems Engineer </span>
-
-          <span> Dec 2022 – Present </span>
-        </div>
-
-        <p class="max-w-3xl leading-7 text-paper/80">
-          Building and governing AI and automation systems in Enterprise
-          Architecture, from production LLM pipelines to formal risk review of
-          proposed AI deployments.
-        </p>
-      </div>
-
-      <p class="border-t border-white/10 pt-4 text-sm text-paper/55">
-        NYU Tandon, MS Computer Engineering (in progress)
-        <span aria-hidden="true"> · </span>
-        CCNY, BE Computer Engineering
-      </p>
+      <ExperienceLog />
     </section>
 
+    <!-- STACK -->
+    <section
+      id="stack"
+      class="scroll-mt-24 space-y-5"
+      aria-labelledby="stack-title"
+    >
+      <div class="border-b border-paper/10 pb-3">
+        <p
+          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+        >
+          Stack
+        </p>
+
+        <h2 id="stack-title" class="text-2xl font-semibold tracking-tight">
+          The tools behind the systems.
+        </h2>
+      </div>
+
+      <StackManifest />
+    </section>
+
+    <!-- SELECTED WORK -->
     <section
       id="work"
       class="scroll-mt-24 space-y-6"
       aria-labelledby="work-title"
     >
-      <div class="border-b border-white/10 pb-3">
+      <div class="border-b border-paper/10 pb-3">
         <p
           class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
         >
@@ -102,6 +114,11 @@ import IdentityBlock from "../components/IdentityBlock.astro";
           Things I have built, measured, and tried to break.
         </h2>
       </div>
+
+      <p class="font-mono text-xs leading-5 text-paper/65">
+        Most of my day-to-day work lives in private enterprise repos. The public
+        projects below are personal or academic work.
+      </p>
 
       <div class="grid gap-4 md:grid-cols-3">
         <ExpandableProjectCard
@@ -140,9 +157,10 @@ import IdentityBlock from "../components/IdentityBlock.astro";
       </div>
     </section>
 
+    <!-- GOVERNANCE -->
     <section
       id="governance"
-      class="scroll-mt-24 border-y border-white/10 py-10"
+      class="scroll-mt-24 border-y border-paper/10 py-10"
       aria-labelledby="governance-title"
     >
       <div class="max-w-3xl space-y-4">
@@ -166,8 +184,9 @@ import IdentityBlock from "../components/IdentityBlock.astro";
       </div>
     </section>
 
+    <!-- OTHER WORK -->
     <section class="space-y-5" aria-labelledby="other-work-title">
-      <div class="border-b border-white/10 pb-3">
+      <div class="border-b border-paper/10 pb-3">
         <p
           class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
         >
@@ -179,7 +198,7 @@ import IdentityBlock from "../components/IdentityBlock.astro";
         </h2>
       </div>
 
-      <ul class="divide-y divide-white/10">
+      <ul class="divide-y divide-paper/10">
         <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
           <span class="font-mono text-sm text-accent-cyan">
             SDLC automation
@@ -215,8 +234,9 @@ import IdentityBlock from "../components/IdentityBlock.astro";
       </ul>
     </section>
 
+    <!-- TEACHING -->
     <section
-      class="border-y border-white/10 py-10"
+      class="border-y border-paper/10 py-10"
       aria-labelledby="mentorship-title"
     >
       <div class="max-w-3xl space-y-4">
