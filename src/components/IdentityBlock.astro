@@ -1,33 +1,89 @@
 ---
 const fields = [
-  ["role", "AI Systems Engineer"],
-  ["at Con Edison since", "Dec 2022"],
-  [
-    "currently curious about",
-    "adversarial ML, distributed systems, AI governance",
-  ],
-  ["status", "building something new"],
+    ["role", "AI Systems Engineer"],
+    ["at Con Edison since", "Dec 2022"],
+    [
+        "currently curious about",
+        "distributed systems, adversarial ML, AI governance",
+    ],
+    ["status", "building something new"],
 ] as const;
 ---
 
-<div
-  class="rounded-lg border border-white/10 bg-white/[0.03] p-6 font-mono text-sm leading-7"
-  aria-label="Professional profile represented as structured data"
->
-  <div class="text-paper/40">{"{"}</div>
+<div data-identity-block>
+    <span class="sr-only">
+        AI Systems Engineer at Con Edison since December 2022. Currently curious
+        about distributed systems, adversarial machine learning, and AI
+        governance. Status: building something new.
+    </span>
 
-  {
-    fields.map(([key, value], index) => (
-      <div class="pl-4">
-        <span class="text-accent-cyan">"{key}"</span>
-        <span class="text-paper/40">: </span>
-        <span class="text-paper/80">"{value}"</span>
-        {index < fields.length - 1 && (
-          <span class="text-paper/40">,</span>
-        )}
-      </div>
-    ))
-  }
+    <div
+        aria-hidden="true"
+        class="rounded-lg border border-paper/10 bg-paper/[0.03] p-6 font-mono text-xs leading-7 text-paper/80 sm:text-sm"
+    >
+        <div class="text-paper/50">{"{"}</div>
 
-  <div class="text-paper/40">{"}"}</div>
+        {
+            fields.map(([key, value], index) => (
+                <div class="pl-4">
+                    <span class="text-accent-cyan">"{key}"</span>
+                    <span class="text-paper/50">: "</span>
+
+                    <span data-typed-value data-value={value}>
+                        {value}
+                    </span>
+
+                    <span class="text-paper/50">
+                        "{index < fields.length - 1 ? "," : ""}
+                    </span>
+                </div>
+            ))
+        }
+
+        <div class="text-paper/50">{"}"}</div>
+    </div>
 </div>
+
+<script>
+    const block = document.querySelector<HTMLElement>("[data-identity-block]");
+
+    if (block) {
+        initializeIdentityBlock(block);
+    }
+
+    function initializeIdentityBlock(block: HTMLElement) {
+        const reducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        );
+
+        const values = Array.from(
+            block.querySelectorAll<HTMLElement>("[data-typed-value]"),
+        );
+
+        if (reducedMotion.matches) {
+            return;
+        }
+
+        for (const value of values) {
+            value.textContent = "";
+        }
+
+        values.forEach((value, index) => {
+            const text = value.dataset.value ?? "";
+
+            window.setTimeout(() => {
+                let position = 0;
+
+                const timer = window.setInterval(() => {
+                    position += 1;
+
+                    value.textContent = text.slice(0, position);
+
+                    if (position >= text.length) {
+                        window.clearInterval(timer);
+                    }
+                }, 18);
+            }, index * 450);
+        });
+    }
+</script>
