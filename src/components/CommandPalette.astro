@@ -2,14 +2,30 @@
 import fs from "node:fs";
 import path from "node:path";
 
+interface Command {
+    label: string;
+    scrollTarget?: string;
+    href?: string;
+    newTab?: boolean;
+}
+
 const hasResume = fs.existsSync(
     path.join(process.cwd(), "public", "resume.pdf"),
 );
 
-const commands = [
-    { label: "Go to Work", href: "#work" },
-    { label: "Go to Stack", href: "#stack" },
-    { label: "Go to Governance", href: "#governance" },
+const commands: Command[] = [
+    {
+        label: "Go to Work",
+        scrollTarget: "work",
+    },
+    {
+        label: "Go to Stack",
+        scrollTarget: "stack",
+    },
+    {
+        label: "Go to Governance",
+        scrollTarget: "governance",
+    },
     ...(hasResume
         ? [
               {
@@ -67,19 +83,38 @@ const commands = [
         {
             commands.map((command) => (
                 <li data-command-item data-label={command.label.toLowerCase()}>
-                    <a
-                        data-command-link
-                        href={command.href}
-                        target={command.newTab ? "_blank" : undefined}
-                        rel={command.newTab ? "noopener noreferrer" : undefined}
-                        class="flex w-full items-center justify-between px-4 py-2.5 font-mono text-sm text-paper/75 hover:bg-paper/5 hover:text-paper focus:bg-paper/5"
-                    >
-                        {command.label}
+                    {command.scrollTarget ? (
+                        <button
+                            type="button"
+                            data-command-action
+                            data-scroll-target={command.scrollTarget}
+                            class="flex w-full items-center justify-between px-4 py-2.5 text-left font-mono text-sm text-paper/75 hover:bg-paper/5 hover:text-paper focus:bg-paper/5"
+                        >
+                            {command.label}
 
-                        <span aria-hidden="true" class="text-paper/35">
-                            ↵
-                        </span>
-                    </a>
+                            <span aria-hidden="true" class="text-paper/35">
+                                ↵
+                            </span>
+                        </button>
+                    ) : command.href ? (
+                        <a
+                            data-command-action
+                            href={command.href}
+                            target={command.newTab ? "_blank" : undefined}
+                            rel={
+                                command.newTab
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
+                            class="flex w-full items-center justify-between px-4 py-2.5 font-mono text-sm text-paper/75 hover:bg-paper/5 hover:text-paper focus:bg-paper/5"
+                        >
+                            {command.label}
+
+                            <span aria-hidden="true" class="text-paper/35">
+                                ↵
+                            </span>
+                        </a>
+                    ) : null}
                 </li>
             ))
         }
@@ -127,8 +162,8 @@ const commands = [
             "[data-command-empty]",
         );
 
-        const links = dialog.querySelectorAll<HTMLAnchorElement>(
-            "[data-command-link]",
+        const actions = dialog.querySelectorAll<HTMLElement>(
+            "[data-command-action]",
         );
 
         function filterCommands() {
@@ -138,6 +173,7 @@ const commands = [
 
             for (const item of items) {
                 const label = item.dataset.label ?? "";
+
                 const matches = label.includes(query);
 
                 item.hidden = !matches;
@@ -200,16 +236,18 @@ const commands = [
 
             const firstVisible = items.find((item) => !item.hidden);
 
-            const link = firstVisible?.querySelector<HTMLAnchorElement>("a");
+            const action = firstVisible?.querySelector<HTMLElement>(
+                "[data-command-action]",
+            );
 
-            if (link) {
+            if (action) {
                 event.preventDefault();
-                link.click();
+                action.click();
             }
         });
 
-        links.forEach((link) => {
-            link.addEventListener("click", closePalette);
+        actions.forEach((action) => {
+            action.addEventListener("click", closePalette);
         });
 
         closeButton?.addEventListener("click", closePalette);
