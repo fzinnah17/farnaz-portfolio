@@ -1,9 +1,12 @@
 ---
+type Platform = "Azure" | "GCP";
+
 interface Props {
     title: string;
     hook: string;
     details: string;
     stack: string[];
+    platforms?: Platform[];
     metric?: string;
     href?: string;
     size?: "large" | "small";
@@ -14,6 +17,7 @@ const {
     hook,
     details,
     stack,
+    platforms = [],
     metric,
     href,
     size = "small",
@@ -32,20 +36,37 @@ const hookAfter =
 
 <article
     class:list={[
-        "self-start h-fit rounded-lg border border-paper/10 bg-paper/[0.02] p-5 transition-[transform,border-color,background-color] hover:-translate-y-0.5 hover:border-accent-violet/40",
+        "self-start h-fit rounded-lg border border-border bg-surface p-5 transition-[transform,border-color] hover:-translate-y-0.5 hover:border-accent-violet",
         spanClass,
     ]}
 >
-    <h3 class="text-lg font-semibold tracking-tight">
-        {title}
-    </h3>
+    <div class="flex items-start justify-between gap-3">
+        <h3 class="text-lg font-semibold tracking-tight text-text">
+            {title}
+        </h3>
 
-    <p class="mt-2 text-sm leading-6 text-paper/75">
+        {
+            platforms.length > 0 && (
+                <div
+                    class="flex shrink-0 flex-wrap justify-end gap-1.5"
+                    aria-label="Cloud platforms"
+                >
+                    {platforms.map((platform) => (
+                        <span class="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted">
+                            {platform}
+                        </span>
+                    ))}
+                </div>
+            )
+        }
+    </div>
+
+    <p class="mt-2 text-sm leading-6 text-secondary">
         {hookBefore}
 
         {
             metric && metricIndex >= 0 && (
-                <strong class="font-semibold text-paper">{metric}</strong>
+                <strong class="font-semibold text-text">{metric}</strong>
             )
         }
 
@@ -66,10 +87,12 @@ const hookAfter =
             details
         </summary>
 
-        <div class="mt-4 border-t border-paper/10 pt-4">
-            <p class="text-sm leading-7 text-paper/80">
+        <div class="mt-4 border-t border-border pt-4">
+            <p class="text-sm leading-7 text-text">
                 {details}
             </p>
+
+            <slot name="diagram" />
 
             <ul
                 class="mt-4 flex flex-wrap gap-2"
@@ -77,7 +100,7 @@ const hookAfter =
             >
                 {
                     stack.map((item) => (
-                        <li class="rounded border border-paper/10 px-2 py-1 font-mono text-[11px] text-paper/70">
+                        <li class="rounded border border-border px-2 py-1 font-mono text-[11px] text-muted">
                             {item}
                         </li>
                     ))
