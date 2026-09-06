@@ -1,0 +1,223 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+const hasResume = fs.existsSync(
+    path.join(process.cwd(), "public", "resume.pdf"),
+);
+
+const commands = [
+    { label: "Go to Work", href: "#work" },
+    { label: "Go to Stack", href: "#stack" },
+    { label: "Go to Governance", href: "#governance" },
+    ...(hasResume
+        ? [
+              {
+                  label: "Open Resume",
+                  href: "/resume.pdf",
+                  newTab: true,
+              },
+          ]
+        : []),
+    {
+        label: "Open GitHub",
+        href: "https://github.com/fzinnah17",
+        newTab: true,
+    },
+    {
+        label: "Open LinkedIn",
+        href: "https://linkedin.com/in/farnaz-zinnah",
+        newTab: true,
+    },
+    {
+        label: "Email me",
+        href: "mailto:farnazsamia@gmail.com",
+    },
+];
+---
+
+<dialog
+    id="command-palette"
+    data-command-palette
+    class="w-[min(32rem,calc(100%-2rem))] rounded-xl border border-paper/15 bg-ink p-0 text-paper shadow-2xl backdrop:bg-black/70"
+>
+    <div class="flex items-center border-b border-paper/10">
+        <label for="command-search" class="sr-only"> Search commands </label>
+
+        <input
+            id="command-search"
+            data-command-search
+            type="search"
+            autocomplete="off"
+            placeholder="Type a command..."
+            class="min-w-0 flex-1 bg-transparent px-4 py-3 font-mono text-sm text-paper outline-none placeholder:text-paper/40"
+        />
+
+        <button
+            type="button"
+            data-command-close
+            aria-label="Close command palette"
+            class="px-4 py-3 font-mono text-paper/50 hover:text-paper"
+        >
+            esc
+        </button>
+    </div>
+
+    <ul class="max-h-72 overflow-y-auto py-2">
+        {
+            commands.map((command) => (
+                <li data-command-item data-label={command.label.toLowerCase()}>
+                    <a
+                        data-command-link
+                        href={command.href}
+                        target={command.newTab ? "_blank" : undefined}
+                        rel={command.newTab ? "noopener noreferrer" : undefined}
+                        class="flex w-full items-center justify-between px-4 py-2.5 font-mono text-sm text-paper/75 hover:bg-paper/5 hover:text-paper focus:bg-paper/5"
+                    >
+                        {command.label}
+
+                        <span aria-hidden="true" class="text-paper/35">
+                            ↵
+                        </span>
+                    </a>
+                </li>
+            ))
+        }
+
+        <li
+            data-command-empty
+            hidden
+            class="px-4 py-3 font-mono text-sm text-paper/45"
+        >
+            No matches
+        </li>
+    </ul>
+</dialog>
+
+<script>
+    const dialog = document.querySelector<HTMLDialogElement>(
+        "[data-command-palette]",
+    );
+
+    const search = document.querySelector<HTMLInputElement>(
+        "[data-command-search]",
+    );
+
+    if (dialog && search) {
+        initializeCommandPalette(dialog, search);
+    }
+
+    function initializeCommandPalette(
+        dialog: HTMLDialogElement,
+        search: HTMLInputElement,
+    ) {
+        const closeButton = dialog.querySelector<HTMLButtonElement>(
+            "[data-command-close]",
+        );
+
+        const triggers = document.querySelectorAll<HTMLElement>(
+            "[data-command-palette-trigger]",
+        );
+
+        const items = Array.from(
+            dialog.querySelectorAll<HTMLElement>("[data-command-item]"),
+        );
+
+        const emptyState = dialog.querySelector<HTMLElement>(
+            "[data-command-empty]",
+        );
+
+        const links = dialog.querySelectorAll<HTMLAnchorElement>(
+            "[data-command-link]",
+        );
+
+        function filterCommands() {
+            const query = search.value.trim().toLowerCase();
+
+            let visibleCount = 0;
+
+            for (const item of items) {
+                const label = item.dataset.label ?? "";
+                const matches = label.includes(query);
+
+                item.hidden = !matches;
+
+                if (matches) {
+                    visibleCount += 1;
+                }
+            }
+
+            if (emptyState) {
+                emptyState.hidden = visibleCount !== 0;
+            }
+        }
+
+        function openPalette() {
+            if (!dialog.open) {
+                dialog.showModal();
+            }
+
+            search.value = "";
+
+            filterCommands();
+
+            requestAnimationFrame(() => {
+                search.focus();
+            });
+        }
+
+        function closePalette() {
+            if (dialog.open) {
+                dialog.close();
+            }
+        }
+
+        window.addEventListener("keydown", (event) => {
+            if (
+                (event.metaKey || event.ctrlKey) &&
+                event.key.toLowerCase() === "k"
+            ) {
+                event.preventDefault();
+
+                if (dialog.open) {
+                    closePalette();
+                } else {
+                    openPalette();
+                }
+            }
+        });
+
+        triggers.forEach((trigger) => {
+            trigger.addEventListener("click", openPalette);
+        });
+
+        search.addEventListener("input", filterCommands);
+
+        search.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter") {
+                return;
+            }
+
+            const firstVisible = items.find((item) => !item.hidden);
+
+            const link = firstVisible?.querySelector<HTMLAnchorElement>("a");
+
+            if (link) {
+                event.preventDefault();
+                link.click();
+            }
+        });
+
+        links.forEach((link) => {
+            link.addEventListener("click", closePalette);
+        });
+
+        closeButton?.addEventListener("click", closePalette);
+
+        dialog.addEventListener("click", (event) => {
+            if (event.target === dialog) {
+                closePalette();
+            }
+        });
+    }
+</script>

@@ -1,24 +1,42 @@
-<header class="sticky top-0 z-30 border-b border-white/10 bg-ink/90 backdrop-blur-sm">
-  <nav
-    class="mx-auto flex h-16 max-w-4xl items-center justify-between px-6 lg:pr-12"
-    aria-label="Primary navigation"
-  >
-    <a
-      href="#top"
-      class="font-mono text-sm font-semibold tracking-widest"
-      aria-label="Back to top"
+---
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header
+    class="sticky top-0 z-30 border-b border-paper/10 bg-ink/90 backdrop-blur-sm"
+>
+    <nav
+        class="mx-auto flex h-16 max-w-4xl items-center justify-between px-6 lg:pr-12"
+        aria-label="Primary navigation"
     >
-      FZ<span class="text-accent-cyan">.</span>
-    </a>
+        <a
+            href="#top"
+            class="font-mono text-sm font-semibold tracking-widest"
+            aria-label="Back to top"
+        >
+            FZ<span class="text-accent-cyan">.</span>
+        </a>
 
-    <div class="flex items-center gap-6 text-sm text-paper/70">
-      <a href="#work" class="transition-colors hover:text-paper">
-        Work
-      </a>
+        <div class="flex items-center gap-5 text-sm text-paper/70">
+            <a href="#work" class="transition-colors hover:text-paper">
+                Work
+            </a>
 
-      <a href="#governance" class="transition-colors hover:text-paper">
-        Governance
-      </a>
-    </div>
-  </nav>
+            <a href="#governance" class="transition-colors hover:text-paper">
+                Governance
+            </a>
+
+            <button
+                type="button"
+                data-command-palette-trigger
+                aria-label="Open command palette"
+                aria-controls="command-palette"
+                class="hidden rounded border border-paper/10 px-1.5 py-0.5 font-mono text-xs text-paper/45 transition-colors hover:border-accent-cyan hover:text-accent-cyan lg:inline"
+            >
+                ⌘K
+            </button>
+
+            <ThemeToggle />
+        </div>
+    </nav>
 </header>
