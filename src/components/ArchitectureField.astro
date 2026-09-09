@@ -1,8 +1,40 @@
 <canvas
     data-architecture-field
     aria-hidden="true"
-    class="pointer-events-none absolute inset-0 z-0 hidden h-full w-full opacity-70 sm:block"
+    class="architecture-field pointer-events-none absolute inset-0 z-0 hidden h-full w-full sm:block"
 ></canvas>
+
+<style>
+    .architecture-field {
+        opacity: 0.58;
+
+        /*
+     * Keep the portrait side quiet.
+     * The system gradually appears behind the right side.
+     */
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            transparent 26%,
+            rgba(0, 0, 0, 0.35) 42%,
+            black 68%,
+            black 100%
+        );
+
+        mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            transparent 26%,
+            rgba(0, 0, 0, 0.35) 42%,
+            black 68%,
+            black 100%
+        );
+    }
+
+    :global(html:not(.dark)) .architecture-field {
+        opacity: 0.68;
+    }
+</style>
 
 <script>
     interface DiagramBox {
@@ -24,16 +56,14 @@
     }
 
     const labels = [
-        "api",
-        "queue",
-        "cache",
-        "auth",
-        "worker",
-        "db",
         "gateway",
-        "cdn",
-        "logs",
+        "policy",
+        "model",
+        "queue",
+        "review",
+        "vault",
         "storage",
+        "audit",
     ];
 
     const canvas = document.querySelector<HTMLCanvasElement>(
@@ -59,85 +89,109 @@
             "(prefers-reduced-motion: reduce)",
         );
 
+        /*
+         * More formal and balanced than the old scattered layout.
+         * Think architectural plan rather than floating SaaS nodes.
+         */
         const relativeBoxes = [
             {
-                x: 0.04,
-                y: 0.16,
-                w: 0.14,
-                h: 0.08,
+                x: 0.26,
+                y: 0.13,
+                w: 0.13,
+                h: 0.065,
             },
             {
-                x: 0.29,
+                x: 0.47,
                 y: 0.08,
-                w: 0.14,
-                h: 0.08,
+                w: 0.13,
+                h: 0.065,
             },
             {
-                x: 0.54,
-                y: 0.18,
-                w: 0.14,
-                h: 0.08,
+                x: 0.68,
+                y: 0.13,
+                w: 0.13,
+                h: 0.065,
             },
             {
-                x: 0.79,
-                y: 0.1,
-                w: 0.14,
-                h: 0.08,
+                x: 0.3,
+                y: 0.4,
+                w: 0.13,
+                h: 0.065,
             },
             {
-                x: 0.14,
-                y: 0.45,
-                w: 0.14,
-                h: 0.08,
+                x: 0.47,
+                y: 0.35,
+                w: 0.13,
+                h: 0.065,
             },
             {
-                x: 0.41,
-                y: 0.5,
-                w: 0.14,
-                h: 0.08,
+                x: 0.64,
+                y: 0.4,
+                w: 0.13,
+                h: 0.065,
             },
             {
-                x: 0.67,
-                y: 0.42,
-                w: 0.14,
-                h: 0.08,
+                x: 0.37,
+                y: 0.73,
+                w: 0.13,
+                h: 0.065,
             },
             {
-                x: 0.82,
-                y: 0.62,
-                w: 0.14,
-                h: 0.08,
-            },
-            {
-                x: 0.24,
-                y: 0.78,
-                w: 0.14,
-                h: 0.08,
-            },
-            {
-                x: 0.57,
-                y: 0.82,
-                w: 0.14,
-                h: 0.08,
+                x: 0.58,
+                y: 0.73,
+                w: 0.13,
+                h: 0.065,
             },
         ];
 
         const connections: Connection[] = [
-            { from: 0, to: 1 },
-            { from: 1, to: 2 },
-            { from: 2, to: 3 },
-            { from: 0, to: 4 },
-            { from: 1, to: 5 },
-            { from: 5, to: 6 },
-            { from: 6, to: 7 },
-            { from: 4, to: 8 },
-            { from: 5, to: 9 },
-            { from: 2, to: 6 },
+            {
+                from: 0,
+                to: 1,
+            },
+            {
+                from: 1,
+                to: 2,
+            },
+            {
+                from: 0,
+                to: 3,
+            },
+            {
+                from: 1,
+                to: 4,
+            },
+            {
+                from: 2,
+                to: 5,
+            },
+            {
+                from: 3,
+                to: 4,
+            },
+            {
+                from: 4,
+                to: 5,
+            },
+            {
+                from: 3,
+                to: 6,
+            },
+            {
+                from: 4,
+                to: 7,
+            },
+            {
+                from: 6,
+                to: 7,
+            },
         ];
 
         let width = 0;
         let height = 0;
+
         let boxes: DiagramBox[] = [];
+
         let animationId = 0;
 
         function themeColors() {
@@ -145,27 +199,35 @@
 
             return dark
                 ? {
-                      box: "rgba(124,58,237,0.42)",
-                      fill: "rgba(124,58,237,0.07)",
-                      line: "rgba(6,182,212,0.30)",
-                      pulse: "rgba(6,182,212,0.95)",
-                      label: "rgba(246,245,241,0.65)",
+                      box: "rgba(146,154,166,0.30)",
+                      fill: "rgba(16,20,28,0.35)",
+                      line: "rgba(146,154,166,0.17)",
+                      axis: "rgba(182,75,91,0.10)",
+                      pulse: "rgba(182,75,91,0.88)",
+                      corner: "rgba(182,75,91,0.38)",
+                      label: "rgba(241,237,230,0.40)",
                   }
                 : {
-                      box: "rgba(109,40,217,0.38)",
-                      fill: "rgba(109,40,217,0.06)",
-                      line: "rgba(14,116,144,0.36)",
-                      pulse: "rgba(14,116,144,0.95)",
-                      label: "rgba(23,24,28,0.68)",
+                      box: "rgba(93,104,115,0.34)",
+                      fill: "rgba(250,248,243,0.52)",
+                      line: "rgba(93,104,115,0.26)",
+                      axis: "rgba(122,36,51,0.13)",
+                      pulse: "rgba(122,36,51,0.72)",
+                      corner: "rgba(122,36,51,0.42)",
+                      label: "rgba(21,22,26,0.44)",
                   };
         }
 
         function layout() {
             boxes = relativeBoxes.map((box, index) => ({
                 x: box.x * width,
+
                 y: box.y * height,
+
                 w: box.w * width,
+
                 h: box.h * height,
+
                 label: labels[index] ?? "node",
             }));
         }
@@ -179,7 +241,7 @@
 
             const endY = second.y + second.h / 2;
 
-            const middleX = startX + (endX - startX) * 0.5;
+            const middleY = startY + (endY - startY) * 0.5;
 
             return [
                 {
@@ -187,12 +249,12 @@
                     y: startY,
                 },
                 {
-                    x: middleX,
-                    y: startY,
+                    x: startX,
+                    y: middleY,
                 },
                 {
-                    x: middleX,
-                    y: endY,
+                    x: endX,
+                    y: middleY,
                 },
                 {
                     x: endX,
@@ -202,9 +264,13 @@
         }
 
         function drawArrow(previous: Point, end: Point, color: string) {
-            const angle = Math.atan2(end.y - previous.y, end.x - previous.x);
+            const angle = Math.atan2(
+                end.y - previous.y,
 
-            const size = 5;
+                end.x - previous.x,
+            );
+
+            const size = 4;
 
             context.fillStyle = color;
 
@@ -214,11 +280,13 @@
 
             context.lineTo(
                 end.x - size * Math.cos(angle - Math.PI / 6),
+
                 end.y - size * Math.sin(angle - Math.PI / 6),
             );
 
             context.lineTo(
                 end.x - size * Math.cos(angle + Math.PI / 6),
+
                 end.y - size * Math.sin(angle + Math.PI / 6),
             );
 
@@ -234,9 +302,11 @@
             }
 
             context.strokeStyle = color;
+
             context.lineWidth = 1;
 
             context.beginPath();
+
             context.moveTo(first.x, first.y);
 
             for (const point of points.slice(1)) {
@@ -254,6 +324,40 @@
             }
         }
 
+        function drawCornerMarks(box: DiagramBox, color: string) {
+            const size = 7;
+
+            context.strokeStyle = color;
+
+            context.lineWidth = 1;
+
+            /*
+             * Upper-left rank mark.
+             */
+            context.beginPath();
+
+            context.moveTo(box.x, box.y + size);
+
+            context.lineTo(box.x, box.y);
+
+            context.lineTo(box.x + size, box.y);
+
+            context.stroke();
+
+            /*
+             * Lower-right balance mark.
+             */
+            context.beginPath();
+
+            context.moveTo(box.x + box.w - size, box.y + box.h);
+
+            context.lineTo(box.x + box.w, box.y + box.h);
+
+            context.lineTo(box.x + box.w, box.y + box.h - size);
+
+            context.stroke();
+        }
+
         function pointAlongPath(points: Point[], progress: number): Point {
             const lengths: number[] = [];
 
@@ -268,9 +372,14 @@
                     continue;
                 }
 
-                const length = Math.hypot(end.x - start.x, end.y - start.y);
+                const length = Math.hypot(
+                    end.x - start.x,
+
+                    end.y - start.y,
+                );
 
                 lengths.push(length);
+
                 total += length;
             }
 
@@ -313,6 +422,22 @@
 
             context.clearRect(0, 0, width, height);
 
+            /*
+             * Subtle center line gives the whole drawing
+             * the formal symmetry of an architectural plan.
+             */
+            context.strokeStyle = colors.axis;
+
+            context.lineWidth = 1;
+
+            context.beginPath();
+
+            context.moveTo(width * 0.535, height * 0.03);
+
+            context.lineTo(width * 0.535, height * 0.92);
+
+            context.stroke();
+
             const paths: Point[][] = [];
 
             for (const connection of connections) {
@@ -338,31 +463,39 @@
 
                 context.lineWidth = 1;
 
-                context.beginPath();
+                /*
+                 * Deliberately square.
+                 * No SaaS rounded rectangle.
+                 */
+                context.fillRect(box.x, box.y, box.w, box.h);
 
-                context.roundRect(box.x, box.y, box.w, box.h, 4);
+                context.strokeRect(box.x, box.y, box.w, box.h);
 
-                context.fill();
-                context.stroke();
+                drawCornerMarks(box, colors.corner);
 
                 context.fillStyle = colors.label;
 
-                context.font = "10px ui-monospace, monospace";
+                context.font = "9px ui-monospace, monospace";
 
                 context.textAlign = "center";
 
                 context.textBaseline = "middle";
 
                 context.fillText(
-                    box.label,
+                    box.label.toUpperCase(),
                     box.x + box.w / 2,
+
                     box.y + box.h / 2,
                 );
             }
 
+            /*
+             * Slow, deliberate movement.
+             * Not a busy network animation.
+             */
             if (!motionPreference.matches) {
                 paths.forEach((path, index) => {
-                    const progress = (time * 0.00006 + index * 0.13) % 1;
+                    const progress = (time * 0.000025 + index * 0.17) % 1;
 
                     const point = pointAlongPath(path, progress);
 
@@ -370,7 +503,7 @@
 
                     context.beginPath();
 
-                    context.arc(point.x, point.y, 2, 0, Math.PI * 2);
+                    context.arc(point.x, point.y, 1.75, 0, Math.PI * 2);
 
                     context.fill();
                 });
@@ -430,6 +563,7 @@
                 cancelAnimationFrame(animationId);
 
                 resizeObserver.disconnect();
+
                 themeObserver.disconnect();
 
                 motionPreference.removeEventListener("change", resize);

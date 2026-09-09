@@ -2,20 +2,31 @@
 import { Image } from "astro:assets";
 
 import avatarImage from "../assets/portfolio/avatar.jpg";
+
+import ArchitectureField from "./ArchitectureField.astro";
+import IdentityBlock from "./IdentityBlock.astro";
 ---
 
 <section
-    class="mx-auto grid min-h-[66vh] max-w-6xl items-center gap-10 px-6 py-14 md:grid-cols-[0.95fr_1.15fr] md:gap-16 md:py-20 lg:pr-12"
+    class="relative isolate mx-auto grid min-h-[72vh] max-w-6xl items-center gap-10 overflow-hidden px-6 py-14 md:grid-cols-[0.92fr_1.08fr] md:gap-16 md:py-20 lg:pr-12"
     aria-labelledby="hero-title"
 >
+    <!--
+    Dynamic architecture lives behind the hero.
+
+    It is deliberately faded from the portrait side,
+    so the photograph remains the dominant human element.
+  -->
+    <ArchitectureField />
+
     <!-- PORTRAIT -->
-    <div class="order-2 md:order-1">
-        <div class="mx-auto max-w-[365px] md:mx-0">
+    <div class="relative z-10 order-2 md:order-1">
+        <div class="mx-auto max-w-[350px] md:mx-0">
             <Image
                 src={avatarImage}
                 alt="Farnaz Zinnah"
-                width={410}
-                height={492}
+                width={400}
+                height={480}
                 loading="eager"
                 class="hero-portrait aspect-[5/6] w-full object-cover"
             />
@@ -23,9 +34,9 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
     </div>
 
     <!-- IDENTITY -->
-    <div class="order-1 max-w-2xl space-y-7 md:order-2">
+    <div class="relative z-10 order-1 max-w-2xl space-y-6 md:order-2">
         <div class="space-y-3">
-            <p class="text-xs uppercase tracking-[0.18em] text-muted">
+            <p class="text-[11px] uppercase tracking-[0.2em] text-pewter">
                 AI Systems · Security · Infrastructure
             </p>
 
@@ -36,7 +47,13 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
                 Farnaz Zinnah
             </h1>
 
-            <p class="text-lg text-secondary">AI Systems Engineer</p>
+            <div class="flex items-center gap-3">
+                <span aria-hidden="true" class="h-px w-8 bg-royal"></span>
+
+                <p class="text-base text-secondary sm:text-lg">
+                    AI Systems Engineer
+                </p>
+            </div>
         </div>
 
         <p class="max-w-xl text-lg leading-8 text-text md:text-xl">
@@ -44,67 +61,57 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
             modes, and help decide which systems are safe to ship.
         </p>
 
-        <dl
-            class="grid max-w-2xl grid-cols-2 gap-x-8 gap-y-5 border-y border-border py-5 sm:grid-cols-3"
-        >
-            <div>
-                <dt class="text-xs uppercase tracking-[0.13em] text-muted">
-                    Platforms
-                </dt>
+        <!--
+      The old static Platforms / Focus / Experience strip is replaced
+      by the animated system dossier.
 
-                <dd class="mt-1 text-sm font-medium text-text">Azure · GCP</dd>
-            </div>
+      This is where the typing block belongs.
+    -->
+        <div class="max-w-xl">
+            <IdentityBlock />
+        </div>
 
-            <div>
-                <dt class="text-xs uppercase tracking-[0.13em] text-muted">
-                    Focus
-                </dt>
-
-                <dd class="mt-1 text-sm font-medium text-text">
-                    AI systems · risk
-                </dd>
-            </div>
-
-            <div>
-                <dt class="text-xs uppercase tracking-[0.13em] text-muted">
-                    Experience
-                </dt>
-
-                <dd class="mt-1 text-sm font-medium text-text">
-                    Con Edison · 2022—
-                </dd>
-            </div>
-        </dl>
-
-        <div class="space-y-4">
+        <div class="flex flex-col items-start gap-3">
             <button
                 type="button"
                 data-scroll-target="worklab"
                 data-activate-tab="work"
-                class="inline-flex min-h-[44px] items-center gap-2 border-b border-pewter pb-0.5 text-sm font-medium text-text transition-colors duration-500 hover:border-text"
+                class="group inline-flex min-h-[44px] items-center gap-3 text-sm font-medium text-text"
             >
-                Selected work
+                <span
+                    class="border-b border-pewter pb-0.5 transition-colors duration-500 group-hover:border-royal"
+                >
+                    Selected work
+                </span>
 
-                <span aria-hidden="true"> ↓ </span>
+                <span
+                    aria-hidden="true"
+                    class="text-royal transition-transform duration-500 group-hover:translate-y-0.5"
+                >
+                    ↓
+                </span>
             </button>
 
-            <!-- Quiet craftsmanship / accessibility mark -->
+            <!--
+        Visible craftsmanship mark.
+        Noticeable, but tiny.
+      -->
             <p
-                class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] uppercase tracking-[0.14em] text-muted sm:text-[11px]"
+                class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[9px] uppercase tracking-[0.15em] text-muted sm:text-[10px]"
             >
-                <span>Accessible by design</span>
+                <span> Accessible by design </span>
 
-                <span class="text-border" aria-hidden="true"> · </span>
+                <span aria-hidden="true" class="text-border"> · </span>
 
-                <span>Keyboard</span>
+                <span> Keyboard </span>
 
-                <span class="text-border" aria-hidden="true"> · </span>
+                <span aria-hidden="true" class="text-border"> · </span>
 
-                <span>Screen readers</span>
+                <span> Screen readers </span>
 
-                <span class="text-border" aria-hidden="true"> · </span>
+                <span aria-hidden="true" class="text-border"> · </span>
 
-                <span>Reduced motion</span>
+                <span> Reduced motion </span>
             </p>
         </div>
     </div>
@@ -112,21 +119,21 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
 
 <style>
     /*
-   * Light mode:
-   * preserve the original color photograph.
+   * Light mode = full color.
    */
     .hero-portrait {
         filter: none;
 
-        transition: filter 220ms ease;
+        transition:
+            filter 240ms ease,
+            opacity 240ms ease;
     }
 
     /*
-   * Dark mode:
-   * controlled black-and-white portrait.
+   * Dark mode = monochrome / formal.
    */
     :global(html.dark) .hero-portrait {
-        filter: grayscale(1) contrast(1.04);
+        filter: grayscale(1) contrast(1.045) brightness(0.96);
     }
 
     @media (prefers-reduced-motion: reduce) {
