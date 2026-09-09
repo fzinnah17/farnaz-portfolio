@@ -5,25 +5,34 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
 ---
 
 <section
-    class="mx-auto grid max-w-[1100px] items-center gap-10 px-6 py-16 md:grid-cols-[0.85fr_1.15fr] md:gap-16 md:py-24"
+    class="mx-auto grid min-h-[68vh] max-w-6xl items-center gap-10 px-6 py-14 md:grid-cols-[1fr_1.15fr] md:gap-16 md:py-20 lg:pr-12"
     aria-labelledby="hero-title"
 >
+    <!-- PORTRAIT
+       Light mode = color
+       Dark mode = grayscale
+  -->
     <div class="order-2 md:order-1">
         <Image
             src={avatarImage}
             alt="Farnaz Zinnah"
-            width={360}
-            height={450}
+            width={420}
+            height={504}
             loading="eager"
-            class="mx-auto aspect-[4/5] w-full max-w-sm object-cover grayscale md:mx-0"
+            class="hero-portrait mx-auto aspect-[5/6] w-full max-w-[380px] object-cover md:mx-0"
         />
     </div>
 
-    <div class="order-1 max-w-xl space-y-7 md:order-2">
-        <div class="space-y-2">
+    <!-- HERO CONTENT -->
+    <div class="order-1 max-w-2xl space-y-7 md:order-2">
+        <div class="space-y-3">
+            <p class="text-xs uppercase tracking-[0.16em] text-muted">
+                AI Systems · Security · Infrastructure
+            </p>
+
             <h1
                 id="hero-title"
-                class="text-5xl font-normal tracking-tight text-text md:text-6xl"
+                class="font-display text-5xl font-normal leading-none tracking-tight text-text md:text-6xl"
             >
                 Farnaz Zinnah
             </h1>
@@ -31,13 +40,13 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
             <p class="text-lg text-secondary">AI Systems Engineer</p>
         </div>
 
-        <p class="max-w-[38rem] text-lg leading-8 text-text md:text-xl">
+        <p class="max-w-xl text-lg leading-8 text-text md:text-xl">
             I build AI systems, break them on purpose to understand failure
             modes, and help decide which systems are safe to ship.
         </p>
 
         <dl
-            class="grid max-w-xl grid-cols-2 gap-x-8 gap-y-5 border-y border-border py-5 sm:grid-cols-3"
+            class="grid max-w-2xl grid-cols-2 gap-x-8 gap-y-5 border-y border-border py-5 sm:grid-cols-3"
         >
             <div>
                 <dt class="text-xs uppercase tracking-[0.12em] text-muted">
@@ -68,12 +77,43 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
             </div>
         </dl>
 
-        <a
-            href="#work"
-            class="inline-flex min-h-[44px] items-center border-b border-accent-strong pb-0.5 text-sm font-medium text-text transition-colors duration-500 hover:border-text"
+        <button
+            type="button"
+            data-scroll-target="worklab"
+            data-activate-tab="work"
+            class="inline-flex min-h-[44px] items-center gap-2 border-b border-accent-strong pb-0.5 text-sm font-medium text-text transition-colors duration-500 hover:border-text"
         >
             Selected work
-            <span class="ml-2" aria-hidden="true">↓</span>
-        </a>
+
+            <span aria-hidden="true"> ↓ </span>
+        </button>
     </div>
 </section>
+
+<style>
+    /*
+   * Light mode:
+   * preserve the photograph's original color.
+   */
+    .hero-portrait {
+        filter: none;
+        transition: filter 180ms ease;
+    }
+
+    /*
+   * Dark mode:
+   * use the restrained black-and-white treatment.
+   *
+   * This follows the same html.dark class already used by
+   * the site's theme system, so no additional JavaScript is needed.
+   */
+    :global(html.dark) .hero-portrait {
+        filter: grayscale(1) contrast(1.05);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-portrait {
+            transition: none;
+        }
+    }
+</style>
