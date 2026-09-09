@@ -10,28 +10,29 @@
   --color-muted: var(--theme-text-muted);
 
   /*
-   * Existing technical colors.
-   * Cyan stays available for system / engineering interactions.
+   * Technical interaction colors.
    */
   --color-accent-cyan: var(--theme-accent-cyan);
   --color-accent-violet: var(--theme-accent-violet);
 
   /*
-   * Editorial neutral accent.
+   * Quiet neutral interaction.
    */
   --color-accent: var(--theme-accent);
   --color-accent-strong: var(--theme-accent-strong);
 
   /*
-   * Perfect Crown-inspired character accents:
+   * Character language.
    *
-   * royal  → Hui-ju: controlled power / deep oxblood
-   * pewter → Ian: cool formal tailoring / restraint
+   * royal:
+   *   Hui-ju — controlled power / oxblood
+   *
+   * pewter:
+   *   Ian — cool tailoring / composure
    */
   --color-royal: var(--theme-royal);
   --color-pewter: var(--theme-pewter);
 
-  /* Compatibility aliases. */
   --color-ink: var(--theme-bg);
   --color-paper: var(--theme-text);
 
@@ -60,67 +61,49 @@
     monospace;
 }
 
-/* LIGHT MODE */
+/* LIGHT — cool ivory, tailored, higher contrast */
 :root {
-  /*
-   * Warm ivory rather than bright white.
-   */
-  --theme-bg: #f6f3ed;
-  --theme-surface: #eeebe4;
-  --theme-border: #d0cbc1;
+  --theme-bg: #f2f0eb;
+  --theme-surface: #faf8f3;
+  --theme-border: #c9c5bd;
 
-  --theme-text: #17171a;
-  --theme-text-secondary: #49484c;
-  --theme-text-muted: #747177;
+  --theme-text: #15161a;
+  --theme-text-secondary: #45474d;
+  --theme-text-muted: #6f7379;
 
-  /*
-   * Technical colors.
-   */
-  --theme-accent-violet: #6d28d9;
-  --theme-accent-cyan: #0e7490;
+  --theme-accent-cyan: #0d7182;
+  --theme-accent-violet: #655873;
 
-  /*
-   * Restrained neutral interaction.
-   */
-  --theme-accent: #5e6870;
-  --theme-accent-strong: #343c43;
+  --theme-accent: #59636d;
+  --theme-accent-strong: #30383f;
 
-  /*
-   * Character palette.
-   */
-  --theme-royal: #8d2737;
-  --theme-pewter: #66707c;
+  /* Hui-ju: deeper wine rather than pink/red */
+  --theme-royal: #7a2433;
+
+  /* Ian: cool tailored grey */
+  --theme-pewter: #5d6873;
 
   color-scheme: light;
 }
 
-/* DARK MODE */
+/* DARK — midnight palace / charcoal tailoring */
 :root.dark {
-  /*
-   * Midnight navy rather than flat black.
-   */
-  --theme-bg: #090c13;
-  --theme-surface: #10141d;
+  --theme-bg: #080b12;
+  --theme-surface: #10141c;
   --theme-border: #292e38;
 
-  /*
-   * Warm ivory instead of clinical white.
-   */
-  --theme-text: #f1eee8;
-  --theme-text-secondary: #bbb8b2;
+  --theme-text: #f1ede6;
+  --theme-text-secondary: #bdb9b2;
   --theme-text-muted: #89878a;
 
-  --theme-accent-violet: #7c3aed;
-  --theme-accent-cyan: #06b6d4;
+  --theme-accent-cyan: #43a9ba;
+  --theme-accent-violet: #77658f;
 
-  --theme-accent: #9ba4af;
-  --theme-accent-strong: #d4d8dd;
+  --theme-accent: #98a1aa;
+  --theme-accent-strong: #d3d7dc;
 
-  /*
-   * Hui-ju / Ian accents.
-   */
-  --theme-royal: #b84b5b;
-  --theme-pewter: #929aa7;
+  --theme-royal: #b64b5b;
+  --theme-pewter: #929aa6;
 
   color-scheme: dark;
 }
@@ -148,8 +131,8 @@ body {
   text-rendering: optimizeLegibility;
 
   transition:
-    background-color 220ms ease,
-    color 220ms ease;
+    background-color 240ms ease,
+    color 240ms ease;
 }
 
 h1,
@@ -168,7 +151,7 @@ summary {
 
 ::selection {
   background: color-mix(in srgb,
-      var(--theme-royal) 24%,
+      var(--theme-royal) 23%,
       transparent);
 }
 
@@ -188,8 +171,8 @@ summary::-webkit-details-marker {
 
 .text-gradient {
   background: linear-gradient(135deg,
-      var(--theme-accent-violet),
-      var(--theme-accent-cyan));
+      var(--theme-pewter),
+      var(--theme-royal));
 
   background-clip: text;
   -webkit-background-clip: text;
@@ -197,7 +180,6 @@ summary::-webkit-details-marker {
   color: transparent;
 }
 
-/* Visible only while keyboard focused. */
 .skip-link {
   position: fixed;
   left: 1rem;
