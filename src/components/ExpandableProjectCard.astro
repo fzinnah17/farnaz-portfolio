@@ -36,7 +36,7 @@ const hookAfter =
 
 <article
     class:list={[
-        "self-start h-fit rounded-lg border border-border bg-surface p-5 transition-[transform,border-color] hover:-translate-y-0.5 hover:border-accent-violet",
+        "self-start h-fit rounded-sm border border-border bg-surface p-5 transition-colors duration-500 hover:border-pewter",
         spanClass,
     ]}
 >
@@ -52,7 +52,7 @@ const hookAfter =
                     aria-label="Cloud platforms"
                 >
                     {platforms.map((platform) => (
-                        <span class="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted">
+                        <span class="rounded-sm border border-border px-1.5 py-0.5 text-[10px] uppercase tracking-[0.1em] text-muted">
                             {platform}
                         </span>
                     ))}
@@ -100,7 +100,7 @@ const hookAfter =
             >
                 {
                     stack.map((item) => (
-                        <li class="rounded border border-border px-2 py-1 font-mono text-[11px] text-muted">
+                        <li class="rounded-sm border border-border px-2 py-1 font-mono text-[11px] text-muted">
                             {item}
                         </li>
                     ))
