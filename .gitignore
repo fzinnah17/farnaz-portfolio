@@ -5,3 +5,8 @@ dist/
 .env.*
 .DS_Store
 .vercel/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
