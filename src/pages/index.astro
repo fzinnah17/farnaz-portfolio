@@ -1,5 +1,11 @@
 ---
+import { Image } from "astro:assets";
+
 import Layout from "../layouts/Layout.astro";
+
+import avatarImage from "../assets/portfolio/avatar.jpg";
+import governanceImage from "../assets/portfolio/governance.jpg";
+import teachingImage from "../assets/portfolio/teaching.jpg";
 
 import ArchitectureField from "../components/ArchitectureField.astro";
 import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
@@ -29,11 +35,22 @@ import Tabs from "../components/Tabs.astro";
       <ArchitectureField />
 
       <div class="relative z-10 space-y-5">
-        <p
-          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
-        >
-          AI Systems · Security · Infrastructure
-        </p>
+        <div class="flex items-center gap-3">
+          <Image
+            src={avatarImage}
+            alt="Farnaz Zinnah"
+            width={56}
+            height={56}
+            loading="eager"
+            class="h-14 w-14 shrink-0 rounded-md border border-border object-cover grayscale"
+          />
+
+          <p
+            class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
+          >
+            AI Systems · Security · Infrastructure
+          </p>
+        </div>
 
         <h1
           id="hero-title"
@@ -299,6 +316,21 @@ import Tabs from "../components/Tabs.astro";
 
           <GovernanceChecklist />
 
+          <figure class="mt-6 max-w-3xl">
+            <Image
+              src={governanceImage}
+              alt="Farnaz participating in an AI governance event"
+              width={960}
+              height={540}
+              loading="lazy"
+              class="max-h-72 w-full rounded-lg border border-border object-cover"
+            />
+
+            <figcaption class="mt-2 font-mono text-xs text-muted">
+              AI governance beyond the implementation layer.
+            </figcaption>
+          </figure>
+
           <p class="mt-4 text-sm leading-7 text-secondary">
             Security by default shows up in the implementation too, not just the
             review process: short-lived processing, input validation, runtime
@@ -333,35 +365,6 @@ import Tabs from "../components/Tabs.astro";
           </ul>
         </div>
       </Tabs>
-    </section>
-
-    <!-- TEACHING -->
-    <section
-      class="border-y border-border py-10"
-      aria-labelledby="mentorship-title"
-    >
-      <div class="max-w-3xl space-y-4">
-        <p
-          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
-        >
-          Teaching &amp; Mentorship
-        </p>
-
-        <h2
-          id="mentorship-title"
-          class="text-2xl font-bold tracking-tight text-text md:text-3xl"
-        >
-          Didn't expect this to stick.
-        </h2>
-
-        <p class="leading-8 text-text">
-          I signed up to teach data structures as a CodePath Tech Fellow mostly
-          for the resume line. Ended up doing it four semesters straight, 50+
-          students, 94 NPS. I still mentor for CUNY Tech Prep's AI Ethics
-          program and show up for hackathons at HackMIT and Columbia DevFest
-          when I can.
-        </p>
-      </div>
     </section>
   </main>
 </Layout>
