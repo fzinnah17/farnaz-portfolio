@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+
+import avatarImage from "../assets/portfolio/avatar.jpg";
+---
+
+<section
+    class="mx-auto grid max-w-[1100px] items-center gap-10 px-6 py-16 md:grid-cols-[0.85fr_1.15fr] md:gap-16 md:py-24"
+    aria-labelledby="hero-title"
+>
+    <div class="order-2 md:order-1">
+        <Image
+            src={avatarImage}
+            alt="Farnaz Zinnah"
+            width={360}
+            height={450}
+            loading="eager"
+            class="mx-auto aspect-[4/5] w-full max-w-sm object-cover grayscale md:mx-0"
+        />
+    </div>
+
+    <div class="order-1 max-w-xl space-y-7 md:order-2">
+        <div class="space-y-2">
+            <h1
+                id="hero-title"
+                class="text-5xl font-normal tracking-tight text-text md:text-6xl"
+            >
+                Farnaz Zinnah
+            </h1>
+
+            <p class="text-lg text-secondary">AI Systems Engineer</p>
+        </div>
+
+        <p class="max-w-[38rem] text-lg leading-8 text-text md:text-xl">
+            I build AI systems, break them on purpose to understand failure
+            modes, and help decide which systems are safe to ship.
+        </p>
+
+        <dl
+            class="grid max-w-xl grid-cols-2 gap-x-8 gap-y-5 border-y border-border py-5 sm:grid-cols-3"
+        >
+            <div>
+                <dt class="text-xs uppercase tracking-[0.12em] text-muted">
+                    Platforms
+                </dt>
+
+                <dd class="mt-1 text-sm font-medium text-text">Azure · GCP</dd>
+            </div>
+
+            <div>
+                <dt class="text-xs uppercase tracking-[0.12em] text-muted">
+                    Focus
+                </dt>
+
+                <dd class="mt-1 text-sm font-medium text-text">
+                    AI systems · risk
+                </dd>
+            </div>
+
+            <div>
+                <dt class="text-xs uppercase tracking-[0.12em] text-muted">
+                    Experience
+                </dt>
+
+                <dd class="mt-1 text-sm font-medium text-text">
+                    Con Edison · 2022—
+                </dd>
+            </div>
+        </dl>
+
+        <a
+            href="#work"
+            class="inline-flex min-h-[44px] items-center border-b border-accent-strong pb-0.5 text-sm font-medium text-text transition-colors duration-500 hover:border-text"
+        >
+            Selected work
+            <span class="ml-2" aria-hidden="true">↓</span>
+        </a>
+    </div>
+</section>
