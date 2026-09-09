@@ -29,7 +29,7 @@ const { tabs, id = "tabs" } = Astro.props;
                     tabindex={index === 0 ? 0 : -1}
                     data-tab-btn={tab.id}
                     data-active={index === 0 ? "true" : "false"}
-                    class="shrink-0 border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-secondary transition-colors hover:text-text data-[active=true]:border-accent-cyan data-[active=true]:text-text"
+                    class="shrink-0 border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-secondary transition-colors duration-500 hover:text-text data-[active=true]:border-royal data-[active=true]:text-text"
                 >
                     {tab.label}
                 </button>

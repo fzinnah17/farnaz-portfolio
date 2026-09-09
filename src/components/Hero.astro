@@ -5,28 +5,27 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
 ---
 
 <section
-    class="mx-auto grid min-h-[68vh] max-w-6xl items-center gap-10 px-6 py-14 md:grid-cols-[1fr_1.15fr] md:gap-16 md:py-20 lg:pr-12"
+    class="mx-auto grid min-h-[66vh] max-w-6xl items-center gap-10 px-6 py-14 md:grid-cols-[0.95fr_1.15fr] md:gap-16 md:py-20 lg:pr-12"
     aria-labelledby="hero-title"
 >
-    <!-- PORTRAIT
-       Light mode = color
-       Dark mode = grayscale
-  -->
+    <!-- PORTRAIT -->
     <div class="order-2 md:order-1">
-        <Image
-            src={avatarImage}
-            alt="Farnaz Zinnah"
-            width={420}
-            height={504}
-            loading="eager"
-            class="hero-portrait mx-auto aspect-[5/6] w-full max-w-[380px] object-cover md:mx-0"
-        />
+        <div class="mx-auto max-w-[365px] md:mx-0">
+            <Image
+                src={avatarImage}
+                alt="Farnaz Zinnah"
+                width={410}
+                height={492}
+                loading="eager"
+                class="hero-portrait aspect-[5/6] w-full object-cover"
+            />
+        </div>
     </div>
 
-    <!-- HERO CONTENT -->
+    <!-- IDENTITY -->
     <div class="order-1 max-w-2xl space-y-7 md:order-2">
         <div class="space-y-3">
-            <p class="text-xs uppercase tracking-[0.16em] text-muted">
+            <p class="text-xs uppercase tracking-[0.18em] text-muted">
                 AI Systems · Security · Infrastructure
             </p>
 
@@ -49,7 +48,7 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
             class="grid max-w-2xl grid-cols-2 gap-x-8 gap-y-5 border-y border-border py-5 sm:grid-cols-3"
         >
             <div>
-                <dt class="text-xs uppercase tracking-[0.12em] text-muted">
+                <dt class="text-xs uppercase tracking-[0.13em] text-muted">
                     Platforms
                 </dt>
 
@@ -57,7 +56,7 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
             </div>
 
             <div>
-                <dt class="text-xs uppercase tracking-[0.12em] text-muted">
+                <dt class="text-xs uppercase tracking-[0.13em] text-muted">
                     Focus
                 </dt>
 
@@ -67,7 +66,7 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
             </div>
 
             <div>
-                <dt class="text-xs uppercase tracking-[0.12em] text-muted">
+                <dt class="text-xs uppercase tracking-[0.13em] text-muted">
                     Experience
                 </dt>
 
@@ -77,38 +76,57 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
             </div>
         </dl>
 
-        <button
-            type="button"
-            data-scroll-target="worklab"
-            data-activate-tab="work"
-            class="inline-flex min-h-[44px] items-center gap-2 border-b border-accent-strong pb-0.5 text-sm font-medium text-text transition-colors duration-500 hover:border-text"
-        >
-            Selected work
+        <div class="space-y-4">
+            <button
+                type="button"
+                data-scroll-target="worklab"
+                data-activate-tab="work"
+                class="inline-flex min-h-[44px] items-center gap-2 border-b border-pewter pb-0.5 text-sm font-medium text-text transition-colors duration-500 hover:border-text"
+            >
+                Selected work
 
-            <span aria-hidden="true"> ↓ </span>
-        </button>
+                <span aria-hidden="true"> ↓ </span>
+            </button>
+
+            <!-- Quiet craftsmanship / accessibility mark -->
+            <p
+                class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] uppercase tracking-[0.14em] text-muted sm:text-[11px]"
+            >
+                <span>Accessible by design</span>
+
+                <span class="text-border" aria-hidden="true"> · </span>
+
+                <span>Keyboard</span>
+
+                <span class="text-border" aria-hidden="true"> · </span>
+
+                <span>Screen readers</span>
+
+                <span class="text-border" aria-hidden="true"> · </span>
+
+                <span>Reduced motion</span>
+            </p>
+        </div>
     </div>
 </section>
 
 <style>
     /*
    * Light mode:
-   * preserve the photograph's original color.
+   * preserve the original color photograph.
    */
     .hero-portrait {
         filter: none;
-        transition: filter 180ms ease;
+
+        transition: filter 220ms ease;
     }
 
     /*
    * Dark mode:
-   * use the restrained black-and-white treatment.
-   *
-   * This follows the same html.dark class already used by
-   * the site's theme system, so no additional JavaScript is needed.
+   * controlled black-and-white portrait.
    */
     :global(html.dark) .hero-portrait {
-        filter: grayscale(1) contrast(1.05);
+        filter: grayscale(1) contrast(1.04);
     }
 
     @media (prefers-reduced-motion: reduce) {

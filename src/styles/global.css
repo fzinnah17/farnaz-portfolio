@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* New semantic theme tokens. */
   --color-bg: var(--theme-bg);
   --color-surface: var(--theme-surface);
   --color-border: var(--theme-border);
@@ -10,25 +9,37 @@
   --color-secondary: var(--theme-text-secondary);
   --color-muted: var(--theme-text-muted);
 
+  /*
+   * Existing technical colors.
+   * Cyan stays available for system / engineering interactions.
+   */
   --color-accent-cyan: var(--theme-accent-cyan);
   --color-accent-violet: var(--theme-accent-violet);
 
+  /*
+   * Editorial neutral accent.
+   */
   --color-accent: var(--theme-accent);
   --color-accent-strong: var(--theme-accent-strong);
+
+  /*
+   * Perfect Crown-inspired character accents:
+   *
+   * royal  → Hui-ju: controlled power / deep oxblood
+   * pewter → Ian: cool formal tailoring / restraint
+   */
+  --color-royal: var(--theme-royal);
+  --color-pewter: var(--theme-pewter);
+
+  /* Compatibility aliases. */
+  --color-ink: var(--theme-bg);
+  --color-paper: var(--theme-text);
 
   --font-display:
     "Newsreader",
     ui-serif,
     Georgia,
     serif;
-
-  /*
-   * Compatibility aliases.
-   * These keep any not-yet-migrated component from breaking while
-   * we remove opacity-based paper/ink usage from the important UI.
-   */
-  --color-ink: var(--theme-bg);
-  --color-paper: var(--theme-text);
 
   --font-sans:
     "Inter",
@@ -49,40 +60,67 @@
     monospace;
 }
 
-/* Light mode */
+/* LIGHT MODE */
 :root {
-  --theme-bg: #faf9f6;
-  --theme-surface: #f1efe9;
-  --theme-border: #d6d3ca;
+  /*
+   * Warm ivory rather than bright white.
+   */
+  --theme-bg: #f6f3ed;
+  --theme-surface: #eeebe4;
+  --theme-border: #d0cbc1;
 
-  --theme-text: #17181c;
-  --theme-text-secondary: #45474d;
-  --theme-text-muted: #6b6d73;
+  --theme-text: #17171a;
+  --theme-text-secondary: #49484c;
+  --theme-text-muted: #747177;
 
+  /*
+   * Technical colors.
+   */
   --theme-accent-violet: #6d28d9;
   --theme-accent-cyan: #0e7490;
 
-  --theme-accent: #52656d;
-  --theme-accent-strong: #2f4148;
+  /*
+   * Restrained neutral interaction.
+   */
+  --theme-accent: #5e6870;
+  --theme-accent-strong: #343c43;
+
+  /*
+   * Character palette.
+   */
+  --theme-royal: #8d2737;
+  --theme-pewter: #66707c;
 
   color-scheme: light;
 }
 
-/* Dark mode */
+/* DARK MODE */
 :root.dark {
-  --theme-bg: #0b0e14;
-  --theme-surface: #12151c;
-  --theme-border: #2a2d34;
+  /*
+   * Midnight navy rather than flat black.
+   */
+  --theme-bg: #090c13;
+  --theme-surface: #10141d;
+  --theme-border: #292e38;
 
-  --theme-text: #f6f5f1;
-  --theme-text-secondary: #c9c8c3;
-  --theme-text-muted: #9c9b96;
+  /*
+   * Warm ivory instead of clinical white.
+   */
+  --theme-text: #f1eee8;
+  --theme-text-secondary: #bbb8b2;
+  --theme-text-muted: #89878a;
 
   --theme-accent-violet: #7c3aed;
   --theme-accent-cyan: #06b6d4;
 
-  --theme-accent: #9fb0b6;
-  --theme-accent-strong: #d7e1e4;
+  --theme-accent: #9ba4af;
+  --theme-accent-strong: #d4d8dd;
+
+  /*
+   * Hui-ju / Ian accents.
+   */
+  --theme-royal: #b84b5b;
+  --theme-pewter: #929aa7;
 
   color-scheme: dark;
 }
@@ -104,15 +142,14 @@ body {
   color: var(--theme-text);
 
   font-family: var(--font-sans);
-
   line-height: 1.7;
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 
   transition:
-    background-color 180ms ease,
-    color 180ms ease;
+    background-color 220ms ease,
+    color 220ms ease;
 }
 
 h1,
@@ -131,7 +168,7 @@ summary {
 
 ::selection {
   background: color-mix(in srgb,
-      var(--theme-accent) 24%,
+      var(--theme-royal) 24%,
       transparent);
 }
 
@@ -160,7 +197,7 @@ summary::-webkit-details-marker {
   color: transparent;
 }
 
-/* Visible only when keyboard focused. */
+/* Visible only while keyboard focused. */
 .skip-link {
   position: fixed;
   left: 1rem;
@@ -170,18 +207,17 @@ summary::-webkit-details-marker {
 
   padding: 0.75rem 1rem;
 
-  border: 1px solid var(--theme-accent-cyan);
-  border-radius: 0.375rem;
+  border: 1px solid var(--theme-pewter);
+  border-radius: 0.125rem;
 
   background: var(--theme-bg);
-  color: var(--theme-accent-strong);
+  color: var(--theme-text);
 
-  font-family: var(--font-mono);
   font-size: 0.875rem;
 
   transform: translateY(-200%);
 
-  transition: transform 150ms ease;
+  transition: transform 160ms ease;
 }
 
 .skip-link:focus {
@@ -192,7 +228,7 @@ a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
 input:focus-visible {
-  outline: 2px solid var(--theme-accent-cyan);
+  outline: 2px solid var(--theme-pewter);
   outline-offset: 3px;
 }
 
