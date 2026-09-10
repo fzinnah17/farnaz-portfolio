@@ -1,49 +1,39 @@
-<div
-    class="mt-5 border-y border-border"
-    aria-label="Mojo and CUDA performance comparison"
->
-    <div class="grid gap-3 border-b border-border py-4 sm:grid-cols-[1fr_auto]">
+<div class="mt-4 border-y border-border" aria-label="Mojo and CUDA comparison">
+    <div
+        class="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-border py-4"
+    >
         <div>
-            <p class="text-[10px] uppercase tracking-[0.16em] text-pewter">
-                Compute-bound · GEMM
+            <p class="text-[9px] uppercase tracking-[0.18em] text-pewter">
+                01 · Compute-bound
             </p>
 
-            <p class="mt-1 text-sm text-secondary">
-                Arithmetic throughput is the limiting factor.
-            </p>
+            <p class="mt-1 text-sm text-secondary">GEMM</p>
         </div>
 
-        <div class="sm:text-right">
+        <div class="text-right">
             <p class="font-display text-2xl text-text">1.7–1.9×</p>
 
-            <p class="text-[10px] uppercase tracking-[0.14em] text-royal">
-                Mojo ahead
+            <p class="text-[9px] uppercase tracking-[0.16em] text-royal">
+                Mojo
             </p>
         </div>
     </div>
 
-    <div class="grid gap-3 py-4 sm:grid-cols-[1fr_auto]">
+    <div class="grid grid-cols-[1fr_auto] items-center gap-4 py-4">
         <div>
-            <p class="text-[10px] uppercase tracking-[0.16em] text-pewter">
-                Memory-bound · LayerNorm
+            <p class="text-[9px] uppercase tracking-[0.18em] text-pewter">
+                02 · Memory-bound
             </p>
 
-            <p class="mt-1 text-sm text-secondary">
-                Memory bandwidth dominates before raw compute does.
-            </p>
+            <p class="mt-1 text-sm text-secondary">LayerNorm</p>
         </div>
 
-        <div class="sm:text-right">
+        <div class="text-right">
             <p class="font-display text-2xl text-text">CUDA</p>
 
-            <p class="text-[10px] uppercase tracking-[0.14em] text-pewter">
-                still ahead
+            <p class="text-[9px] uppercase tracking-[0.16em] text-pewter">
+                Ahead
             </p>
         </div>
     </div>
 </div>
-
-<p class="mt-3 text-xs leading-5 text-muted">
-    Same question, different bottleneck: identify what actually limits the
-    system before deciding what to optimize.
-</p>

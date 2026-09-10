@@ -10,25 +10,54 @@ interface Props {
 const { steps } = Astro.props;
 ---
 
-<div
-    class="mt-4 overflow-x-auto border-y border-border"
-    aria-label="System flow"
->
-    <ol class="flex min-w-max items-center py-3">
-        {
-            steps.map((step, index) => (
-                <li class="flex items-center">
-                    <span class="px-3 font-mono text-[10px] uppercase tracking-[0.12em] text-pewter">
-                        {step.label}
-                    </span>
+<ol class="flow-register mt-4 border-y border-border" aria-label="System flow">
+    {
+        steps.map((step, index) => (
+            <li class="flow-step min-w-0 px-3 py-3">
+                <span class="block font-mono text-[8px] tracking-[0.14em] text-royal">
+                    {String(index + 1).padStart(2, "0")}
+                </span>
 
-                    {index < steps.length - 1 && (
-                        <span class="text-royal" aria-hidden="true">
-                            →
-                        </span>
-                    )}
-                </li>
-            ))
+                <span class="mt-1 block text-[9px] uppercase tracking-[0.13em] text-pewter">
+                    {step.label}
+                </span>
+            </li>
+        ))
+    }
+</ol>
+
+<style>
+    .flow-register {
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+    }
+
+    .flow-step {
+        border-right: 1px solid var(--theme-border);
+    }
+
+    .flow-step:last-child {
+        border-right: 0;
+    }
+
+    @media (max-width: 640px) {
+        .flow-register {
+            grid-template-columns: 1fr 1fr;
         }
-    </ol>
-</div>
+
+        .flow-step {
+            border-right: 1px solid var(--theme-border);
+
+            border-bottom: 1px solid var(--theme-border);
+        }
+
+        .flow-step:nth-child(2n) {
+            border-right: 0;
+        }
+
+        .flow-step:last-child {
+            border-bottom: 0;
+        }
+    }
+</style>
