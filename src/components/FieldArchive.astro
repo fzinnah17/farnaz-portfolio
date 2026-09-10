@@ -14,11 +14,15 @@ import mongodbPhoto from "../assets/portfolio/archive/09-mongodb.jpeg";
 import hbsPhoto from "../assets/portfolio/archive/10-harvard-business-school.jpeg";
 
 type ArchiveSize =
-  | "feature"
-  | "portrait"
   | "wide"
-  | "medium"
-  | "strip";
+  | "standard"
+  | "narrow"
+  | "portrait";
+
+type ImageMode =
+  | "scene"
+  | "portrait"
+  | "record";
 
 interface ArchiveItem {
   number: string;
@@ -28,6 +32,8 @@ interface ArchiveItem {
   image: ImageMetadata;
   alt: string;
   size: ArchiveSize;
+  imageMode: ImageMode;
+  focalPoint?: string;
   breakProtocol?: boolean;
 }
 
@@ -39,7 +45,9 @@ const archive: ArchiveItem[] = [
     note: "Hackathon build session.",
     image: hackathonWorking,
     alt: "Farnaz working with teammates at a hackathon table",
-    size: "feature",
+    size: "wide",
+    imageMode: "scene",
+    focalPoint: "center center",
   },
   {
     number: "02",
@@ -48,7 +56,8 @@ const archive: ArchiveItem[] = [
     note: "Learning beyond the day-to-day.",
     image: microsoftPhoto,
     alt: "Farnaz standing in front of a Microsoft sign",
-    size: "portrait",
+    size: "standard",
+    imageMode: "record",
   },
   {
     number: "03",
@@ -58,6 +67,8 @@ const archive: ArchiveItem[] = [
     image: sweGroup,
     alt: "Large group photo at a Society of Women Engineers event",
     size: "wide",
+    imageMode: "scene",
+    focalPoint: "center center",
   },
   {
     number: "04",
@@ -66,7 +77,9 @@ const archive: ArchiveItem[] = [
     note: "Technical conversations beyond the screen.",
     image: conferencePanel,
     alt: "Professional conference panel on a blue-lit stage",
-    size: "medium",
+    size: "standard",
+    imageMode: "scene",
+    focalPoint: "center center",
     breakProtocol: true,
   },
   {
@@ -75,8 +88,10 @@ const archive: ArchiveItem[] = [
     title: "From problem to prototype",
     note: "Building collaboratively under a deadline.",
     image: hackathonTeam,
-    alt: "Farnaz with a hackathon team beside their Clarity Care project",
-    size: "medium",
+    alt: "Farnaz with a hackathon team beside their project",
+    size: "standard",
+    imageMode: "scene",
+    focalPoint: "center center",
   },
   {
     number: "06",
@@ -86,6 +101,8 @@ const archive: ArchiveItem[] = [
     image: mitPhoto,
     alt: "Farnaz seated outside Massachusetts Institute of Technology",
     size: "portrait",
+    imageMode: "portrait",
+    focalPoint: "center 42%",
   },
   {
     number: "07",
@@ -95,6 +112,8 @@ const archive: ArchiveItem[] = [
     image: womenTechGroup,
     alt: "Farnaz with a professional group at an engineering event",
     size: "wide",
+    imageMode: "scene",
+    focalPoint: "center center",
   },
   {
     number: "08",
@@ -102,8 +121,9 @@ const archive: ArchiveItem[] = [
     title: "SWE 2025",
     note: "A small artifact from the larger experience.",
     image: swePhotoStrip,
-    alt: "SWE 2025 photo booth strip featuring Farnaz",
-    size: "strip",
+    alt: "SWE 2025 professional event record featuring Farnaz",
+    size: "narrow",
+    imageMode: "record",
   },
   {
     number: "09",
@@ -112,7 +132,8 @@ const archive: ArchiveItem[] = [
     note: "Meeting the broader developer community.",
     image: mongodbPhoto,
     alt: "Farnaz at a MongoDB developer event",
-    size: "medium",
+    size: "standard",
+    imageMode: "record",
   },
   {
     number: "10",
@@ -122,24 +143,30 @@ const archive: ArchiveItem[] = [
     image: hbsPhoto,
     alt: "Farnaz standing outside Harvard Business School",
     size: "portrait",
+    imageMode: "record",
   },
 ];
+
+const totalRecords = archive.length;
 ---
 
 <section
   id="field-archive"
-  class="field-archive mx-auto max-w-6xl px-6 lg:pr-12"
+  data-field-archive
+  class="field-archive mx-auto max-w-6xl scroll-mt-24 px-6 lg:pr-12"
   aria-labelledby="field-archive-title"
 >
-  <!-- CEREMONIAL REGISTER -->
+  <!-- ==================================================
+       FIELD ARCHIVE / 03
+  ================================================== -->
   <header
     class="archive-header grid border-y border-border md:grid-cols-[0.72fr_1.28fr]"
   >
     <div
-      class="relative border-b border-border px-5 py-7 md:border-b-0 md:border-r"
+      class="border-b border-border px-5 py-6 md:border-b-0 md:border-r"
     >
       <p
-        class="text-[10px] uppercase tracking-[0.22em] text-royal"
+        class="text-[11px] uppercase tracking-[0.2em] text-royal"
       >
         Field Archive / 03
       </p>
@@ -151,7 +178,7 @@ const archive: ArchiveItem[] = [
         Beyond the work.
       </h2>
 
-      <!-- REFLECTION -->
+      <!-- NAKHWA / REFLECTION MOTIF -->
       <div
         class="archive-reflection mt-4"
         aria-hidden="true"
@@ -162,10 +189,10 @@ const archive: ArchiveItem[] = [
     </div>
 
     <div
-      class="flex items-center justify-between gap-8 px-5 py-7"
+      class="flex items-center justify-between gap-8 px-5 py-6"
     >
       <p
-        class="max-w-md text-sm leading-6 text-secondary"
+        class="max-w-lg text-[15px] leading-7 text-secondary"
       >
         Hackathons, professional communities, workshops, and the rooms where
         technical work becomes something shared.
@@ -178,11 +205,11 @@ const archive: ArchiveItem[] = [
         <span class="h-px w-12 bg-border"></span>
 
         <span
-          class="h-1.5 w-1.5 rotate-45 border border-royal"
+          class="h-2 w-2 rotate-45 border border-royal"
         ></span>
 
         <span
-          class="text-[9px] uppercase tracking-[0.2em] text-pewter"
+          class="text-[11px] uppercase tracking-[0.18em] text-pewter"
         >
           FZ / Field Record
         </span>
@@ -190,114 +217,259 @@ const archive: ArchiveItem[] = [
     </div>
   </header>
 
-  <!-- FOLDING-SCREEN FRAME -->
-  <div class="archive-frame relative mt-6">
-    <!-- CHEOLLIK / PLEAT RHYTHM -->
+  <!-- ==================================================
+       ACCESSIBLE COURT REGISTER
+  ================================================== -->
+  <div
+    class="archive-controls mt-5 grid gap-4 border-y px-4 py-3 sm:grid-cols-[1fr_auto] sm:items-center"
+  >
     <div
-      class="archive-pleats"
+      class="flex flex-wrap items-center gap-x-4 gap-y-2"
+    >
+      <p
+        class="text-[11px] font-medium uppercase tracking-[0.18em] text-pewter"
+      >
+        Court Register
+      </p>
+
+      <span
+        aria-hidden="true"
+        class="h-px w-10 bg-border"
+      ></span>
+
+      <p
+        class="font-mono text-[12px] tracking-[0.1em] text-secondary"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        Record
+        <span data-archive-current>01</span>
+        of
+        {String(totalRecords).padStart(2, "0")}
+      </p>
+    </div>
+
+    <div
+      class="flex items-center gap-2"
+      aria-label="Field archive navigation"
+    >
+      <button
+        type="button"
+        data-archive-prev
+        aria-controls="field-archive-scroll"
+        class="archive-control-button"
+        aria-label="View previous field archive record"
+      >
+        <span aria-hidden="true">
+          ←
+        </span>
+
+        <span>
+          Previous
+        </span>
+      </button>
+
+      <button
+        type="button"
+        data-archive-next
+        aria-controls="field-archive-scroll"
+        class="archive-control-button"
+        aria-label="View next field archive record"
+      >
+        <span>
+          Next
+        </span>
+
+        <span aria-hidden="true">
+          →
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <p
+    id="field-archive-instructions"
+    class="archive-instructions mt-3 text-[12px] leading-5 text-muted"
+  >
+    Browse with Previous/Next, arrow keys, trackpad, or swipe.
+  </p>
+
+  <!-- ==================================================
+       FOLDING-SCREEN STAGE
+  ================================================== -->
+  <div class="archive-stage relative mt-4">
+    <!-- CEREMONIAL OPENING RULE -->
+    <div
+      class="archive-ceremonial-line"
       aria-hidden="true"
     ></div>
 
-    <div class="archive-grid">
-      {
-        archive.map((item) => (
-          <article
-            class="archive-card"
-            data-size={item.size}
-            data-break={item.breakProtocol ? "true" : "false"}
-          >
-            <!-- CONTROLLED RED DISRUPTION -->
-            <span
-              aria-hidden="true"
-              class="archive-corner archive-corner-x"
-            ></span>
+    <!-- FORMAL RANK MARK -->
+    <div
+      class="archive-rank-mark"
+      aria-hidden="true"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
-            <span
-              aria-hidden="true"
-              class="archive-corner archive-corner-y"
-            ></span>
-
-            <!-- PHOTO -->
-            <div class="archive-image">
-              <Image
-                src={item.image}
-                alt={item.alt}
-                widths={[480, 720, 960, 1200]}
-                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 40vw"
-                class="archive-photo"
-              />
-
-              <!-- archival folio number -->
+    <div
+      id="field-archive-scroll"
+      data-archive-scroll
+      class="archive-scroll"
+      tabindex="0"
+      role="region"
+      aria-label="Professional field archive"
+      aria-describedby="field-archive-instructions"
+    >
+      <div class="archive-track">
+        {
+          archive.map((item, index) => (
+            <article
+              class="archive-panel"
+              data-archive-panel
+              data-index={index}
+              data-size={item.size}
+              data-image-mode={item.imageMode}
+              data-break={item.breakProtocol ? "true" : "false"}
+              role="group"
+              aria-labelledby={`archive-title-${item.number}`}
+              style={`--archive-object-position: ${item.focalPoint ?? "center center"};`}
+            >
+              <!-- HUI-JU / OXBLOOD INTERRUPTION -->
               <span
-                class="archive-photo-number"
+                class="archive-corner archive-corner-x"
+                aria-hidden="true"
+              ></span>
+
+              <span
+                class="archive-corner archive-corner-y"
+                aria-hidden="true"
+              ></span>
+
+              <!-- FOLDING-SCREEN HINGES -->
+              <div
+                class="archive-hinges"
                 aria-hidden="true"
               >
-                {item.number}
-              </span>
-            </div>
+                <span></span>
+                <span></span>
+              </div>
 
-            <!-- CAPTION REGISTER -->
-            <div class="archive-caption">
-              <div
-                class="flex items-start justify-between gap-4"
-              >
-                <div class="min-w-0">
-                  <p
-                    class="text-[9px] uppercase tracking-[0.2em] text-pewter"
-                  >
-                    {item.register}
-                  </p>
-
-                  <h3
-                    class="mt-1 font-display text-xl font-normal leading-tight text-text"
-                  >
-                    {item.title}
-                  </h3>
-                </div>
+              <!-- PHOTO -->
+              <div class="archive-image">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  widths={[420, 640, 840, 1000]}
+                  sizes="(max-width: 640px) 82vw, 22rem"
+                  loading="lazy"
+                  class="archive-photo"
+                />
 
                 <span
-                  class="shrink-0 font-mono text-[9px] tracking-[0.12em] text-royal"
+                  class="archive-photo-number"
+                  aria-hidden="true"
                 >
                   {item.number}
                 </span>
               </div>
 
-              <p
-                class="mt-3 text-sm leading-6 text-secondary"
-              >
-                {item.note}
-              </p>
+              <!-- ALWAYS-VISIBLE RECORD -->
+              <div class="archive-caption">
+                <div
+                  class="flex items-start justify-between gap-4"
+                >
+                  <div class="min-w-0">
+                    <p
+                      class="archive-category"
+                    >
+                      {item.number} / {item.register}
+                    </p>
 
-              <!-- quiet reflected rule -->
-              <div
-                class="archive-caption-rule mt-4"
-                aria-hidden="true"
-              >
-                <span></span>
-                <span></span>
+                    <h3
+                      id={`archive-title-${item.number}`}
+                      class="archive-title mt-1"
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <span
+                    class="archive-register-mark"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+
+                <p
+                  class="archive-note mt-2"
+                >
+                  {item.note}
+                </p>
+
+                <div
+                  class="archive-caption-reflection mt-3"
+                  aria-hidden="true"
+                >
+                  <span></span>
+                  <span></span>
+                </div>
               </div>
-            </div>
-          </article>
-        ))
-      }
+            </article>
+          ))
+        }
+
+        <!-- END REGISTER -->
+        <div
+          class="archive-end"
+          aria-hidden="true"
+        >
+          <div>
+            <p>
+              End / {String(totalRecords).padStart(2, "0")}
+            </p>
+
+            <span></span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- RIGHT-SIDE DISCOVERY FADE -->
+    <div
+      class="archive-edge-right"
+      aria-hidden="true"
+    ></div>
   </div>
 </section>
 
 <style>
   /*
-   * --------------------------------------------------
+   * ==================================================
    * FIELD ARCHIVE
    *
-   * Perfect Crown visual grammar:
+   * PERFECT CROWN VISUAL SYSTEM
    *
-   * - ceremonial numbering
-   * - palace-bay framing
-   * - pleated vertical rhythm
-   * - controlled oxblood interruptions
-   * - quiet reflections
-   * - one deliberate protocol break
-   * --------------------------------------------------
+   * - modern content inside formal structure
+   * - folding-screen vertical bays
+   * - court-register ordering
+   * - oxblood controlled disruption
+   * - pewter hinges
+   * - reflection lines
+   * - one subtle protocol break
+   * - ceremonial opening motion
+   *
+   * ACCESSIBILITY
+   *
+   * - no autoplay
+   * - no hover-only information
+   * - no card height changes
+   * - large functional typography
+   * - keyboard navigation
+   * - reduced motion supported
+   * - cards are not unnecessary Tab stops
+   * ==================================================
    */
 
   .field-archive {
@@ -305,8 +477,11 @@ const archive: ArchiveItem[] = [
   }
 
   /*
+   * ==================================================
    * HEADER
+   * ==================================================
    */
+
   .archive-header {
     background:
       color-mix(
@@ -317,12 +492,15 @@ const archive: ArchiveItem[] = [
   }
 
   /*
-   * REFLECTION MOTIF
+   * Reflection motif.
    */
   .archive-reflection {
     display: flex;
-    width: 7rem;
+
+    width: 8rem;
+
     flex-direction: column;
+
     gap: 3px;
   }
 
@@ -333,31 +511,293 @@ const archive: ArchiveItem[] = [
     background:
       color-mix(
         in srgb,
-        var(--theme-royal) 58%,
+        var(--theme-royal) 70%,
         var(--theme-border)
       );
   }
 
   .archive-reflection span:last-child {
-    width: 68%;
+    width: 64%;
     height: 1px;
 
-    margin-left: 16%;
+    margin-left: 18%;
 
     opacity: 0.32;
 
     background:
+      var(--theme-royal);
+  }
+
+  /*
+   * ==================================================
+   * COURT REGISTER / CONTROLS
+   * ==================================================
+   */
+
+  .archive-controls {
+    border-color:
+      var(--theme-border);
+
+    background:
       color-mix(
         in srgb,
-        var(--theme-royal) 30%,
+        var(--theme-surface) 42%,
+        transparent
+      );
+  }
+
+  .archive-control-button {
+    display: inline-flex;
+
+    min-height: 44px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    border:
+      1px solid
+      var(--theme-border);
+
+    padding:
+      0.55rem
+      0.85rem;
+
+    background:
+      transparent;
+
+    font-size:
+      0.875rem;
+
+    line-height:
+      1.25rem;
+
+    color:
+      var(--theme-text-secondary);
+
+    transition:
+      border-color 180ms ease,
+      color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .archive-control-button:hover {
+    border-color:
+      var(--theme-pewter);
+
+    color:
+      var(--theme-text);
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-surface) 70%,
+        transparent
+      );
+  }
+
+  .archive-control-button:focus-visible {
+    outline:
+      2px solid
+      var(--theme-royal);
+
+    outline-offset:
+      3px;
+  }
+
+  .archive-control-button:disabled {
+    opacity: 0.42;
+
+    cursor: not-allowed;
+  }
+
+  /*
+   * ==================================================
+   * FIXED ARCHIVE STAGE
+   * ==================================================
+   */
+
+  .archive-stage {
+    height: 30rem;
+
+    overflow: hidden;
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 80%,
+        var(--theme-surface)
+      );
+  }
+
+  /*
+   * Ceremonial oxblood line.
+   *
+   * This is the one entrance animation.
+   */
+  .archive-ceremonial-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    z-index: 12;
+
+    height: 2px;
+
+    transform-origin:
+      left center;
+
+    background:
+      linear-gradient(
+        to right,
+        var(--theme-royal),
+        color-mix(
+          in srgb,
+          var(--theme-royal) 54%,
+          var(--theme-pewter)
+        ),
         transparent
       );
   }
 
   /*
-   * OUTER PALACE / SCREEN FRAME
+   * Three-line formal rank marker.
    */
-  .archive-frame {
+  .archive-rank-mark {
+    position: absolute;
+
+    left: 0;
+    top: -6px;
+
+    z-index: 14;
+
+    display: flex;
+
+    gap: 3px;
+  }
+
+  .archive-rank-mark span {
+    width: 1px;
+
+    background:
+      var(--theme-royal);
+  }
+
+  .archive-rank-mark span:nth-child(1) {
+    height: 9px;
+  }
+
+  .archive-rank-mark span:nth-child(2) {
+    height: 14px;
+  }
+
+  .archive-rank-mark span:nth-child(3) {
+    height: 8px;
+  }
+
+  /*
+   * ==================================================
+   * SCROLL REGION
+   * ==================================================
+   */
+
+  .archive-scroll {
+    position: relative;
+
+    height: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type:
+      x mandatory;
+
+    overscroll-behavior-inline:
+      contain;
+
+    scrollbar-width:
+      thin;
+
+    scrollbar-color:
+      var(--theme-pewter)
+      transparent;
+  }
+
+  .archive-scroll:focus-visible {
+    outline:
+      2px solid
+      var(--theme-royal);
+
+    outline-offset:
+      -3px;
+  }
+
+  .archive-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .archive-scroll::-webkit-scrollbar-track {
+    background:
+      transparent;
+  }
+
+  .archive-scroll::-webkit-scrollbar-thumb {
+    background:
+      var(--theme-pewter);
+  }
+
+  /*
+   * ==================================================
+   * FOLDING-SCREEN TRACK
+   * ==================================================
+   */
+
+  .archive-track {
+    display: flex;
+
+    width: max-content;
+    min-width: 100%;
+
+    height: 100%;
+
+    align-items: flex-start;
+
+    padding:
+      1rem
+      4rem
+      1.25rem
+      0;
+
+    gap: 0;
+  }
+
+  /*
+   * ==================================================
+   * INDIVIDUAL PANEL
+   * ==================================================
+   */
+
+  .archive-panel {
+    position: relative;
+
+    display: flex;
+
+    height: 27rem;
+
+    flex: none;
+    flex-direction: column;
+
+    scroll-snap-align:
+      start;
+
     border-top:
       1px solid
       var(--theme-border);
@@ -366,73 +806,7 @@ const archive: ArchiveItem[] = [
       1px solid
       var(--theme-border);
 
-    padding:
-      1rem 0;
-  }
-
-  /*
-   * PLEATED RHYTHM
-   *
-   * These lines sit behind the photographs.
-   * They should register structurally rather
-   * than read as a pattern.
-   */
-  .archive-pleats {
-    position: absolute;
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: 0.25;
-
-    background:
-      repeating-linear-gradient(
-        to right,
-        transparent 0,
-        transparent calc(8.333% - 1px),
-        var(--theme-border)
-          calc(8.333% - 1px),
-        var(--theme-border)
-          8.333%
-      );
-  }
-
-  /*
-   * FOLDING-SCREEN GRID
-   */
-  .archive-grid {
-    position: relative;
-
-    display: grid;
-
-    grid-template-columns:
-      repeat(
-        12,
-        minmax(0, 1fr)
-      );
-
-    grid-auto-rows:
-      3.15rem;
-
-    grid-auto-flow:
-      dense;
-
-    gap: 1rem;
-  }
-
-  /*
-   * ARCHIVE FOLIO
-   */
-  .archive-card {
-    position: relative;
-
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-
-    overflow: hidden;
-
-    border:
+    border-left:
       1px solid
       var(--theme-border);
 
@@ -440,155 +814,209 @@ const archive: ArchiveItem[] = [
       var(--theme-surface);
 
     transition:
-      border-color 300ms ease,
-      transform 400ms
+      transform 350ms
         cubic-bezier(
           0.22,
           1,
           0.36,
           1
         ),
-      box-shadow 300ms ease;
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .archive-panel:last-of-type {
+    border-right:
+      1px solid
+      var(--theme-border);
   }
 
   /*
-   * PHOTO PROPORTIONS
+   * Approximately three records plus the beginning
+   * of a fourth at desktop width.
    */
-  .archive-card[data-size="feature"] {
-    grid-column:
-      span 6;
-
-    grid-row:
-      span 11;
+  .archive-panel[data-size="wide"] {
+    width: 22rem;
   }
 
-  .archive-card[data-size="portrait"] {
-    grid-column:
-      span 3;
-
-    grid-row:
-      span 11;
+  .archive-panel[data-size="standard"] {
+    width: 18rem;
   }
 
-  .archive-card[data-size="wide"] {
-    grid-column:
-      span 6;
-
-    grid-row:
-      span 7;
+  .archive-panel[data-size="narrow"] {
+    width: 15rem;
   }
 
-  .archive-card[data-size="medium"] {
-    grid-column:
-      span 3;
-
-    grid-row:
-      span 7;
-  }
-
-  .archive-card[data-size="strip"] {
-    grid-column:
-      span 3;
-
-    grid-row:
-      span 11;
+  .archive-panel[data-size="portrait"] {
+    width: 16.5rem;
   }
 
   /*
-   * PROTOCOL BREAK
-   *
-   * Exactly one archive record disobeys the
-   * otherwise rigid vertical alignment.
+   * One deliberate protocol break.
    */
-  .archive-card[data-break="true"] {
-    transform:
-      translateY(
-        12px
-      );
-  }
-
-  .archive-card:hover {
-    border-color:
-      color-mix(
-        in srgb,
-        var(--theme-pewter) 68%,
-        var(--theme-border)
-      );
-
-    box-shadow:
-      0 18px 42px
-      rgba(
-        18,
-        18,
-        20,
-        0.055
-      );
-  }
-
-  .archive-card[data-break="true"]:hover {
+  .archive-panel[data-break="true"] {
     transform:
       translateY(
         8px
       );
   }
 
+  .archive-panel:hover {
+    z-index: 5;
+
+    border-color:
+      color-mix(
+        in srgb,
+        var(--theme-pewter) 72%,
+        var(--theme-border)
+      );
+
+    box-shadow:
+      0 18px 40px
+      rgba(
+        18,
+        18,
+        20,
+        0.07
+      );
+  }
+
   /*
-   * RED CORNER REGISTER
+   * ==================================================
+   * FOLDING-SCREEN HINGES
+   * ==================================================
    */
+
+  .archive-hinges {
+    position: absolute;
+
+    right: -4px;
+    top: 0;
+    bottom: 0;
+
+    z-index: 15;
+
+    width: 8px;
+
+    pointer-events: none;
+  }
+
+  .archive-hinges::before {
+    content: "";
+
+    position: absolute;
+
+    left: 3px;
+    top: 0;
+    bottom: 0;
+
+    width: 1px;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-pewter) 60%,
+        var(--theme-border)
+      );
+  }
+
+  .archive-hinges span {
+    position: absolute;
+
+    left: 1px;
+
+    width: 6px;
+    height: 6px;
+
+    transform:
+      rotate(
+        45deg
+      );
+
+    border:
+      1px solid
+      var(--theme-pewter);
+
+    background:
+      var(--theme-surface);
+  }
+
+  .archive-hinges span:first-child {
+    top: 28%;
+  }
+
+  .archive-hinges span:last-child {
+    bottom: 28%;
+  }
+
+  /*
+   * Stronger oxblood hinge on the panel
+   * that breaks protocol.
+   */
+  .archive-panel[data-break="true"]
+    .archive-hinges span:first-child {
+    border-color:
+      var(--theme-royal);
+  }
+
+  /*
+   * ==================================================
+   * CONTROLLED RED CORNER
+   * ==================================================
+   */
+
   .archive-corner {
     position: absolute;
 
     left: -1px;
     top: -1px;
 
-    z-index: 5;
-
-    display: block;
+    z-index: 16;
 
     background:
       var(--theme-royal);
 
-    opacity: 0.68;
+    opacity: 0.72;
 
     pointer-events: none;
   }
 
   .archive-corner-x {
-    width: 2.4rem;
+    width: 2.35rem;
     height: 1px;
   }
 
   .archive-corner-y {
     width: 1px;
-    height: 2.4rem;
+    height: 2.35rem;
   }
 
-  /*
-   * The single protocol break carries
-   * the strongest oxblood mark.
-   */
-  .archive-card[data-break="true"]
+  .archive-panel[data-break="true"]
     .archive-corner {
     opacity: 1;
   }
 
-  .archive-card[data-break="true"]
+  .archive-panel[data-break="true"]
     .archive-corner-x {
-    width: 3.6rem;
+    width: 3.25rem;
   }
 
-  .archive-card[data-break="true"]
+  .archive-panel[data-break="true"]
     .archive-corner-y {
-    height: 3.6rem;
+    height: 3.25rem;
   }
 
   /*
-   * PHOTO AREA
+   * ==================================================
+   * IMAGE AREA
+   * ==================================================
    */
+
   .archive-image {
     position: relative;
 
     min-height: 0;
+
     flex: 1;
 
     overflow: hidden;
@@ -600,7 +1028,7 @@ const archive: ArchiveItem[] = [
     background:
       color-mix(
         in srgb,
-        var(--theme-bg) 72%,
+        var(--theme-bg) 76%,
         var(--theme-surface)
       );
   }
@@ -613,30 +1041,79 @@ const archive: ArchiveItem[] = [
 
     object-fit: cover;
 
-    /*
-     * Your actual photographs already have
-     * useful color. Don't erase it.
-     */
+    object-position:
+      var(
+        --archive-object-position
+      );
+
     filter:
       saturate(0.92)
       contrast(1.018);
 
     transition:
-      transform 700ms
+      transform 550ms
         cubic-bezier(
           0.22,
           1,
           0.36,
           1
         ),
-      filter 500ms ease;
+      filter 350ms ease;
   }
 
-  .archive-card:hover
+  /*
+   * SCENE
+   *
+   * Context can crop slightly.
+   */
+  .archive-panel[data-image-mode="scene"]
+    .archive-photo {
+    object-fit: cover;
+  }
+
+  /*
+   * PORTRAIT
+   *
+   * Keep the person dominant while respecting
+   * the custom focal point.
+   */
+  .archive-panel[data-image-mode="portrait"]
+    .archive-photo {
+    object-fit: cover;
+  }
+
+  /*
+   * RECORD
+   *
+   * Logos, signs and artifacts are evidence.
+   * Show the complete photograph.
+   */
+  .archive-panel[data-image-mode="record"]
+    .archive-image {
+    padding:
+      0.7rem;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 64%,
+        var(--theme-surface)
+      );
+  }
+
+  .archive-panel[data-image-mode="record"]
+    .archive-photo {
+    object-fit: contain;
+  }
+
+  /*
+   * Hover is purely decorative.
+   */
+  .archive-panel:hover
     .archive-photo {
     transform:
       scale(
-        1.012
+        1.01
       );
 
     filter:
@@ -644,38 +1121,52 @@ const archive: ArchiveItem[] = [
       contrast(1.018);
   }
 
+  .archive-panel[data-image-mode="record"]:hover
+    .archive-photo {
+    transform: none;
+  }
+
   /*
-   * Folio number floating over the photograph.
+   * ==================================================
+   * PHOTO NUMBER
+   * ==================================================
    */
+
   .archive-photo-number {
     position: absolute;
 
-    right: 0.8rem;
-    top: 0.8rem;
+    right: 0.75rem;
+    top: 0.75rem;
+
+    z-index: 6;
+
+    min-width: 2rem;
 
     padding:
-      0.22rem
-      0.36rem;
+      0.28rem
+      0.38rem;
 
     border:
       1px solid
       color-mix(
         in srgb,
-        var(--theme-border) 55%,
+        var(--theme-border) 70%,
         transparent
       );
 
     background:
       color-mix(
         in srgb,
-        var(--theme-bg) 72%,
+        var(--theme-bg) 86%,
         transparent
       );
 
     backdrop-filter:
       blur(
-        6px
+        5px
       );
+
+    text-align: center;
 
     font-family:
       ui-monospace,
@@ -684,319 +1175,965 @@ const archive: ArchiveItem[] = [
       monospace;
 
     font-size:
-      0.52rem;
+      0.68rem;
 
     letter-spacing:
-      0.14em;
+      0.1em;
 
     color:
       var(--theme-text);
-
-    opacity: 0.9;
   }
 
   /*
-   * CAPTION REGISTER
+   * ==================================================
+   * CAPTION
+   *
+   * Always visible.
+   * Never depends on hover.
+   * ==================================================
    */
+
   .archive-caption {
+    min-height: 8.4rem;
+
     padding:
+      0.9rem
+      1rem
       1rem;
+
+    background:
+      var(--theme-surface);
+  }
+
+  .archive-category {
+    font-size:
+      0.69rem;
+
+    font-weight:
+      500;
+
+    line-height:
+      1rem;
+
+    text-transform:
+      uppercase;
+
+    letter-spacing:
+      0.16em;
+
+    color:
+      var(--theme-pewter);
+  }
+
+  .archive-title {
+    font-family:
+      var(--font-display);
+
+    font-size:
+      1.35rem;
+
+    font-weight:
+      400;
+
+    line-height:
+      1.2;
+
+    color:
+      var(--theme-text);
+  }
+
+  .archive-note {
+    font-size:
+      0.875rem;
+
+    line-height:
+      1.45rem;
+
+    color:
+      var(--theme-text-secondary);
+  }
+
+  .archive-register-mark {
+    width: 7px;
+    height: 7px;
+
+    flex: none;
+
+    transform:
+      rotate(
+        45deg
+      );
+
+    border:
+      1px solid
+      var(--theme-royal);
   }
 
   /*
-   * Reflection detail repeated beneath captions.
+   * Caption reflection.
    */
-  .archive-caption-rule {
+  .archive-caption-reflection {
     display: flex;
 
-    width: 4.5rem;
+    width: 4.25rem;
 
     flex-direction: column;
 
     gap: 2px;
   }
 
-  .archive-caption-rule span:first-child {
+  .archive-caption-reflection
+    span:first-child {
     width: 100%;
     height: 1px;
 
     background:
       color-mix(
         in srgb,
-        var(--theme-pewter) 42%,
+        var(--theme-pewter) 58%,
         var(--theme-border)
       );
   }
 
-  .archive-caption-rule span:last-child {
-    width: 62%;
+  .archive-caption-reflection
+    span:last-child {
+    width: 58%;
     height: 1px;
 
-    margin-left: 19%;
+    margin-left: 21%;
 
-    opacity: 0.22;
+    opacity: 0.35;
 
     background:
       var(--theme-royal);
   }
 
   /*
-   * --------------------------------------------------
-   * LIGHT
-   * --------------------------------------------------
+   * ==================================================
+   * END REGISTER
+   * ==================================================
    */
 
-  :global(html:not(.dark))
-    .archive-card {
+  .archive-end {
+    display: flex;
+
+    width: 8rem;
+    height: 27rem;
+
+    flex: none;
+
+    align-items: center;
+    justify-content: center;
+
+    border-left:
+      1px solid
+      var(--theme-border);
+  }
+
+  .archive-end div {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 0.8rem;
+  }
+
+  .archive-end p {
+    writing-mode:
+      vertical-rl;
+
+    font-family:
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      monospace;
+
+    font-size:
+      0.68rem;
+
+    text-transform:
+      uppercase;
+
+    letter-spacing:
+      0.18em;
+
+    color:
+      var(--theme-muted);
+  }
+
+  .archive-end span {
+    width: 1px;
+    height: 3rem;
+
     background:
-      #faf8f4;
-
-    border-color:
-      color-mix(
-        in srgb,
-        var(--theme-pewter) 36%,
-        var(--theme-border)
-      );
-  }
-
-  :global(html:not(.dark))
-    .archive-image {
-    background:
-      #ece9e2;
-  }
-
-  :global(html:not(.dark))
-    .archive-pleats {
-    opacity: 0.34;
-  }
-
-  :global(html:not(.dark))
-    .archive-card:hover {
-    box-shadow:
-      0 18px 42px
-      rgba(
-        45,
-        38,
-        33,
-        0.065
-      );
+      var(--theme-royal);
   }
 
   /*
-   * --------------------------------------------------
-   * DARK
-   * --------------------------------------------------
+   * ==================================================
+   * EDGE DISCOVERY
+   * ==================================================
    */
 
-  :global(html.dark)
-    .archive-card {
+  .archive-edge-right {
+    position: absolute;
+
+    right: 0;
+    top: 2px;
+    bottom: 1.25rem;
+
+    z-index: 20;
+
+    width: 2.25rem;
+
+    pointer-events: none;
+
     background:
-      color-mix(
-        in srgb,
-        var(--theme-surface) 60%,
+      linear-gradient(
+        to left,
+        var(--theme-bg),
         transparent
       );
   }
 
-  :global(html.dark)
+  /*
+   * ==================================================
+   * LIGHT MODE
+   *
+   * Stronger hierarchy than the previous version.
+   * ==================================================
+   */
+
+  :global(html:not(.dark))
+    .archive-header {
+    background:
+      #f7f5f0;
+  }
+
+  :global(html:not(.dark))
+    .archive-controls {
+    border-color:
+      #aaa39a;
+
+    background:
+      #e8e4dc;
+  }
+
+  :global(html:not(.dark))
+    .archive-controls
+    .bg-border {
+    background:
+      #9c958c;
+  }
+
+  :global(html:not(.dark))
+    .archive-control-button {
+    border-color:
+      #9e978e;
+
+    background:
+      #f6f3ed;
+
+    color:
+      #2e3238;
+  }
+
+  :global(html:not(.dark))
+    .archive-control-button:hover {
+    border-color:
+      var(--theme-royal);
+
+    background:
+      #fcfaf6;
+
+    color:
+      #151519;
+  }
+
+  :global(html:not(.dark))
+    .archive-stage {
+    border-color:
+      #a9a298;
+
+    background:
+      #eae6de;
+  }
+
+  :global(html:not(.dark))
+    .archive-panel {
+    border-color:
+      #9f988f;
+
+    background:
+      #fbfaf6;
+  }
+
+  :global(html:not(.dark))
+    .archive-image {
+    border-color:
+      #aaa39a;
+
+    background:
+      #e9e5dd;
+  }
+
+  :global(html:not(.dark))
+    .archive-panel[data-image-mode="record"]
     .archive-image {
     background:
-      #0c1017;
+      #e4e0d7;
+  }
+
+  :global(html:not(.dark))
+    .archive-caption {
+    background:
+      #fbfaf6;
+  }
+
+  :global(html:not(.dark))
+    .archive-hinges::before {
+    background:
+      #888178;
+  }
+
+  :global(html:not(.dark))
+    .archive-hinges span {
+    border-color:
+      #777168;
+
+    background:
+      #f7f4ee;
+  }
+
+  :global(html:not(.dark))
+    .archive-panel[data-break="true"]
+    .archive-hinges span:first-child {
+    border-color:
+      var(--theme-royal);
+  }
+
+  :global(html:not(.dark))
+    .archive-photo-number {
+    border-color:
+      #9d968c;
+
+    background:
+      rgba(
+        250,
+        248,
+        243,
+        0.92
+      );
+  }
+
+  :global(html:not(.dark))
+    .archive-edge-right {
+    background:
+      linear-gradient(
+        to left,
+        #f1efea,
+        transparent
+      );
   }
 
   /*
-   * Do NOT grayscale the archive.
-   *
-   * Hero portrait = restrained monochrome.
-   * Field Archive = lived professional color.
+   * ==================================================
+   * DARK MODE
+   * ==================================================
    */
+
+  :global(html.dark)
+    .archive-stage {
+    background:
+      #090d14;
+  }
+
+  :global(html.dark)
+    .archive-panel {
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-surface) 72%,
+        #080b12
+      );
+  }
+
+  :global(html.dark)
+    .archive-caption {
+    background:
+      #0e131b;
+  }
+
   :global(html.dark)
     .archive-photo {
     filter:
-      saturate(0.78)
+      saturate(0.8)
       contrast(1.025)
       brightness(0.92);
   }
 
   :global(html.dark)
-    .archive-card:hover
+    .archive-panel:hover
     .archive-photo {
     filter:
-      saturate(0.9)
+      saturate(0.92)
       contrast(1.025)
       brightness(0.95);
   }
 
   :global(html.dark)
-    .archive-card:hover {
-    box-shadow:
-      0 22px 52px
-      rgba(
-        0,
-        0,
-        0,
-        0.18
+    .archive-panel[data-image-mode="record"]
+    .archive-photo {
+    filter:
+      saturate(0.86)
+      contrast(1.02)
+      brightness(0.94);
+  }
+
+  /*
+   * ==================================================
+   * CEREMONIAL ENTRANCE
+   *
+   * Content remains visible.
+   * Motion is decorative only.
+   * ==================================================
+   */
+
+  .field-archive[data-motion="ready"]
+    .archive-ceremonial-line {
+    transform:
+      scaleX(
+        0
+      );
+  }
+
+  .field-archive[data-motion="ready"]
+    .archive-panel {
+    translate:
+      0
+      6px;
+  }
+
+  .field-archive[data-motion="ready"][data-entered="true"]
+    .archive-ceremonial-line {
+    transform:
+      scaleX(
+        1
+      );
+
+    transition:
+      transform
+      420ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+  }
+
+  .field-archive[data-motion="ready"][data-entered="true"]
+    .archive-panel {
+    translate:
+      0
+      0;
+
+    transition:
+      translate
+      420ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
       );
   }
 
   /*
-   * --------------------------------------------------
-   * TABLET
-   * --------------------------------------------------
+   * Keep the intentional 04 protocol break.
    */
-
-  @media (
-    max-width: 1023px
-  ) {
-    .archive-grid {
-      grid-template-columns:
-        repeat(
-          6,
-          minmax(0, 1fr)
-        );
-    }
-
-    .archive-card[data-size="feature"] {
-      grid-column:
-        span 4;
-    }
-
-    .archive-card[data-size="portrait"],
-    .archive-card[data-size="strip"] {
-      grid-column:
-        span 2;
-    }
-
-    .archive-card[data-size="wide"] {
-      grid-column:
-        span 6;
-    }
-
-    .archive-card[data-size="medium"] {
-      grid-column:
-        span 3;
-    }
-
-    .archive-pleats {
-      background:
-        repeating-linear-gradient(
-          to right,
-          transparent 0,
-          transparent
-            calc(
-              16.666% - 1px
-            ),
-          var(--theme-border)
-            calc(
-              16.666% - 1px
-            ),
-          var(--theme-border)
-            16.666%
-        );
-    }
+  .field-archive[data-motion="ready"][data-entered="true"]
+    .archive-panel[data-break="true"] {
+    transform:
+      translateY(
+        8px
+      );
   }
 
   /*
-   * --------------------------------------------------
-   * MOBILE
-   * --------------------------------------------------
-   *
-   * Folding screen becomes a vertical archive.
+   * ==================================================
+   * TABLET
+   * ==================================================
    */
 
   @media (
-    max-width: 767px
+    max-width: 900px
   ) {
-    .archive-grid {
-      grid-template-columns:
-        1fr;
-
-      grid-auto-rows:
-        auto;
-
-      gap:
-        0.9rem;
+    .archive-stage {
+      height:
+        29rem;
     }
 
-    .archive-card,
-    .archive-card[data-size="feature"],
-    .archive-card[data-size="portrait"],
-    .archive-card[data-size="wide"],
-    .archive-card[data-size="medium"],
-    .archive-card[data-size="strip"] {
-      grid-column:
-        auto;
-
-      grid-row:
-        auto;
+    .archive-panel,
+    .archive-end {
+      height:
+        26rem;
     }
 
-    .archive-image {
-      min-height:
-        17rem;
-    }
-
-    .archive-card[data-size="feature"]
-      .archive-image {
-      min-height:
+    .archive-panel[data-size="wide"] {
+      width:
         20rem;
     }
 
-    .archive-card[data-size="portrait"]
-      .archive-image {
-      min-height:
-        25rem;
-    }
-
-    .archive-card[data-size="strip"]
-      .archive-image {
-      min-height:
-        28rem;
-    }
-
-    /*
-     * Preserve the protocol break on mobile,
-     * but change it from vertical to horizontal.
-     */
-    .archive-card[data-break="true"] {
+    .archive-panel[data-size="standard"] {
       width:
-        calc(
-          100% - 8px
-        );
-
-      transform:
-        translateX(
-          8px
-        );
+        17rem;
     }
 
-    .archive-card[data-break="true"]:hover {
-      transform:
-        translateX(
-          8px
-        );
+    .archive-panel[data-size="narrow"] {
+      width:
+        14.5rem;
     }
 
-    .archive-pleats {
-      display: none;
+    .archive-panel[data-size="portrait"] {
+      width:
+        15.5rem;
+    }
+
+    .archive-caption {
+      min-height:
+        8.5rem;
     }
   }
 
   /*
-   * ACCESSIBILITY
+   * ==================================================
+   * MOBILE
+   *
+   * One main record plus a visible portion of the next.
+   * ==================================================
    */
+
+  @media (
+    max-width: 640px
+  ) {
+    .archive-stage {
+      height:
+        29rem;
+    }
+
+    .archive-track {
+      padding-right:
+        1.75rem;
+    }
+
+    .archive-panel,
+    .archive-end {
+      height:
+        26rem;
+    }
+
+    .archive-panel[data-size="wide"],
+    .archive-panel[data-size="standard"],
+    .archive-panel[data-size="narrow"],
+    .archive-panel[data-size="portrait"] {
+      width:
+        min(
+          82vw,
+          19rem
+        );
+    }
+
+    .archive-controls {
+      grid-template-columns:
+        1fr;
+    }
+
+    .archive-control-button {
+      flex:
+        1;
+    }
+
+    .archive-caption {
+      min-height:
+        8.8rem;
+    }
+
+    .archive-edge-right {
+      width:
+        1.2rem;
+    }
+  }
+
+  /*
+   * ==================================================
+   * REDUCED MOTION
+   *
+   * The archive simply appears.
+   * No functionality is lost.
+   * ==================================================
+   */
+
   @media (
     prefers-reduced-motion:
       reduce
   ) {
-    .archive-card,
-    .archive-photo {
-      transition: none;
+    .field-archive,
+    .archive-panel,
+    .archive-photo,
+    .archive-ceremonial-line,
+    .archive-control-button {
+      animation:
+        none !important;
+
+      transition:
+        none !important;
     }
 
-    .archive-card:hover
+    .field-archive[data-motion="ready"]
+      .archive-ceremonial-line {
+      transform:
+        scaleX(
+          1
+        );
+    }
+
+    .field-archive[data-motion="ready"]
+      .archive-panel {
+      translate:
+        0
+        0;
+    }
+
+    .archive-panel:hover
       .archive-photo {
-      transform: none;
+      transform:
+        none;
     }
   }
 </style>
+
+<script>
+  const archiveSection =
+    document.querySelector<HTMLElement>(
+      "[data-field-archive]",
+    );
+
+  if (archiveSection) {
+    const scroller =
+      archiveSection.querySelector<HTMLElement>(
+        "[data-archive-scroll]",
+      );
+
+    const panels =
+      Array.from(
+        archiveSection.querySelectorAll<HTMLElement>(
+          "[data-archive-panel]",
+        ),
+      );
+
+    const previousButton =
+      archiveSection.querySelector<HTMLButtonElement>(
+        "[data-archive-prev]",
+      );
+
+    const nextButton =
+      archiveSection.querySelector<HTMLButtonElement>(
+        "[data-archive-next]",
+      );
+
+    const currentLabel =
+      archiveSection.querySelector<HTMLElement>(
+        "[data-archive-current]",
+      );
+
+    const reducedMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+
+    let currentIndex = 0;
+    let scrollFrame = 0;
+
+    function getBehavior():
+      ScrollBehavior {
+      return reducedMotion.matches
+        ? "auto"
+        : "smooth";
+    }
+
+    function clampIndex(
+      index: number,
+    ) {
+      return Math.max(
+        0,
+        Math.min(
+          index,
+          panels.length - 1,
+        ),
+      );
+    }
+
+    function updateControls(
+      index: number,
+    ) {
+      currentIndex =
+        clampIndex(
+          index,
+        );
+
+      if (currentLabel) {
+        currentLabel.textContent =
+          String(
+            currentIndex + 1,
+          ).padStart(
+            2,
+            "0",
+          );
+      }
+
+      if (previousButton) {
+        previousButton.disabled =
+          currentIndex === 0;
+      }
+
+      if (nextButton) {
+        nextButton.disabled =
+          currentIndex ===
+          panels.length - 1;
+      }
+    }
+
+    function goToPanel(
+      index: number,
+    ) {
+      if (!scroller) {
+        return;
+      }
+
+      const nextIndex =
+        clampIndex(
+          index,
+        );
+
+      const panel =
+        panels[
+          nextIndex
+        ];
+
+      if (!panel) {
+        return;
+      }
+
+      /*
+       * Scroll only the archive itself.
+       *
+       * Using scrollTo rather than scrollIntoView
+       * prevents the whole page from unexpectedly
+       * moving vertically.
+       */
+      scroller.scrollTo({
+        left:
+          panel.offsetLeft,
+        behavior:
+          getBehavior(),
+      });
+
+      updateControls(
+        nextIndex,
+      );
+    }
+
+    previousButton?.addEventListener(
+      "click",
+      () => {
+        goToPanel(
+          currentIndex - 1,
+        );
+      },
+    );
+
+    nextButton?.addEventListener(
+      "click",
+      () => {
+        goToPanel(
+          currentIndex + 1,
+        );
+      },
+    );
+
+    /*
+     * Keyboard navigation lives on the archive region.
+     *
+     * The individual photo cards are deliberately
+     * NOT separate Tab stops.
+     */
+    scroller?.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key ===
+          "ArrowRight"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            currentIndex + 1,
+          );
+
+          return;
+        }
+
+        if (
+          event.key ===
+          "ArrowLeft"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            currentIndex - 1,
+          );
+
+          return;
+        }
+
+        if (
+          event.key ===
+          "Home"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            0,
+          );
+
+          return;
+        }
+
+        if (
+          event.key ===
+          "End"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            panels.length - 1,
+          );
+        }
+      },
+    );
+
+    /*
+     * Keep the counter synchronized with
+     * mouse-wheel, trackpad and touch scrolling.
+     */
+    scroller?.addEventListener(
+      "scroll",
+      () => {
+        cancelAnimationFrame(
+          scrollFrame,
+        );
+
+        scrollFrame =
+          requestAnimationFrame(
+            () => {
+              if (!scroller) {
+                return;
+              }
+
+              let closestIndex =
+                0;
+
+              let closestDistance =
+                Number.POSITIVE_INFINITY;
+
+              panels.forEach(
+                (
+                  panel,
+                  index,
+                ) => {
+                  const distance =
+                    Math.abs(
+                      panel.offsetLeft -
+                        scroller.scrollLeft,
+                    );
+
+                  if (
+                    distance <
+                    closestDistance
+                  ) {
+                    closestDistance =
+                      distance;
+
+                    closestIndex =
+                      index;
+                  }
+                },
+              );
+
+              updateControls(
+                closestIndex,
+              );
+            },
+          );
+      },
+      {
+        passive: true,
+      },
+    );
+
+    /*
+     * --------------------------------------------------
+     * CEREMONIAL OPENING
+     * --------------------------------------------------
+     *
+     * One short decorative entrance.
+     * No autoplay afterward.
+     */
+    if (
+      !reducedMotion.matches
+    ) {
+      archiveSection.dataset.motion =
+        "ready";
+
+      const observer =
+        new IntersectionObserver(
+          (
+            entries,
+            archiveObserver,
+          ) => {
+            const entry =
+              entries[0];
+
+            if (
+              !entry?.isIntersecting
+            ) {
+              return;
+            }
+
+            archiveSection.dataset.entered =
+              "true";
+
+            archiveObserver.disconnect();
+          },
+          {
+            threshold:
+              0.2,
+          },
+        );
+
+      observer.observe(
+        archiveSection,
+      );
+    } else {
+      archiveSection.dataset.entered =
+        "true";
+    }
+
+    updateControls(
+      0,
+    );
+  }
+</script>
