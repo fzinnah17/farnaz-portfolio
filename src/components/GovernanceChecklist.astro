@@ -1,29 +1,37 @@
 ---
 const criteria = [
     {
+        marker: "01",
         label: "Data sensitivity",
-        note: "what is flowing through the system and how sensitive it is",
+        note: "What data moves through it?",
     },
     {
-        label: "PII / PHI exposure",
-        note: "whether personal or health data touches the pipeline and how it is handled",
+        marker: "02",
+        label: "PII / PHI",
+        note: "Is personal or health data exposed?",
     },
     {
-        label: "Third-party integration risk",
-        note: "what an external vendor or API can see, store, or fail on",
+        marker: "03",
+        label: "Third-party risk",
+        note: "What can vendors or APIs access?",
     },
     {
+        marker: "04",
         label: "Access controls",
-        note: "who can reach the system and what happens if that access is misused",
+        note: "Who can reach the system?",
     },
-];
+] as const;
 ---
 
-<div class="divide-y divide-border rounded-lg border border-border bg-surface">
+<div class="divide-y divide-border border-y border-border">
     {
         criteria.map((criterion) => (
-            <div class="flex flex-col gap-1 p-4 sm:flex-row sm:items-baseline sm:gap-4">
-                <span class="shrink-0 font-mono text-sm text-accent-cyan sm:w-56">
+            <div class="grid gap-2 px-5 py-4 sm:grid-cols-[2rem_12rem_1fr]">
+                <span class="font-mono text-[10px] text-royal">
+                    {criterion.marker}
+                </span>
+
+                <span class="text-sm font-medium text-text">
                     {criterion.label}
                 </span>
 

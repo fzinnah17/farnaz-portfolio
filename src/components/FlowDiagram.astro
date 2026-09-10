@@ -10,22 +10,25 @@ interface Props {
 const { steps } = Astro.props;
 ---
 
-<div class="mt-4 overflow-x-auto" aria-label="System flow">
-    <div class="flex min-w-max items-center gap-2 py-2">
+<div
+    class="mt-4 overflow-x-auto border-y border-border"
+    aria-label="System flow"
+>
+    <ol class="flex min-w-max items-center py-3">
         {
             steps.map((step, index) => (
-                <>
-                    <div class="shrink-0 rounded border border-border bg-surface px-3 py-1.5 font-mono text-xs text-text">
+                <li class="flex items-center">
+                    <span class="px-3 font-mono text-[10px] uppercase tracking-[0.12em] text-pewter">
                         {step.label}
-                    </div>
+                    </span>
 
                     {index < steps.length - 1 && (
-                        <span class="shrink-0 text-muted" aria-hidden="true">
+                        <span class="text-royal" aria-hidden="true">
                             →
                         </span>
                     )}
-                </>
+                </li>
             ))
         }
-    </div>
+    </ol>
 </div>

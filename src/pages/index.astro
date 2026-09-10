@@ -1,34 +1,24 @@
 ---
-import { Image } from "astro:assets";
-
 import Layout from "../layouts/Layout.astro";
-
-import governanceImage from "../assets/portfolio/governance.jpg";
 
 import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
 import ExperienceLog from "../components/ExperienceLog.astro";
 import FlowDiagram from "../components/FlowDiagram.astro";
-import GovernanceChecklist from "../components/GovernanceChecklist.astro";
 import Hero from "../components/Hero.astro";
-import PlatformExpertise from "../components/PlatformExpertise.astro";
-import PrinciplesGrid from "../components/PrinciplesGrid.astro";
+import PerformanceComparison from "../components/PerformanceComparison.astro";
 import StackManifest from "../components/StackManifest.astro";
-import Tabs from "../components/Tabs.astro";
 ---
 
 <Layout
   title="Farnaz Zinnah — AI Systems Engineer"
-  description="AI Systems Engineer working across AI infrastructure, distributed systems, adversarial machine learning, and AI governance."
+  description="AI systems, adversarial machine learning, systems performance, and AI governance."
 >
-  <main
-    id="main"
-    class="mx-auto max-w-6xl space-y-20 px-6 pb-28 pt-10 md:space-y-24 md:pt-14 lg:pr-12 lg:pb-20"
-  >
+  <main id="main" class="space-y-20 pb-28 md:space-y-24 lg:pb-20">
     <Hero />
 
     <!-- EXPERIENCE + STACK -->
     <section
-      class="grid gap-10 lg:grid-cols-2"
+      class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-2 lg:pr-12"
       aria-label="Experience and technical stack"
     >
       <div id="experience" class="scroll-mt-24 space-y-3">
@@ -38,9 +28,7 @@ import Tabs from "../components/Tabs.astro";
           Experience
         </h2>
 
-        <p class="text-sm text-muted">
-          Mostly Con Edison so far, with school running alongside it.
-        </p>
+        <p class="text-sm text-muted">Work and school, side by side.</p>
 
         <ExperienceLog />
       </div>
@@ -52,283 +40,144 @@ import Tabs from "../components/Tabs.astro";
           Stack
         </h2>
 
-        <p class="text-sm text-muted">
-          Not everything here makes it onto a resume bullet.
-        </p>
+        <p class="text-sm text-muted">What I build with.</p>
 
         <StackManifest />
       </div>
     </section>
 
-    <!-- PRINCIPLES -->
-    <section class="space-y-3" aria-labelledby="principles-title">
-      <h2
-        id="principles-title"
-        class="border-b border-border pb-2 text-2xl font-bold tracking-tight text-text md:text-3xl"
-      >
-        How I Build
-      </h2>
-
-      <PrinciplesGrid />
-    </section>
-
-    <!-- PLATFORMS -->
+    <!-- SELECTED WORK -->
     <section
-      id="platforms"
-      class="scroll-mt-24 space-y-5"
-      aria-labelledby="platforms-title"
+      id="work"
+      class="mx-auto max-w-6xl scroll-mt-24 px-6 lg:pr-12"
+      aria-labelledby="work-title"
     >
-      <div class="space-y-2">
-        <h2
-          id="platforms-title"
-          class="border-b border-border pb-2 text-2xl font-bold tracking-tight text-text md:text-3xl"
-        >
-          Where I Actually Work
-        </h2>
-
-        <p class="max-w-3xl text-sm leading-6 text-muted">
-          Architecture review is part of the job. Most of the hands-on cloud
-          work happens across these two platforms.
-        </p>
-      </div>
-
-      <PlatformExpertise />
-
-      <p class="max-w-3xl text-sm leading-7 text-secondary">
-        Production work is primarily Azure because that's the enterprise
-        environment I work in. My GCP experience grew through projects where
-        Vertex AI and computer-vision services fit the problem well, especially
-        multimodal and drone-imagery workflows. Different constraints, different
-        tools.
-      </p>
-
-      <div class="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-        <span class="font-mono text-muted"> Standalone cloud demos: </span>
-
-        <a
-          href="https://github.com/fzinnah17/literature-screening-demo"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-medium text-accent-cyan hover:underline"
-        >
-          Azure structured screening ↗
-        </a>
-
-        <a
-          href="https://github.com/fzinnah17/ml-experiment-reporter"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-medium text-accent-cyan hover:underline"
-        >
-          Vertex AI experiment reporting ↗
-        </a>
-      </div>
-    </section>
-
-    <!-- WORK LAB -->
-    <section
-      id="worklab"
-      class="scroll-mt-24 space-y-4"
-      aria-labelledby="worklab-title"
-    >
-      <h2
-        id="worklab-title"
-        class="border-b border-border pb-2 text-2xl font-bold tracking-tight text-text md:text-3xl"
-      >
-        Work Lab
-      </h2>
-
-      <Tabs
-        id="worklab-tabs"
-        tabs={[
-          {
-            id: "work",
-            label: "Selected Work",
-          },
-          {
-            id: "governance",
-            label: "Governance",
-          },
-          {
-            id: "other",
-            label: "Other Work",
-          },
-        ]}
-      >
-        <!-- WORK -->
-        <div
-          data-tab-panel="work"
-          role="tabpanel"
-          id="worklab-tabs-panel-work"
-          aria-labelledby="worklab-tabs-tab-work"
-          tabindex="0"
-        >
-          <p class="mb-4 text-sm text-secondary">
-            Most of my day-to-day work lives in private enterprise repos. These
-            are the ones I can actually show.
+      <!-- Perspective-style section header -->
+      <div class="grid border-y border-border md:grid-cols-[0.72fr_1.28fr]">
+        <div class="border-b border-border px-5 py-6 md:border-b-0 md:border-r">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-royal">
+            Work / 01
           </p>
 
-          <div class="grid items-start gap-4 md:grid-cols-3">
-            <ExpandableProjectCard
-              size="large"
-              title="Adversarial Robustness Testing"
-              hook="Fooled a production image classifier down to 0.2% accuracy with changes you can't see."
-              details="I wanted to know how easily a production-grade image classifier could be fooled. Turns out: very. A PGD attack dropped accuracy from 76% to 0.2%, and the trick transferred to a completely different model 90% of the time. Measured on a held-out ImageNet-1K validation subset, PGD run at ε=8/255, 20 steps. Built solo in PyTorch."
-              stack={["PyTorch", "ImageNet-1K", "Security"]}
-              href="https://github.com/fzinnah17/neural-network-jailbreak"
-            />
-
-            <ExpandableProjectCard
-              title="Mojo vs CUDA"
-              hook="Mojo's compiler kernels against a decade of CUDA optimization: closer than I expected."
-              details="Mojo is still young, so I wanted to see how its compiler-generated GPU kernels stack up against CUDA's. On compute-heavy operations, Mojo won by 1.7–1.9x. On memory-bound ones, CUDA still had the edge. Co-built for HPML coursework."
-              stack={["Mojo", "CUDA", "MAX Graph"]}
-            />
-
-            <ExpandableProjectCard
-              title="Agentic SDLC Automation"
-              platforms={["Azure"]}
-              hook="Agents that sync backlogs, draft user stories, and answer questions over sprint docs."
-              details="Built coordinated agents to reduce the manual overhead of sprint planning: synchronizing scope, drafting first-pass user stories, and answering backlog questions with retrieval instead of someone hunting through old tickets."
-              stack={["Azure OpenAI", "RAG", "Azure DevOps", "Python"]}
-            >
-              <FlowDiagram
-                slot="diagram"
-                steps={[
-                  {
-                    label: "Backlog item",
-                  },
-                  {
-                    label: "Agent drafts story",
-                  },
-                  {
-                    label: "ADO sync",
-                  },
-                  {
-                    label: "RAG over docs",
-                  },
-                ]}
-              />
-            </ExpandableProjectCard>
-
-            <ExpandableProjectCard
-              title="Board Materials Review Agent"
-              platforms={["Azure"]}
-              hook="An AI reviewer that checks a deck against structured formatting rules before manual review."
-              details="Designed the architecture for a workflow that ingests a presentation, extracts slide text and formatting, checks it against structured rules with an LLM, and returns flagged inconsistencies. The generalized pattern uses short-lived storage and runtime secret resolution rather than embedding credentials in code."
-              stack={["Azure OpenAI", "Blob Storage", "Key Vault", "Python"]}
-            >
-              <FlowDiagram
-                slot="diagram"
-                steps={[
-                  {
-                    label: "Document intake",
-                  },
-                  {
-                    label: "Temporary storage",
-                  },
-                  {
-                    label: "LLM rule check",
-                  },
-                  {
-                    label: "Report + flags",
-                  },
-                  {
-                    label: "Delivery",
-                  },
-                ]}
-              />
-            </ExpandableProjectCard>
-
-            <ExpandableProjectCard
-              title="AI Governance Agent"
-              platforms={["GCP"]}
-              hook="An automated first pass at the same risk questions I ask in manual review."
-              details="Built a smaller automated version of the review process: takes a proposed AI or automation system description and evaluates it against risk criteria such as data sensitivity, third-party exposure, and access-control gaps before a human reviewer looks at it."
-              stack={["Gemini", "Vertex AI", "Python"]}
-            />
-          </div>
+          <h2
+            id="work-title"
+            class="mt-2 font-display text-3xl font-normal text-text"
+          >
+            Selected Work
+          </h2>
         </div>
 
-        <!-- GOVERNANCE -->
-        <div
-          data-tab-panel="governance"
-          role="tabpanel"
-          id="worklab-tabs-panel-governance"
-          aria-labelledby="worklab-tabs-tab-governance"
-          tabindex="0"
-          hidden
+        <div class="flex items-end px-5 py-6">
+          <p class="text-sm tracking-wide text-secondary">
+            Build · break · review
+          </p>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="grid auto-rows-min items-start gap-4 pt-6 md:grid-cols-3">
+        <ExpandableProjectCard
+          size="large"
+          eyebrow="ML · Security"
+          title="Adversarial Robustness Testing"
+          hook="PGD cut classifier accuracy from 76% to 0.2%."
+          details="Tested adversarial attacks on an ImageNet classifier. Cross-model transfer reached 90% at ε=8/255 over 20 PGD steps."
+          stack={["PyTorch", "ImageNet-1K", "Security"]}
+          href="https://github.com/fzinnah17/neural-network-jailbreak"
+        />
+
+        <ExpandableProjectCard
+          eyebrow="Systems · Performance"
+          title="Mojo vs CUDA"
+          hook="Mojo led compute-bound work by 1.7–1.9×; CUDA led memory-bound work."
+          details="The bottleneck changed the winner. That mattered more than the language itself."
+          stack={["Mojo", "CUDA", "MAX Graph"]}
         >
-          <div class="mb-6 max-w-2xl space-y-3">
-            <p
-              class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
-            >
-              Architecture &amp; Governance
-            </p>
+          <PerformanceComparison slot="diagram" />
+        </ExpandableProjectCard>
 
-            <h3 class="text-xl font-semibold text-text">
-              The other side of the table.
-            </h3>
+        <ExpandableProjectCard
+          eyebrow="AI Systems"
+          title="Agentic SDLC Automation"
+          hook="Backlog → story draft → sync → retrieval."
+          details="Agents draft first-pass stories, sync work items, and retrieve answers from sprint documentation."
+          stack={["Azure OpenAI", "RAG", "Azure DevOps", "Python"]}
+        >
+          <FlowDiagram
+            slot="diagram"
+            steps={[
+              { label: "Backlog" },
+              { label: "Draft" },
+              { label: "Sync" },
+              { label: "Retrieve" },
+            ]}
+          />
+        </ExpandableProjectCard>
 
-            <p class="leading-8 text-text">
-              Before an AI or automation system ships, someone has to actually
-              look at it and ask if it's safe. That's part of my job too. It's
-              slower and less flashy than the projects above, but it's the one
-              I'd probably miss most if it went away.
-            </p>
-          </div>
+        <ExpandableProjectCard
+          eyebrow="AI Systems · Review"
+          title="Board Materials Review Agent"
+          hook="Document intake → rules → flagged review."
+          details="Extracts document structure, checks explicit rules, and surfaces exceptions for human review."
+          stack={["Azure OpenAI", "Storage", "Key Vault", "Python"]}
+        >
+          <FlowDiagram
+            slot="diagram"
+            steps={[
+              { label: "Intake" },
+              { label: "Extract" },
+              { label: "Check" },
+              { label: "Flag" },
+              { label: "Review" },
+            ]}
+          />
+        </ExpandableProjectCard>
 
-          <GovernanceChecklist />
+        <ExpandableProjectCard
+          eyebrow="AI · Governance"
+          title="AI Governance Agent"
+          hook="First-pass risk check before human review."
+          details="Checks proposed AI use for data sensitivity, third-party exposure, and access-control risk."
+          stack={["Gemini", "Vertex AI", "Python"]}
+        />
+      </div>
 
-          <figure class="mt-6 max-w-3xl">
-            <Image
-              src={governanceImage}
-              alt="Farnaz participating in an AI governance event"
-              width={960}
-              height={540}
-              loading="lazy"
-              class="max-h-72 w-full rounded-lg border border-border object-cover"
-            />
-
-            <figcaption class="mt-2 font-mono text-xs text-muted">
-              AI governance beyond the implementation layer.
-            </figcaption>
-          </figure>
-
-          <p class="mt-4 text-sm leading-7 text-secondary">
-            Security by default shows up in the implementation too, not just the
-            review process: short-lived processing, input validation, runtime
-            secret resolution, and controlled access.
+      <!-- PUBLIC DEMOS -->
+      <div class="mt-6 grid border-y border-border sm:grid-cols-[10rem_1fr]">
+        <div class="border-b border-border px-5 py-4 sm:border-b-0 sm:border-r">
+          <p class="text-[10px] uppercase tracking-[0.18em] text-pewter">
+            Public demos
           </p>
         </div>
 
-        <!-- OTHER -->
         <div
-          data-tab-panel="other"
-          role="tabpanel"
-          id="worklab-tabs-panel-other"
-          aria-labelledby="worklab-tabs-tab-other"
-          tabindex="0"
-          hidden
+          class="grid divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0"
         >
-          <ul class="space-y-3 text-text">
-            <li>
-              <span class="font-mono text-sm text-accent-cyan">
-                Infrastructure risk
-              </span>
+          <a
+            href="https://github.com/fzinnah17/literature-screening-demo"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-5 py-4 transition-colors hover:text-royal"
+          >
+            <p class="text-sm font-medium">Literature screening ↗</p>
 
-              <span
-                class="ml-1 rounded border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted"
-              >
-                GCP
-              </span>
+            <p class="mt-1 text-xs text-muted">Azure · structured outputs</p>
+          </a>
 
-              — Drone footage plus weather data, fused into a risk score for
-              infrastructure inspection.
-            </li>
-          </ul>
+          <a
+            href="https://github.com/fzinnah17/ml-experiment-reporter"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-5 py-4 transition-colors hover:text-royal"
+          >
+            <p class="text-sm font-medium">Experiment reporter ↗</p>
+
+            <p class="mt-1 text-xs text-muted">
+              Vertex AI · experiment analysis
+            </p>
+          </a>
         </div>
-      </Tabs>
+      </div>
     </section>
   </main>
 </Layout>

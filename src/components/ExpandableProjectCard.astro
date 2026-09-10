@@ -1,23 +1,21 @@
 ---
-type Platform = "Azure" | "GCP";
-
 interface Props {
+    eyebrow?: string;
     title: string;
     hook: string;
     details: string;
     stack: string[];
-    platforms?: Platform[];
     metric?: string;
     href?: string;
     size?: "large" | "small";
 }
 
 const {
+    eyebrow,
     title,
     hook,
     details,
     stack,
-    platforms = [],
     metric,
     href,
     size = "small",
@@ -36,30 +34,21 @@ const hookAfter =
 
 <article
     class:list={[
-        "self-start h-fit rounded-sm border border-border bg-surface p-5 transition-colors duration-500 hover:border-pewter",
+        "self-start h-fit min-w-0 border border-border bg-surface/60 p-5 transition-colors duration-500 hover:border-pewter",
         spanClass,
     ]}
 >
-    <div class="flex items-start justify-between gap-3">
-        <h3 class="text-lg font-semibold tracking-tight text-text">
-            {title}
-        </h3>
+    {
+        eyebrow && (
+            <p class="mb-2 text-[9px] uppercase tracking-[0.17em] text-pewter">
+                {eyebrow}
+            </p>
+        )
+    }
 
-        {
-            platforms.length > 0 && (
-                <div
-                    class="flex shrink-0 flex-wrap justify-end gap-1.5"
-                    aria-label="Cloud platforms"
-                >
-                    {platforms.map((platform) => (
-                        <span class="rounded-sm border border-border px-1.5 py-0.5 text-[10px] uppercase tracking-[0.1em] text-muted">
-                            {platform}
-                        </span>
-                    ))}
-                </div>
-            )
-        }
-    </div>
+    <h3 class="text-lg font-semibold tracking-tight text-text">
+        {title}
+    </h3>
 
     <p class="mt-2 text-sm leading-6 text-secondary">
         {hookBefore}
@@ -73,13 +62,13 @@ const hookAfter =
         {hookAfter}
     </p>
 
-    <details class="group mt-4">
+    <details name="portfolio-project" data-project-details class="group mt-4">
         <summary
-            class="flex cursor-pointer list-none items-center gap-1.5 font-mono text-xs text-accent-cyan"
+            class="flex cursor-pointer list-none items-center gap-2 text-xs text-pewter transition-colors hover:text-text"
         >
             <span
                 aria-hidden="true"
-                class="transition-transform group-open:rotate-90"
+                class="text-royal transition-transform duration-300 group-open:rotate-90"
             >
                 ▸
             </span>
@@ -88,21 +77,19 @@ const hookAfter =
         </summary>
 
         <div class="mt-4 border-t border-border pt-4">
-            <p class="text-sm leading-7 text-text">
+            <p class="text-sm leading-6 text-text">
                 {details}
             </p>
 
             <slot name="diagram" />
 
             <ul
-                class="mt-4 flex flex-wrap gap-2"
+                class="mt-4 flex flex-wrap gap-x-3 gap-y-1"
                 aria-label={`${title} technology stack`}
             >
                 {
                     stack.map((item) => (
-                        <li class="rounded-sm border border-border px-2 py-1 font-mono text-[11px] text-muted">
-                            {item}
-                        </li>
+                        <li class="font-mono text-[10px] text-muted">{item}</li>
                     ))
                 }
             </ul>
@@ -113,13 +100,42 @@ const hookAfter =
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent-cyan hover:underline"
+                        class="mt-4 inline-flex items-center gap-1 text-xs font-medium text-text transition-colors hover:text-royal"
                     >
-                        View code
-                        <span aria-hidden="true">↗</span>
+                        View code ↗
                     </a>
                 )
             }
         </div>
     </details>
 </article>
+
+<script>
+    /*
+     * Keep project expansion exclusive even in browsers where
+     * named <details> accordion behavior differs.
+     */
+    document.addEventListener(
+        "toggle",
+        (event) => {
+            const opened = event.target;
+
+            if (
+                !(opened instanceof HTMLDetailsElement) ||
+                !opened.matches("[data-project-details]") ||
+                !opened.open
+            ) {
+                return;
+            }
+
+            document
+                .querySelectorAll<HTMLDetailsElement>("[data-project-details]")
+                .forEach((details) => {
+                    if (details !== opened) {
+                        details.open = false;
+                    }
+                });
+        },
+        true,
+    );
+</script>
