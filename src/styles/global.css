@@ -61,27 +61,47 @@
     monospace;
 }
 
-/* LIGHT — cool ivory, tailored, higher contrast */
+/* LIGHT — cool ivory, stronger editorial contrast */
 :root {
-  --theme-bg: #f2f0eb;
-  --theme-surface: #faf8f3;
-  --theme-border: #c9c5bd;
+  /*
+   * Page:
+   * slightly cooler and darker than the cards.
+   */
+  --theme-bg: #f1efea;
 
-  --theme-text: #15161a;
-  --theme-text-secondary: #45474d;
-  --theme-text-muted: #6f7379;
+  /*
+   * Surfaces:
+   * cleaner ivory so cards actually separate from the page.
+   */
+  --theme-surface: #faf9f6;
 
-  --theme-accent-cyan: #0d7182;
-  --theme-accent-violet: #655873;
+  /*
+   * Architectural lines:
+   * substantially more visible than before without becoming harsh.
+   */
+  --theme-border: #bdb8af;
 
-  --theme-accent: #59636d;
-  --theme-accent-strong: #30383f;
+  --theme-text: #151519;
+  --theme-text-secondary: #3f434a;
+  --theme-text-muted: #68707a;
 
-  /* Hui-ju: deeper wine rather than pink/red */
-  --theme-royal: #7a2433;
+  /*
+   * Technical interaction colors.
+   */
+  --theme-accent-cyan: #087486;
+  --theme-accent-violet: #62566e;
 
-  /* Ian: cool tailored grey */
-  --theme-pewter: #5d6873;
+  --theme-accent: #56616a;
+  --theme-accent-strong: #2e363d;
+
+  /*
+   * Controlled Perfect Crown-inspired accents.
+   *
+   * royal = deep wine
+   * pewter = tailored cool gray
+   */
+  --theme-royal: #7b2233;
+  --theme-pewter: #55616d;
 
   color-scheme: light;
 }
