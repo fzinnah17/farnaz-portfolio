@@ -2,6 +2,9 @@
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
+import JewelMark from "./JewelMark.astro";
+import RoyalLandscape from "./RoyalLandscape.astro";
+
 import hackathonWorking from "../assets/portfolio/archive/01-hackathon-working.jpeg";
 import microsoftPhoto from "../assets/portfolio/archive/02-microsoft.jpeg";
 import sweGroup from "../assets/portfolio/archive/03-swe-group.jpeg";
@@ -68,7 +71,6 @@ const archive: ArchiveItem[] = [
     alt: "Large group photo at a Society of Women Engineers event",
     size: "wide",
     imageMode: "scene",
-    focalPoint: "center center",
   },
   {
     number: "04",
@@ -79,7 +81,6 @@ const archive: ArchiveItem[] = [
     alt: "Professional conference panel on a blue-lit stage",
     size: "standard",
     imageMode: "scene",
-    focalPoint: "center center",
     breakProtocol: true,
   },
   {
@@ -91,7 +92,6 @@ const archive: ArchiveItem[] = [
     alt: "Farnaz with a hackathon team beside their project",
     size: "standard",
     imageMode: "scene",
-    focalPoint: "center center",
   },
   {
     number: "06",
@@ -113,7 +113,6 @@ const archive: ArchiveItem[] = [
     alt: "Farnaz with a professional group at an engineering event",
     size: "wide",
     imageMode: "scene",
-    focalPoint: "center center",
   },
   {
     number: "08",
@@ -147,7 +146,8 @@ const archive: ArchiveItem[] = [
   },
 ];
 
-const totalRecords = archive.length;
+const totalRecords =
+  archive.length;
 ---
 
 <section
@@ -159,66 +159,73 @@ const totalRecords = archive.length;
   <!-- ==================================================
        FIELD ARCHIVE / 03
   ================================================== -->
-  <header
-    class="archive-header grid border-y border-border md:grid-cols-[0.72fr_1.28fr]"
-  >
+  <header class="archive-header">
+    <!-- STATIC SUN / MOON / FIVE PEAKS -->
     <div
-      class="border-b border-border px-5 py-6 md:border-b-0 md:border-r"
+      class="archive-landscape"
+      aria-hidden="true"
     >
-      <p
-        class="text-[11px] uppercase tracking-[0.2em] text-royal"
-      >
-        Field Archive / 03
-      </p>
-
-      <h2
-        id="field-archive-title"
-        class="mt-2 font-display text-3xl font-normal text-text md:text-4xl"
-      >
-        Beyond the work.
-      </h2>
-
-      <!-- NAKHWA / REFLECTION MOTIF -->
-      <div
-        class="archive-reflection mt-4"
-        aria-hidden="true"
-      >
-        <span></span>
-        <span></span>
-      </div>
+      <RoyalLandscape />
     </div>
 
     <div
-      class="flex items-center justify-between gap-8 px-5 py-6"
+      class="archive-header-grid grid md:grid-cols-[0.72fr_1.28fr]"
     >
-      <p
-        class="max-w-lg text-[15px] leading-7 text-secondary"
+      <div
+        class="relative z-10 border-b border-border px-5 py-6 md:border-b-0 md:border-r"
       >
-        Hackathons, professional communities, workshops, and the rooms where
-        technical work becomes something shared.
-      </p>
+        <p
+          class="text-[11px] uppercase tracking-[0.2em] text-royal"
+        >
+          Field Archive / 03
+        </p>
+
+        <h2
+          id="field-archive-title"
+          class="mt-2 font-display text-3xl font-normal text-text md:text-4xl"
+        >
+          Beyond the work.
+        </h2>
+
+        <div
+          class="archive-reflection mt-4"
+          aria-hidden="true"
+        >
+          <span></span>
+          <span></span>
+        </div>
+      </div>
 
       <div
-        class="hidden shrink-0 items-center gap-3 md:flex"
-        aria-hidden="true"
+        class="relative z-10 flex items-center justify-between gap-8 px-5 py-6"
       >
-        <span class="h-px w-12 bg-border"></span>
-
-        <span
-          class="h-2 w-2 rotate-45 border border-royal"
-        ></span>
-
-        <span
-          class="text-[11px] uppercase tracking-[0.18em] text-pewter"
+        <p
+          class="max-w-lg text-[15px] leading-7 text-secondary"
         >
-          FZ / Field Record
-        </span>
+          Hackathons, professional communities, workshops, and the rooms where
+          technical work becomes something shared.
+        </p>
+
+        <div
+          class="hidden shrink-0 items-center gap-3 md:flex"
+          aria-hidden="true"
+        >
+          <span class="h-px w-10 bg-border"></span>
+
+          <JewelMark size="sm" />
+
+          <span
+            class="text-[11px] uppercase tracking-[0.18em] text-pewter"
+          >
+            FZ / Field Record
+          </span>
+        </div>
       </div>
     </div>
   </header>
 
   <!-- ==================================================
-       ACCESSIBLE COURT REGISTER
+       COURT REGISTER
   ================================================== -->
   <div
     class="archive-controls mt-5 grid gap-4 border-y px-4 py-3 sm:grid-cols-[1fr_auto] sm:items-center"
@@ -258,15 +265,12 @@ const totalRecords = archive.length;
         data-archive-prev
         aria-controls="field-archive-scroll"
         class="archive-control-button"
-        aria-label="View previous field archive record"
       >
         <span aria-hidden="true">
           ←
         </span>
 
-        <span>
-          Previous
-        </span>
+        Previous
       </button>
 
       <button
@@ -274,11 +278,8 @@ const totalRecords = archive.length;
         data-archive-next
         aria-controls="field-archive-scroll"
         class="archive-control-button"
-        aria-label="View next field archive record"
       >
-        <span>
-          Next
-        </span>
+        Next
 
         <span aria-hidden="true">
           →
@@ -289,30 +290,19 @@ const totalRecords = archive.length;
 
   <p
     id="field-archive-instructions"
-    class="archive-instructions mt-3 text-[12px] leading-5 text-muted"
+    class="mt-3 text-[12px] leading-5 text-muted"
   >
     Browse with Previous/Next, arrow keys, trackpad, or swipe.
   </p>
 
   <!-- ==================================================
-       FOLDING-SCREEN STAGE
+       FOLDING SCREEN
   ================================================== -->
   <div class="archive-stage relative mt-4">
-    <!-- CEREMONIAL OPENING RULE -->
     <div
       class="archive-ceremonial-line"
       aria-hidden="true"
     ></div>
-
-    <!-- FORMAL RANK MARK -->
-    <div
-      class="archive-rank-mark"
-      aria-hidden="true"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
 
     <div
       id="field-archive-scroll"
@@ -332,12 +322,16 @@ const totalRecords = archive.length;
               data-index={index}
               data-size={item.size}
               data-image-mode={item.imageMode}
-              data-break={item.breakProtocol ? "true" : "false"}
+              data-break={
+                item.breakProtocol
+                  ? "true"
+                  : "false"
+              }
               role="group"
               aria-labelledby={`archive-title-${item.number}`}
               style={`--archive-object-position: ${item.focalPoint ?? "center center"};`}
             >
-              <!-- HUI-JU / OXBLOOD INTERRUPTION -->
+              <!-- RED CORNER -->
               <span
                 class="archive-corner archive-corner-x"
                 aria-hidden="true"
@@ -348,7 +342,7 @@ const totalRecords = archive.length;
                 aria-hidden="true"
               ></span>
 
-              <!-- FOLDING-SCREEN HINGES -->
+              <!-- SCREEN HINGES -->
               <div
                 class="archive-hinges"
                 aria-hidden="true"
@@ -357,12 +351,28 @@ const totalRecords = archive.length;
                 <span></span>
               </div>
 
-              <!-- PHOTO -->
+              <!-- SPECIAL STATIC JEWEL ON PROTOCOL BREAK -->
+              {
+                item.breakProtocol && (
+                  <span
+                    class="archive-protocol-jewel"
+                    aria-hidden="true"
+                  >
+                    <JewelMark size="sm" />
+                  </span>
+                )
+              }
+
               <div class="archive-image">
                 <Image
                   src={item.image}
                   alt={item.alt}
-                  widths={[420, 640, 840, 1000]}
+                  widths={[
+                    420,
+                    640,
+                    840,
+                    1000,
+                  ]}
                   sizes="(max-width: 640px) 82vw, 22rem"
                   loading="lazy"
                   class="archive-photo"
@@ -376,15 +386,12 @@ const totalRecords = archive.length;
                 </span>
               </div>
 
-              <!-- ALWAYS-VISIBLE RECORD -->
               <div class="archive-caption">
                 <div
                   class="flex items-start justify-between gap-4"
                 >
                   <div class="min-w-0">
-                    <p
-                      class="archive-category"
-                    >
+                    <p class="archive-category">
                       {item.number} / {item.register}
                     </p>
 
@@ -402,9 +409,7 @@ const totalRecords = archive.length;
                   ></span>
                 </div>
 
-                <p
-                  class="archive-note mt-2"
-                >
+                <p class="archive-note mt-2">
                   {item.note}
                 </p>
 
@@ -420,23 +425,18 @@ const totalRecords = archive.length;
           ))
         }
 
-        <!-- END REGISTER -->
         <div
           class="archive-end"
           aria-hidden="true"
         >
-          <div>
-            <p>
-              End / {String(totalRecords).padStart(2, "0")}
-            </p>
-
-            <span></span>
-          </div>
+          <p>
+            End /
+            {String(totalRecords).padStart(2, "0")}
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT-SIDE DISCOVERY FADE -->
     <div
       class="archive-edge-right"
       aria-hidden="true"
@@ -445,55 +445,51 @@ const totalRecords = archive.length;
 </section>
 
 <style>
-  /*
-   * ==================================================
-   * FIELD ARCHIVE
-   *
-   * PERFECT CROWN VISUAL SYSTEM
-   *
-   * - modern content inside formal structure
-   * - folding-screen vertical bays
-   * - court-register ordering
-   * - oxblood controlled disruption
-   * - pewter hinges
-   * - reflection lines
-   * - one subtle protocol break
-   * - ceremonial opening motion
-   *
-   * ACCESSIBILITY
-   *
-   * - no autoplay
-   * - no hover-only information
-   * - no card height changes
-   * - large functional typography
-   * - keyboard navigation
-   * - reduced motion supported
-   * - cards are not unnecessary Tab stops
-   * ==================================================
-   */
-
   .field-archive {
     position: relative;
   }
 
   /*
    * ==================================================
-   * HEADER
+   * HEADER + STATIC LANDSCAPE
    * ==================================================
    */
 
   .archive-header {
+    position: relative;
+
+    overflow: hidden;
+
+    border-top:
+      1px solid
+      var(--theme-border);
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
     background:
-      color-mix(
-        in srgb,
-        var(--theme-surface) 24%,
-        transparent
-      );
+      var(--theme-surface);
   }
 
-  /*
-   * Reflection motif.
-   */
+  .archive-landscape {
+    position: absolute;
+
+    right: -2%;
+    bottom: -10px;
+
+    width: 64%;
+    height: 95%;
+
+    opacity: 0.46;
+
+    pointer-events: none;
+  }
+
+  .archive-header-grid {
+    position: relative;
+  }
+
   .archive-reflection {
     display: flex;
 
@@ -505,7 +501,6 @@ const totalRecords = archive.length;
   }
 
   .archive-reflection span:first-child {
-    width: 100%;
     height: 1px;
 
     background:
@@ -530,7 +525,7 @@ const totalRecords = archive.length;
 
   /*
    * ==================================================
-   * COURT REGISTER / CONTROLS
+   * CONTROLS
    * ==================================================
    */
 
@@ -541,18 +536,17 @@ const totalRecords = archive.length;
     background:
       color-mix(
         in srgb,
-        var(--theme-surface) 42%,
+        var(--theme-surface) 48%,
         transparent
       );
   }
 
   .archive-control-button {
-    display: inline-flex;
-
     min-height: 44px;
 
-    align-items: center;
+    display: inline-flex;
 
+    align-items: center;
     justify-content: center;
 
     gap: 0.5rem;
@@ -571,16 +565,8 @@ const totalRecords = archive.length;
     font-size:
       0.875rem;
 
-    line-height:
-      1.25rem;
-
     color:
       var(--theme-text-secondary);
-
-    transition:
-      border-color 180ms ease,
-      color 180ms ease,
-      background-color 180ms ease;
   }
 
   .archive-control-button:hover {
@@ -589,13 +575,6 @@ const totalRecords = archive.length;
 
     color:
       var(--theme-text);
-
-    background:
-      color-mix(
-        in srgb,
-        var(--theme-surface) 70%,
-        transparent
-      );
   }
 
   .archive-control-button:focus-visible {
@@ -615,7 +594,7 @@ const totalRecords = archive.length;
 
   /*
    * ==================================================
-   * FIXED ARCHIVE STAGE
+   * STAGE
    * ==================================================
    */
 
@@ -636,11 +615,6 @@ const totalRecords = archive.length;
       );
   }
 
-  /*
-   * Ceremonial oxblood line.
-   *
-   * This is the one entrance animation.
-   */
   .archive-ceremonial-line {
     position: absolute;
 
@@ -648,7 +622,7 @@ const totalRecords = archive.length;
     right: 0;
     top: 0;
 
-    z-index: 12;
+    z-index: 20;
 
     height: 2px;
 
@@ -661,7 +635,7 @@ const totalRecords = archive.length;
         var(--theme-royal),
         color-mix(
           in srgb,
-          var(--theme-royal) 54%,
+          var(--theme-royal) 50%,
           var(--theme-pewter)
         ),
         transparent
@@ -669,49 +643,12 @@ const totalRecords = archive.length;
   }
 
   /*
-   * Three-line formal rank marker.
-   */
-  .archive-rank-mark {
-    position: absolute;
-
-    left: 0;
-    top: -6px;
-
-    z-index: 14;
-
-    display: flex;
-
-    gap: 3px;
-  }
-
-  .archive-rank-mark span {
-    width: 1px;
-
-    background:
-      var(--theme-royal);
-  }
-
-  .archive-rank-mark span:nth-child(1) {
-    height: 9px;
-  }
-
-  .archive-rank-mark span:nth-child(2) {
-    height: 14px;
-  }
-
-  .archive-rank-mark span:nth-child(3) {
-    height: 8px;
-  }
-
-  /*
    * ==================================================
-   * SCROLL REGION
+   * SCROLLER
    * ==================================================
    */
 
   .archive-scroll {
-    position: relative;
-
     height: 100%;
 
     overflow-x: auto;
@@ -744,21 +681,10 @@ const totalRecords = archive.length;
     height: 6px;
   }
 
-  .archive-scroll::-webkit-scrollbar-track {
-    background:
-      transparent;
-  }
-
   .archive-scroll::-webkit-scrollbar-thumb {
     background:
       var(--theme-pewter);
   }
-
-  /*
-   * ==================================================
-   * FOLDING-SCREEN TRACK
-   * ==================================================
-   */
 
   .archive-track {
     display: flex;
@@ -775,13 +701,11 @@ const totalRecords = archive.length;
       4rem
       1.25rem
       0;
-
-    gap: 0;
   }
 
   /*
    * ==================================================
-   * INDIVIDUAL PANEL
+   * PANELS
    * ==================================================
    */
 
@@ -812,17 +736,6 @@ const totalRecords = archive.length;
 
     background:
       var(--theme-surface);
-
-    transition:
-      transform 350ms
-        cubic-bezier(
-          0.22,
-          1,
-          0.36,
-          1
-        ),
-      border-color 180ms ease,
-      box-shadow 180ms ease;
   }
 
   .archive-panel:last-of-type {
@@ -831,10 +744,6 @@ const totalRecords = archive.length;
       var(--theme-border);
   }
 
-  /*
-   * Approximately three records plus the beginning
-   * of a fourth at desktop width.
-   */
   .archive-panel[data-size="wide"] {
     width: 22rem;
   }
@@ -852,7 +761,7 @@ const totalRecords = archive.length;
   }
 
   /*
-   * One deliberate protocol break.
+   * Protocol break.
    */
   .archive-panel[data-break="true"] {
     transform:
@@ -861,29 +770,9 @@ const totalRecords = archive.length;
       );
   }
 
-  .archive-panel:hover {
-    z-index: 5;
-
-    border-color:
-      color-mix(
-        in srgb,
-        var(--theme-pewter) 72%,
-        var(--theme-border)
-      );
-
-    box-shadow:
-      0 18px 40px
-      rgba(
-        18,
-        18,
-        20,
-        0.07
-      );
-  }
-
   /*
    * ==================================================
-   * FOLDING-SCREEN HINGES
+   * HINGES
    * ==================================================
    */
 
@@ -915,7 +804,7 @@ const totalRecords = archive.length;
     background:
       color-mix(
         in srgb,
-        var(--theme-pewter) 60%,
+        var(--theme-pewter) 62%,
         var(--theme-border)
       );
   }
@@ -950,18 +839,8 @@ const totalRecords = archive.length;
   }
 
   /*
-   * Stronger oxblood hinge on the panel
-   * that breaks protocol.
-   */
-  .archive-panel[data-break="true"]
-    .archive-hinges span:first-child {
-    border-color:
-      var(--theme-royal);
-  }
-
-  /*
    * ==================================================
-   * CONTROLLED RED CORNER
+   * RED INTERRUPTION
    * ==================================================
    */
 
@@ -971,14 +850,12 @@ const totalRecords = archive.length;
     left: -1px;
     top: -1px;
 
-    z-index: 16;
+    z-index: 18;
 
     background:
       var(--theme-royal);
 
     opacity: 0.72;
-
-    pointer-events: none;
   }
 
   .archive-corner-x {
@@ -996,19 +873,18 @@ const totalRecords = archive.length;
     opacity: 1;
   }
 
-  .archive-panel[data-break="true"]
-    .archive-corner-x {
-    width: 3.25rem;
-  }
+  .archive-protocol-jewel {
+    position: absolute;
 
-  .archive-panel[data-break="true"]
-    .archive-corner-y {
-    height: 3.25rem;
+    left: 0.75rem;
+    top: 0.7rem;
+
+    z-index: 20;
   }
 
   /*
    * ==================================================
-   * IMAGE AREA
+   * IMAGE
    * ==================================================
    */
 
@@ -1034,8 +910,6 @@ const totalRecords = archive.length;
   }
 
   .archive-photo {
-    display: block;
-
     width: 100%;
     height: 100%;
 
@@ -1049,44 +923,11 @@ const totalRecords = archive.length;
     filter:
       saturate(0.92)
       contrast(1.018);
-
-    transition:
-      transform 550ms
-        cubic-bezier(
-          0.22,
-          1,
-          0.36,
-          1
-        ),
-      filter 350ms ease;
   }
 
   /*
-   * SCENE
-   *
-   * Context can crop slightly.
-   */
-  .archive-panel[data-image-mode="scene"]
-    .archive-photo {
-    object-fit: cover;
-  }
-
-  /*
-   * PORTRAIT
-   *
-   * Keep the person dominant while respecting
-   * the custom focal point.
-   */
-  .archive-panel[data-image-mode="portrait"]
-    .archive-photo {
-    object-fit: cover;
-  }
-
-  /*
-   * RECORD
-   *
-   * Logos, signs and artifacts are evidence.
-   * Show the complete photograph.
+   * Signs, logos and record photos:
+   * preserve the whole image.
    */
   .archive-panel[data-image-mode="record"]
     .archive-image {
@@ -1107,26 +948,6 @@ const totalRecords = archive.length;
   }
 
   /*
-   * Hover is purely decorative.
-   */
-  .archive-panel:hover
-    .archive-photo {
-    transform:
-      scale(
-        1.01
-      );
-
-    filter:
-      saturate(1)
-      contrast(1.018);
-  }
-
-  .archive-panel[data-image-mode="record"]:hover
-    .archive-photo {
-    transform: none;
-  }
-
-  /*
    * ==================================================
    * PHOTO NUMBER
    * ==================================================
@@ -1138,8 +959,6 @@ const totalRecords = archive.length;
     right: 0.75rem;
     top: 0.75rem;
 
-    z-index: 6;
-
     min-width: 2rem;
 
     padding:
@@ -1148,30 +967,19 @@ const totalRecords = archive.length;
 
     border:
       1px solid
-      color-mix(
-        in srgb,
-        var(--theme-border) 70%,
-        transparent
-      );
+      var(--theme-border);
 
     background:
       color-mix(
         in srgb,
-        var(--theme-bg) 86%,
+        var(--theme-bg) 88%,
         transparent
-      );
-
-    backdrop-filter:
-      blur(
-        5px
       );
 
     text-align: center;
 
     font-family:
       ui-monospace,
-      SFMono-Regular,
-      Menlo,
       monospace;
 
     font-size:
@@ -1187,9 +995,6 @@ const totalRecords = archive.length;
   /*
    * ==================================================
    * CAPTION
-   *
-   * Always visible.
-   * Never depends on hover.
    * ==================================================
    */
 
@@ -1269,9 +1074,6 @@ const totalRecords = archive.length;
       var(--theme-royal);
   }
 
-  /*
-   * Caption reflection.
-   */
   .archive-caption-reflection {
     display: flex;
 
@@ -1284,7 +1086,6 @@ const totalRecords = archive.length;
 
   .archive-caption-reflection
     span:first-child {
-    width: 100%;
     height: 1px;
 
     background:
@@ -1310,7 +1111,7 @@ const totalRecords = archive.length;
 
   /*
    * ==================================================
-   * END REGISTER
+   * END
    * ==================================================
    */
 
@@ -1330,24 +1131,12 @@ const totalRecords = archive.length;
       var(--theme-border);
   }
 
-  .archive-end div {
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 0.8rem;
-  }
-
   .archive-end p {
     writing-mode:
       vertical-rl;
 
     font-family:
       ui-monospace,
-      SFMono-Regular,
-      Menlo,
       monospace;
 
     font-size:
@@ -1363,20 +1152,6 @@ const totalRecords = archive.length;
       var(--theme-muted);
   }
 
-  .archive-end span {
-    width: 1px;
-    height: 3rem;
-
-    background:
-      var(--theme-royal);
-  }
-
-  /*
-   * ==================================================
-   * EDGE DISCOVERY
-   * ==================================================
-   */
-
   .archive-edge-right {
     position: absolute;
 
@@ -1384,7 +1159,7 @@ const totalRecords = archive.length;
     top: 2px;
     bottom: 1.25rem;
 
-    z-index: 20;
+    z-index: 30;
 
     width: 2.25rem;
 
@@ -1401,89 +1176,54 @@ const totalRecords = archive.length;
   /*
    * ==================================================
    * LIGHT MODE
-   *
-   * Stronger hierarchy than the previous version.
    * ==================================================
    */
 
   :global(html:not(.dark))
     .archive-header {
     background:
-      #f7f5f0;
+      #f4f1ea;
+  }
+
+  :global(html:not(.dark))
+    .archive-landscape {
+    opacity: 0.56;
   }
 
   :global(html:not(.dark))
     .archive-controls {
     border-color:
-      #aaa39a;
+      #9f988e;
 
     background:
-      #e8e4dc;
-  }
-
-  :global(html:not(.dark))
-    .archive-controls
-    .bg-border {
-    background:
-      #9c958c;
+      #e5e0d7;
   }
 
   :global(html:not(.dark))
     .archive-control-button {
     border-color:
-      #9e978e;
+      #989188;
 
     background:
-      #f6f3ed;
+      #f8f6f1;
 
     color:
-      #2e3238;
-  }
-
-  :global(html:not(.dark))
-    .archive-control-button:hover {
-    border-color:
-      var(--theme-royal);
-
-    background:
-      #fcfaf6;
-
-    color:
-      #151519;
+      #292d33;
   }
 
   :global(html:not(.dark))
     .archive-stage {
-    border-color:
-      #a9a298;
-
     background:
-      #eae6de;
+      #e8e3da;
   }
 
   :global(html:not(.dark))
     .archive-panel {
     border-color:
-      #9f988f;
+      #989188;
 
     background:
       #fbfaf6;
-  }
-
-  :global(html:not(.dark))
-    .archive-image {
-    border-color:
-      #aaa39a;
-
-    background:
-      #e9e5dd;
-  }
-
-  :global(html:not(.dark))
-    .archive-panel[data-image-mode="record"]
-    .archive-image {
-    background:
-      #e4e0d7;
   }
 
   :global(html:not(.dark))
@@ -1493,49 +1233,18 @@ const totalRecords = archive.length;
   }
 
   :global(html:not(.dark))
-    .archive-hinges::before {
-    background:
-      #888178;
-  }
-
-  :global(html:not(.dark))
     .archive-hinges span {
     border-color:
-      #777168;
+      #716b63;
 
     background:
-      #f7f4ee;
+      #f5f2ec;
   }
 
   :global(html:not(.dark))
-    .archive-panel[data-break="true"]
-    .archive-hinges span:first-child {
-    border-color:
-      var(--theme-royal);
-  }
-
-  :global(html:not(.dark))
-    .archive-photo-number {
-    border-color:
-      #9d968c;
-
+    .archive-hinges::before {
     background:
-      rgba(
-        250,
-        248,
-        243,
-        0.92
-      );
-  }
-
-  :global(html:not(.dark))
-    .archive-edge-right {
-    background:
-      linear-gradient(
-        to left,
-        #f1efea,
-        transparent
-      );
+      #817a72;
   }
 
   /*
@@ -1545,19 +1254,20 @@ const totalRecords = archive.length;
    */
 
   :global(html.dark)
-    .archive-stage {
+    .archive-header {
     background:
-      #090d14;
+      #0b0f16;
   }
 
   :global(html.dark)
-    .archive-panel {
+    .archive-landscape {
+    opacity: 0.38;
+  }
+
+  :global(html.dark)
+    .archive-stage {
     background:
-      color-mix(
-        in srgb,
-        var(--theme-surface) 72%,
-        #080b12
-      );
+      #090d14;
   }
 
   :global(html.dark)
@@ -1574,30 +1284,9 @@ const totalRecords = archive.length;
       brightness(0.92);
   }
 
-  :global(html.dark)
-    .archive-panel:hover
-    .archive-photo {
-    filter:
-      saturate(0.92)
-      contrast(1.025)
-      brightness(0.95);
-  }
-
-  :global(html.dark)
-    .archive-panel[data-image-mode="record"]
-    .archive-photo {
-    filter:
-      saturate(0.86)
-      contrast(1.02)
-      brightness(0.94);
-  }
-
   /*
    * ==================================================
-   * CEREMONIAL ENTRANCE
-   *
-   * Content remains visible.
-   * Motion is decorative only.
+   * ONE-TIME SCREEN ENTRANCE
    * ==================================================
    */
 
@@ -1613,7 +1302,7 @@ const totalRecords = archive.length;
     .archive-panel {
     translate:
       0
-      6px;
+      5px;
   }
 
   .field-archive[data-motion="ready"][data-entered="true"]
@@ -1652,87 +1341,27 @@ const totalRecords = archive.length;
   }
 
   /*
-   * Keep the intentional 04 protocol break.
-   */
-  .field-archive[data-motion="ready"][data-entered="true"]
-    .archive-panel[data-break="true"] {
-    transform:
-      translateY(
-        8px
-      );
-  }
-
-  /*
-   * ==================================================
-   * TABLET
-   * ==================================================
-   */
-
-  @media (
-    max-width: 900px
-  ) {
-    .archive-stage {
-      height:
-        29rem;
-    }
-
-    .archive-panel,
-    .archive-end {
-      height:
-        26rem;
-    }
-
-    .archive-panel[data-size="wide"] {
-      width:
-        20rem;
-    }
-
-    .archive-panel[data-size="standard"] {
-      width:
-        17rem;
-    }
-
-    .archive-panel[data-size="narrow"] {
-      width:
-        14.5rem;
-    }
-
-    .archive-panel[data-size="portrait"] {
-      width:
-        15.5rem;
-    }
-
-    .archive-caption {
-      min-height:
-        8.5rem;
-    }
-  }
-
-  /*
    * ==================================================
    * MOBILE
-   *
-   * One main record plus a visible portion of the next.
    * ==================================================
    */
 
   @media (
     max-width: 640px
   ) {
-    .archive-stage {
-      height:
-        29rem;
+    .archive-landscape {
+      width: 100%;
+
+      opacity: 0.28;
     }
 
-    .archive-track {
-      padding-right:
-        1.75rem;
+    .archive-stage {
+      height: 29rem;
     }
 
     .archive-panel,
     .archive-end {
-      height:
-        26rem;
+      height: 26rem;
     }
 
     .archive-panel[data-size="wide"],
@@ -1752,27 +1381,13 @@ const totalRecords = archive.length;
     }
 
     .archive-control-button {
-      flex:
-        1;
-    }
-
-    .archive-caption {
-      min-height:
-        8.8rem;
-    }
-
-    .archive-edge-right {
-      width:
-        1.2rem;
+      flex: 1;
     }
   }
 
   /*
    * ==================================================
    * REDUCED MOTION
-   *
-   * The archive simply appears.
-   * No functionality is lost.
    * ==================================================
    */
 
@@ -1780,37 +1395,23 @@ const totalRecords = archive.length;
     prefers-reduced-motion:
       reduce
   ) {
-    .field-archive,
     .archive-panel,
-    .archive-photo,
-    .archive-ceremonial-line,
-    .archive-control-button {
+    .archive-ceremonial-line {
       animation:
         none !important;
 
       transition:
         none !important;
+
+      translate:
+        0 0 !important;
     }
 
-    .field-archive[data-motion="ready"]
-      .archive-ceremonial-line {
+    .archive-ceremonial-line {
       transform:
         scaleX(
           1
-        );
-    }
-
-    .field-archive[data-motion="ready"]
-      .archive-panel {
-      translate:
-        0
-        0;
-    }
-
-    .archive-panel:hover
-      .archive-photo {
-      transform:
-        none;
+        ) !important;
     }
   }
 </style>
@@ -1856,13 +1457,6 @@ const totalRecords = archive.length;
 
     let currentIndex = 0;
     let scrollFrame = 0;
-
-    function getBehavior():
-      ScrollBehavior {
-      return reducedMotion.matches
-        ? "auto"
-        : "smooth";
-    }
 
     function clampIndex(
       index: number,
@@ -1919,26 +1513,20 @@ const totalRecords = archive.length;
         );
 
       const panel =
-        panels[
-          nextIndex
-        ];
+        panels[nextIndex];
 
       if (!panel) {
         return;
       }
 
-      /*
-       * Scroll only the archive itself.
-       *
-       * Using scrollTo rather than scrollIntoView
-       * prevents the whole page from unexpectedly
-       * moving vertically.
-       */
       scroller.scrollTo({
         left:
           panel.offsetLeft,
+
         behavior:
-          getBehavior(),
+          reducedMotion.matches
+            ? "auto"
+            : "smooth",
       });
 
       updateControls(
@@ -1964,12 +1552,6 @@ const totalRecords = archive.length;
       },
     );
 
-    /*
-     * Keyboard navigation lives on the archive region.
-     *
-     * The individual photo cards are deliberately
-     * NOT separate Tab stops.
-     */
     scroller?.addEventListener(
       "keydown",
       (event) => {
@@ -2025,10 +1607,6 @@ const totalRecords = archive.length;
       },
     );
 
-    /*
-     * Keep the counter synchronized with
-     * mouse-wheel, trackpad and touch scrolling.
-     */
     scroller?.addEventListener(
       "scroll",
       () => {
@@ -2085,12 +1663,7 @@ const totalRecords = archive.length;
     );
 
     /*
-     * --------------------------------------------------
-     * CEREMONIAL OPENING
-     * --------------------------------------------------
-     *
-     * One short decorative entrance.
-     * No autoplay afterward.
+     * One short entrance.
      */
     if (
       !reducedMotion.matches
@@ -2104,11 +1677,9 @@ const totalRecords = archive.length;
             entries,
             archiveObserver,
           ) => {
-            const entry =
-              entries[0];
-
             if (
-              !entry?.isIntersecting
+              !entries[0]
+                ?.isIntersecting
             ) {
               return;
             }

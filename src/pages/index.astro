@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+import ArcheryTransition from "../components/ArcheryTransition.astro";
 import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
 import ExperienceLog from "../components/ExperienceLog.astro";
 import FieldArchive from "../components/FieldArchive.astro";
@@ -8,6 +9,7 @@ import FlowDiagram from "../components/FlowDiagram.astro";
 import Hero from "../components/Hero.astro";
 import PerformanceComparison from "../components/PerformanceComparison.astro";
 import StackManifest from "../components/StackManifest.astro";
+import WaltzInterlude from "../components/WaltzInterlude.astro";
 import WorkGallery from "../components/WorkGallery.astro";
 ---
 
@@ -28,11 +30,11 @@ import WorkGallery from "../components/WorkGallery.astro";
       class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-2 lg:pr-12"
       aria-label="Experience and technical stack"
     >
-      <!-- CEREMONIAL CHAPTER REGISTER -->
+      <!-- CHAPTER REGISTER -->
       <div
         class="col-span-full flex items-center gap-4 border-y border-border px-1 py-3"
       >
-        <span class="text-[9px] uppercase tracking-[0.2em] text-royal">
+        <span class="text-[11px] uppercase tracking-[0.18em] text-royal">
           Experience / 01
         </span>
 
@@ -73,157 +75,167 @@ import WorkGallery from "../components/WorkGallery.astro";
     <!-- ==================================================
          WORK / 02
     ================================================== -->
-    <section
-      id="work"
-      class="mx-auto max-w-6xl scroll-mt-24 px-6 lg:pr-12"
-      aria-label="Selected work"
-    >
-      <WorkGallery>
-        <!-- 01 · ML + SECURITY -->
-        <div data-work-item data-category="ml-security" class="min-w-0">
-          <ExpandableProjectCard
-            eyebrow="ML · Security / 01"
-            title="Adversarial Robustness Testing"
-            hook="PGD cut classifier accuracy from 76% to 0.2%."
-            details="Tested PGD attacks on an ImageNet classifier. Cross-model transfer reached 90% at ε=8/255 over 20 steps."
-            stack={["PyTorch", "ImageNet-1K", "Security"]}
-            href="https://github.com/fzinnah17/neural-network-jailbreak"
-          />
-        </div>
+    <div class="space-y-4">
+      <!-- ONE-TIME ARCHERY TRANSITION -->
+      <ArcheryTransition />
 
-        <!-- 02 · SYSTEMS -->
-        <div data-work-item data-category="systems" class="min-w-0">
-          <ExpandableProjectCard
-            eyebrow="Systems · Performance / 02"
-            title="Mojo vs CUDA"
-            hook="Mojo led compute-bound work by 1.7–1.9×; CUDA led memory-bound work."
-            details="The bottleneck changed the winner."
-            stack={["Mojo", "CUDA", "MAX Graph"]}
-          >
-            <PerformanceComparison slot="diagram" />
-          </ExpandableProjectCard>
-        </div>
-
-        <!-- 03 · AI SYSTEMS -->
-        <div data-work-item data-category="ai-systems" class="min-w-0">
-          <ExpandableProjectCard
-            eyebrow="AI Systems / 03"
-            title="Agentic SDLC Automation"
-            hook="Backlog → story draft → sync → retrieval."
-            details="Agents draft stories, sync work items, and retrieve answers from sprint documentation."
-            stack={["Azure OpenAI", "RAG", "Azure DevOps", "Python"]}
-          >
-            <FlowDiagram
-              slot="diagram"
-              steps={[
-                {
-                  label: "Backlog",
-                },
-                {
-                  label: "Draft",
-                },
-                {
-                  label: "Sync",
-                },
-                {
-                  label: "Retrieve",
-                },
-              ]}
+      <section
+        id="work"
+        class="mx-auto max-w-6xl scroll-mt-24 px-6 lg:pr-12"
+        aria-label="Selected work"
+      >
+        <WorkGallery>
+          <!-- 01 -->
+          <div data-work-item data-category="ml-security" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="ML · Security / 01"
+              title="Adversarial Robustness Testing"
+              hook="PGD cut classifier accuracy from 76% to 0.2%."
+              details="Tested PGD attacks on an ImageNet classifier. Cross-model transfer reached 90% at ε=8/255 over 20 steps."
+              stack={["PyTorch", "ImageNet-1K", "Security"]}
+              href="https://github.com/fzinnah17/neural-network-jailbreak"
             />
-          </ExpandableProjectCard>
-        </div>
+          </div>
 
-        <!-- 04 · AI SYSTEMS REVIEW -->
-        <div data-work-item data-category="ai-systems" class="min-w-0">
-          <ExpandableProjectCard
-            eyebrow="AI Systems · Review / 04"
-            title="Board Materials Review Agent"
-            hook="Document intake → rules → flagged review."
-            details="Extracts structure, checks explicit rules, and surfaces exceptions for human review."
-            stack={["Azure OpenAI", "Storage", "Key Vault", "Python"]}
-          >
-            <FlowDiagram
-              slot="diagram"
-              steps={[
-                {
-                  label: "Intake",
-                },
-                {
-                  label: "Extract",
-                },
-                {
-                  label: "Check",
-                },
-                {
-                  label: "Flag",
-                },
-                {
-                  label: "Review",
-                },
-              ]}
+          <!-- 02 -->
+          <div data-work-item data-category="systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="Systems · Performance / 02"
+              title="Mojo vs CUDA"
+              hook="Mojo led compute-bound work by 1.7–1.9×; CUDA led memory-bound work."
+              details="The bottleneck changed the winner."
+              stack={["Mojo", "CUDA", "MAX Graph"]}
+            >
+              <PerformanceComparison slot="diagram" />
+            </ExpandableProjectCard>
+          </div>
+
+          <!-- 03 -->
+          <div data-work-item data-category="ai-systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="AI Systems / 03"
+              title="Agentic SDLC Automation"
+              hook="Backlog → story draft → sync → retrieval."
+              details="Agents draft stories, sync work items, and retrieve answers from sprint documentation."
+              stack={["Azure OpenAI", "RAG", "Azure DevOps", "Python"]}
+            >
+              <FlowDiagram
+                slot="diagram"
+                steps={[
+                  {
+                    label: "Backlog",
+                  },
+                  {
+                    label: "Draft",
+                  },
+                  {
+                    label: "Sync",
+                  },
+                  {
+                    label: "Retrieve",
+                  },
+                ]}
+              />
+            </ExpandableProjectCard>
+          </div>
+
+          <!-- 04 -->
+          <div data-work-item data-category="ai-systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="AI Systems · Review / 04"
+              title="Board Materials Review Agent"
+              hook="Document intake → rules → flagged review."
+              details="Extracts structure, checks explicit rules, and surfaces exceptions for human review."
+              stack={["Azure OpenAI", "Storage", "Key Vault", "Python"]}
+            >
+              <FlowDiagram
+                slot="diagram"
+                steps={[
+                  {
+                    label: "Intake",
+                  },
+                  {
+                    label: "Extract",
+                  },
+                  {
+                    label: "Check",
+                  },
+                  {
+                    label: "Flag",
+                  },
+                  {
+                    label: "Review",
+                  },
+                ]}
+              />
+            </ExpandableProjectCard>
+          </div>
+
+          <!-- 05 -->
+          <div data-work-item data-category="ai-systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="AI · Governance / 05"
+              title="AI Governance Agent"
+              hook="First-pass risk check before human review."
+              details="Checks data sensitivity, third-party exposure, and access-control risk."
+              stack={["Gemini", "Vertex AI", "Python"]}
             />
-          </ExpandableProjectCard>
-        </div>
+          </div>
 
-        <!-- 05 · AI GOVERNANCE -->
-        <div data-work-item data-category="ai-systems" class="min-w-0">
-          <ExpandableProjectCard
-            eyebrow="AI · Governance / 05"
-            title="AI Governance Agent"
-            hook="First-pass risk check before human review."
-            details="Checks data sensitivity, third-party exposure, and access-control risk."
-            stack={["Gemini", "Vertex AI", "Python"]}
-          />
-        </div>
+          <!-- PUBLIC -->
+          <div slot="public" class="border-y border-border">
+            <a
+              href="https://github.com/fzinnah17/literature-screening-demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="grid gap-2 border-b border-border px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
+            >
+              <span class="font-mono text-[10px] tracking-[0.12em] text-royal">
+                01
+              </span>
 
-        <!-- PUBLIC PROJECTS -->
-        <div slot="public" class="border-y border-border">
-          <!-- PUBLIC 01 -->
-          <a
-            href="https://github.com/fzinnah17/literature-screening-demo"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="grid gap-2 border-b border-border px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
-          >
-            <span class="font-mono text-[9px] tracking-[0.12em] text-royal">
-              01
-            </span>
+              <span class="font-display text-lg text-text">
+                Literature Screening ↗
+              </span>
 
-            <span class="font-display text-lg text-text">
-              Literature Screening ↗
-            </span>
+              <span class="text-sm text-secondary">
+                Azure · structured outputs
+              </span>
+            </a>
 
-            <span class="text-sm text-secondary">
-              Azure · structured outputs
-            </span>
-          </a>
+            <a
+              href="https://github.com/fzinnah17/ml-experiment-reporter"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="grid gap-2 px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
+            >
+              <span class="font-mono text-[10px] tracking-[0.12em] text-royal">
+                02
+              </span>
 
-          <!-- PUBLIC 02 -->
-          <a
-            href="https://github.com/fzinnah17/ml-experiment-reporter"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="grid gap-2 px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
-          >
-            <span class="font-mono text-[9px] tracking-[0.12em] text-royal">
-              02
-            </span>
+              <span class="font-display text-lg text-text">
+                Experiment Reporter ↗
+              </span>
 
-            <span class="font-display text-lg text-text">
-              Experiment Reporter ↗
-            </span>
-
-            <span class="text-sm text-secondary">
-              Vertex AI · experiment analysis
-            </span>
-          </a>
-        </div>
-      </WorkGallery>
-    </section>
+              <span class="text-sm text-secondary">
+                Vertex AI · experiment analysis
+              </span>
+            </a>
+          </div>
+        </WorkGallery>
+      </section>
+    </div>
 
     <!-- ==================================================
-         FIELD ARCHIVE / 03
+         QUIET CEREMONIAL INTERLUDE
+         
+         Waltz lives HERE, not in Hero.
     ================================================== -->
-    <FieldArchive />
+    <div class="space-y-8">
+      <WaltzInterlude />
+
+      <!-- FIELD ARCHIVE / 03 -->
+      <FieldArchive />
+    </div>
   </main>
 </Layout>
