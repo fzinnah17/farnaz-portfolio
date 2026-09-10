@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 
 import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
 import ExperienceLog from "../components/ExperienceLog.astro";
+import FieldArchive from "../components/FieldArchive.astro";
 import FlowDiagram from "../components/FlowDiagram.astro";
 import Hero from "../components/Hero.astro";
 import PerformanceComparison from "../components/PerformanceComparison.astro";
@@ -15,12 +16,34 @@ import WorkGallery from "../components/WorkGallery.astro";
   description="AI systems, adversarial machine learning, systems performance, and AI governance."
 >
   <main id="main" class="space-y-20 pb-28 md:space-y-24 lg:pb-20">
+    <!-- ==================================================
+         HERO
+    ================================================== -->
     <Hero />
 
+    <!-- ==================================================
+         EXPERIENCE / 01
+    ================================================== -->
     <section
       class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-2 lg:pr-12"
       aria-label="Experience and technical stack"
     >
+      <!-- CEREMONIAL CHAPTER REGISTER -->
+      <div
+        class="col-span-full flex items-center gap-4 border-y border-border px-1 py-3"
+      >
+        <span class="text-[9px] uppercase tracking-[0.2em] text-royal">
+          Experience / 01
+        </span>
+
+        <span aria-hidden="true" class="h-px flex-1 bg-border"></span>
+
+        <span
+          aria-hidden="true"
+          class="h-1.5 w-1.5 rotate-45 border border-pewter"></span>
+      </div>
+
+      <!-- EXPERIENCE -->
       <div id="experience" class="scroll-mt-24 space-y-3">
         <h2
           class="border-b border-border pb-2 text-2xl font-bold tracking-tight text-text md:text-3xl"
@@ -33,6 +56,7 @@ import WorkGallery from "../components/WorkGallery.astro";
         <ExperienceLog />
       </div>
 
+      <!-- STACK -->
       <div id="stack" class="scroll-mt-24 space-y-3">
         <h2
           class="border-b border-border pb-2 text-2xl font-bold tracking-tight text-text md:text-3xl"
@@ -46,12 +70,16 @@ import WorkGallery from "../components/WorkGallery.astro";
       </div>
     </section>
 
+    <!-- ==================================================
+         WORK / 02
+    ================================================== -->
     <section
       id="work"
       class="mx-auto max-w-6xl scroll-mt-24 px-6 lg:pr-12"
       aria-label="Selected work"
     >
       <WorkGallery>
+        <!-- 01 · ML + SECURITY -->
         <div data-work-item data-category="ml-security" class="min-w-0">
           <ExpandableProjectCard
             eyebrow="ML · Security / 01"
@@ -63,6 +91,7 @@ import WorkGallery from "../components/WorkGallery.astro";
           />
         </div>
 
+        <!-- 02 · SYSTEMS -->
         <div data-work-item data-category="systems" class="min-w-0">
           <ExpandableProjectCard
             eyebrow="Systems · Performance / 02"
@@ -75,6 +104,7 @@ import WorkGallery from "../components/WorkGallery.astro";
           </ExpandableProjectCard>
         </div>
 
+        <!-- 03 · AI SYSTEMS -->
         <div data-work-item data-category="ai-systems" class="min-w-0">
           <ExpandableProjectCard
             eyebrow="AI Systems / 03"
@@ -86,15 +116,24 @@ import WorkGallery from "../components/WorkGallery.astro";
             <FlowDiagram
               slot="diagram"
               steps={[
-                { label: "Backlog" },
-                { label: "Draft" },
-                { label: "Sync" },
-                { label: "Retrieve" },
+                {
+                  label: "Backlog",
+                },
+                {
+                  label: "Draft",
+                },
+                {
+                  label: "Sync",
+                },
+                {
+                  label: "Retrieve",
+                },
               ]}
             />
           </ExpandableProjectCard>
         </div>
 
+        <!-- 04 · AI SYSTEMS REVIEW -->
         <div data-work-item data-category="ai-systems" class="min-w-0">
           <ExpandableProjectCard
             eyebrow="AI Systems · Review / 04"
@@ -106,16 +145,27 @@ import WorkGallery from "../components/WorkGallery.astro";
             <FlowDiagram
               slot="diagram"
               steps={[
-                { label: "Intake" },
-                { label: "Extract" },
-                { label: "Check" },
-                { label: "Flag" },
-                { label: "Review" },
+                {
+                  label: "Intake",
+                },
+                {
+                  label: "Extract",
+                },
+                {
+                  label: "Check",
+                },
+                {
+                  label: "Flag",
+                },
+                {
+                  label: "Review",
+                },
               ]}
             />
           </ExpandableProjectCard>
         </div>
 
+        <!-- 05 · AI GOVERNANCE -->
         <div data-work-item data-category="ai-systems" class="min-w-0">
           <ExpandableProjectCard
             eyebrow="AI · Governance / 05"
@@ -126,7 +176,9 @@ import WorkGallery from "../components/WorkGallery.astro";
           />
         </div>
 
+        <!-- PUBLIC PROJECTS -->
         <div slot="public" class="border-y border-border">
+          <!-- PUBLIC 01 -->
           <a
             href="https://github.com/fzinnah17/literature-screening-demo"
             target="_blank"
@@ -146,6 +198,7 @@ import WorkGallery from "../components/WorkGallery.astro";
             </span>
           </a>
 
+          <!-- PUBLIC 02 -->
           <a
             href="https://github.com/fzinnah17/ml-experiment-reporter"
             target="_blank"
@@ -167,5 +220,10 @@ import WorkGallery from "../components/WorkGallery.astro";
         </div>
       </WorkGallery>
     </section>
+
+    <!-- ==================================================
+         FIELD ARCHIVE / 03
+    ================================================== -->
+    <FieldArchive />
   </main>
 </Layout>
