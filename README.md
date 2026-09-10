@@ -1,8 +1,9 @@
+````md
 # Farnaz Zinnah — Portfolio
 
 [![CI](https://github.com/fzinnah17/farnaz-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/fzinnah17/farnaz-portfolio/actions/workflows/ci.yml)
 
-Personal engineering portfolio for Farnaz Zinnah, an AI Systems Engineer working across AI infrastructure, distributed systems, adversarial machine learning, and AI governance.
+Personal engineering portfolio for Farnaz Zinnah, an AI Systems Engineer focused on AI systems, adversarial machine learning, systems performance, cloud AI, and AI governance.
 
 ## Stack
 
@@ -14,24 +15,66 @@ Personal engineering portfolio for Farnaz Zinnah, an AI Systems Engineer working
 - Astro-native client interactions
 - GitHub Actions CI
 
-## Interface
+## Design and interaction
 
-The portfolio uses an engineering-inspired design language rather than a conventional marketing-site layout.
+The portfolio uses a restrained technical and editorial visual system rather than a conventional marketing-site layout.
 
-Features include:
+Key interface features include:
 
-- ambient distributed-systems network visualization
-- structured JSON identity block
-- one-time typing sequence
-- experience rendered as a development log
-- stack rendered as a dependency manifest
-- expandable project details
-- Cmd/Ctrl + K command palette
-- persistent scroll progress
+- animated systems architecture in the hero
+- structured system dossier identity block
 - light and dark themes
+- keyboard-accessible navigation
+- Cmd/Ctrl + K command palette
+- responsive social/contact rail
+- filtered Selected Work gallery
+- expandable project details
+- accessible masonry project layout
+- Experience and Stack registers
+- horizontal Field Archive for professional events, hackathons, workshops, and communities
+- Previous/Next, keyboard, trackpad, and swipe navigation in the archive
 - reduced-motion support
-- keyboard skip navigation
-- responsive contact rail
+- restrained one-time ceremonial transitions
+- clean section navigation without URL fragments
+
+## Accessibility
+
+Accessibility is treated as a core part of the interface.
+
+The site includes:
+
+- keyboard navigation
+- visible focus states
+- skip navigation
+- reduced-motion support
+- screen-reader labels and semantic regions
+- user-controlled archive navigation
+- no autoplaying carousels
+- no hover-only information
+- responsive layouts for desktop and mobile
+- accessible interactive target sizing
+
+## Project structure
+
+Components are grouped by responsibility:
+
+```text
+src/
+├── assets/
+│   └── portfolio/
+│       └── archive/
+│
+├── components/
+│   ├── archive/
+│   ├── experience/
+│   ├── hero/
+│   ├── shell/
+│   └── work/
+│
+├── layouts/
+├── pages/
+└── styles/
+````
 
 ## Local development
 
@@ -41,7 +84,7 @@ Install dependencies:
 npm install
 ```
 
-Run locally:
+Start the local development server:
 
 ```bash
 npm run dev
@@ -55,20 +98,26 @@ http://localhost:4321
 
 ## Validation
 
-Run:
+Before committing or deploying, run:
 
 ```bash
 npm run check
 npm run build
 ```
 
-## Resume
+## Continuous integration
 
-The site automatically exposes the Resume link once the file exists.
+GitHub Actions validates changes by running:
+
+```bash
+npm ci
+npm run check
+npm run build
+```
 
 ## Deployment
 
-The site is built as static output and can be deployed to Vercel.
+The portfolio is generated as static output and can be deployed to Vercel.
 
 Build command:
 
@@ -82,14 +131,23 @@ Output directory:
 dist
 ```
 
-No environment variables are required for v1.
+No environment variables are required for the current version.
 
-## CI
+## Professional links
 
-GitHub Actions validates every pull request by running:
+The deployed portfolio includes links to:
+
+* GitHub
+* LinkedIn
+* Resume
+* selected public project repositories
+
+````
+
+Then save it and run:
 
 ```bash
-npm ci
 npm run check
 npm run build
-```
+````
+

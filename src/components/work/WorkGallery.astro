@@ -1,0 +1,415 @@
+---
+const filters = [
+    {
+        id: "selected",
+        label: "Selected",
+        number: "01",
+    },
+    {
+        id: "ml-security",
+        label: "ML + Security",
+        number: "02",
+    },
+    {
+        id: "systems",
+        label: "Systems",
+        number: "03",
+    },
+    {
+        id: "ai-systems",
+        label: "AI Systems",
+        number: "04",
+    },
+    {
+        id: "public",
+        label: "Public",
+        number: "05",
+    },
+] as const;
+---
+
+<div data-work-gallery class="work-gallery">
+    <!-- REGISTER HEADER -->
+    <div
+        class="work-register-header grid border-y border-border md:grid-cols-[0.72fr_1.28fr]"
+    >
+        <div class="border-b border-border px-5 py-6 md:border-b-0 md:border-r">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-royal">
+                Work / 02
+            </p>
+
+            <h2
+                data-work-title
+                class="mt-2 font-display text-3xl font-normal text-text"
+            >
+                Selected Work
+            </h2>
+        </div>
+
+        <div class="flex items-center justify-end px-5 py-6" aria-hidden="true">
+            <div class="flex items-center gap-3">
+                <span class="hidden h-px w-12 bg-border sm:block"></span>
+
+                <span class="h-1.5 w-1.5 rotate-45 border border-royal"></span>
+
+                <span class="text-[9px] uppercase tracking-[0.2em] text-pewter">
+                    FZ / Project Register
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILTER REGISTER -->
+    <div
+        class="work-filter-register overflow-x-auto border-b border-border"
+        aria-label="Filter selected work"
+    >
+        <div class="flex min-w-max">
+            {
+                filters.map((filter, index) => (
+                    <button
+                        type="button"
+                        data-work-filter={filter.id}
+                        data-active={index === 0 ? "true" : "false"}
+                        aria-pressed={index === 0 ? "true" : "false"}
+                        class="work-filter group relative flex items-center gap-2 border-r border-border px-4 py-3 text-sm text-secondary transition-colors duration-300 last:border-r-0 hover:text-text data-[active=true]:text-text"
+                    >
+                        <span class="font-mono text-[9px] tracking-[0.12em] text-pewter group-data-[active=true]:text-royal">
+                            {filter.number}
+                        </span>
+
+                        <span>{filter.label}</span>
+
+                        <span
+                            aria-hidden="true"
+                            class="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-royal transition-transform duration-300 group-data-[active=true]:scale-x-100"
+                        />
+                    </button>
+                ))
+            }
+        </div>
+    </div>
+
+    <!--
+    STABLE WORK STAGE
+
+    This wrapper keeps the footprint of the Selected view
+    even when a filter contains only one project.
+  -->
+    <div data-work-stage class="relative">
+        <!-- PROJECT MASONRY -->
+        <div
+            data-work-grid
+            class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 md:[grid-auto-rows:8px] xl:grid-cols-3"
+        >
+            <slot />
+        </div>
+
+        <!-- PUBLIC VIEW -->
+        <div data-public-panel hidden class="mt-6">
+            <slot name="public" />
+        </div>
+    </div>
+</div>
+
+<style>
+    /*
+   * LIGHT MODE:
+   * make the register feel like a clean folio sitting over
+   * the slightly darker ivory page.
+   */
+    :global(html:not(.dark)) .work-register-header,
+    :global(html:not(.dark)) .work-filter-register {
+        background: color-mix(in srgb, var(--theme-surface) 58%, transparent);
+    }
+
+    /*
+   * Give the active light-mode filter just enough tonal
+   * distinction without turning it into a conventional tab.
+   */
+    :global(html:not(.dark)) .work-filter[data-active="true"] {
+        background: color-mix(
+            in srgb,
+            var(--theme-royal) 3%,
+            var(--theme-surface)
+        );
+    }
+
+    /*
+   * Dark mode stays visually transparent/minimal.
+   */
+    :global(html.dark) .work-register-header,
+    :global(html.dark) .work-filter-register {
+        background: transparent;
+    }
+</style>
+
+<script>
+    document
+        .querySelectorAll<HTMLElement>("[data-work-gallery]")
+        .forEach((gallery) => {
+            initializeWorkGallery(gallery);
+        });
+
+    function initializeWorkGallery(gallery: HTMLElement) {
+        const gridElement =
+            gallery.querySelector<HTMLElement>("[data-work-grid]");
+
+        const publicPanelElement = gallery.querySelector<HTMLElement>(
+            "[data-public-panel]",
+        );
+
+        const stageElement =
+            gallery.querySelector<HTMLElement>("[data-work-stage]");
+
+        const title = gallery.querySelector<HTMLElement>("[data-work-title]");
+
+        const buttons = Array.from(
+            gallery.querySelectorAll<HTMLButtonElement>("[data-work-filter]"),
+        );
+
+        const items = Array.from(
+            gallery.querySelectorAll<HTMLElement>("[data-work-item]"),
+        );
+
+        if (!gridElement || !publicPanelElement || !stageElement) {
+            return;
+        }
+
+        const grid = gridElement;
+
+        const publicPanel = publicPanelElement;
+
+        const stage = stageElement;
+
+        const rowHeight = 8;
+        const gap = 16;
+
+        let layoutFrame = 0;
+
+        let currentFilter = "selected";
+
+        /*
+         * Height of the normal collapsed Selected view.
+         *
+         * We keep this when switching to categories with
+         * fewer projects.
+         */
+        let stableStageHeight = 0;
+
+        function hasOpenProject() {
+            return Boolean(
+                gallery.querySelector("[data-project-details][open]"),
+            );
+        }
+
+        function closeProjects() {
+            gallery
+                .querySelectorAll<HTMLDetailsElement>("[data-project-details]")
+                .forEach((details) => {
+                    details.open = false;
+                });
+        }
+
+        function resizeItem(item: HTMLElement) {
+            item.style.gridRowEnd = "auto";
+
+            /*
+             * Mobile:
+             * normal document flow.
+             */
+            if (item.hidden || window.innerWidth < 768) {
+                return;
+            }
+
+            const card = item.firstElementChild;
+
+            if (!(card instanceof HTMLElement)) {
+                return;
+            }
+
+            const height = card.getBoundingClientRect().height;
+
+            const span = Math.ceil((height + gap) / (rowHeight + gap));
+
+            item.style.gridRowEnd = `span ${span}`;
+        }
+
+        function captureSelectedHeight() {
+            /*
+             * Do not let an expanded card redefine our
+             * baseline height.
+             */
+            if (currentFilter !== "selected" || hasOpenProject()) {
+                return;
+            }
+
+            requestAnimationFrame(() => {
+                const height = grid.getBoundingClientRect().height;
+
+                if (height > stableStageHeight) {
+                    stableStageHeight = Math.ceil(height);
+
+                    stage.style.minHeight = `${stableStageHeight}px`;
+                }
+            });
+        }
+
+        function layout() {
+            cancelAnimationFrame(layoutFrame);
+
+            layoutFrame = requestAnimationFrame(() => {
+                items.forEach(resizeItem);
+
+                captureSelectedHeight();
+            });
+        }
+
+        function setFilter(filter: string) {
+            currentFilter = filter;
+
+            closeProjects();
+
+            buttons.forEach((button) => {
+                const active = button.dataset.workFilter === filter;
+
+                button.dataset.active = String(active);
+
+                button.setAttribute("aria-pressed", String(active));
+            });
+
+            const publicMode = filter === "public";
+
+            grid.hidden = publicMode;
+
+            publicPanel.hidden = !publicMode;
+
+            if (title) {
+                const activeButton = buttons.find(
+                    (button) => button.dataset.workFilter === filter,
+                );
+
+                const label = activeButton?.textContent
+                    ?.replace(/^\s*\d+\s*/, "")
+                    .trim();
+
+                title.textContent =
+                    filter === "selected"
+                        ? "Selected Work"
+                        : label || "Selected Work";
+            }
+
+            items.forEach((item) => {
+                if (publicMode) {
+                    item.hidden = true;
+
+                    return;
+                }
+
+                const category = item.dataset.category ?? "";
+
+                item.hidden = filter !== "selected" && category !== filter;
+            });
+
+            /*
+             * Keep the selected baseline even when this
+             * filter has only one project.
+             */
+            if (stableStageHeight > 0) {
+                stage.style.minHeight = `${stableStageHeight}px`;
+            }
+
+            layout();
+        }
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const filter = button.dataset.workFilter;
+
+                if (filter) {
+                    setFilter(filter);
+                }
+            });
+        });
+
+        /*
+         * Exactly one expanded card.
+         */
+        gallery.addEventListener(
+            "toggle",
+            (event) => {
+                const opened = event.target;
+
+                if (
+                    !(opened instanceof HTMLDetailsElement) ||
+                    !opened.matches("[data-project-details]")
+                ) {
+                    return;
+                }
+
+                if (opened.open) {
+                    gallery
+                        .querySelectorAll<HTMLDetailsElement>(
+                            "[data-project-details]",
+                        )
+                        .forEach((details) => {
+                            if (details !== opened) {
+                                details.open = false;
+                            }
+                        });
+                }
+
+                requestAnimationFrame(layout);
+            },
+            true,
+        );
+
+        /*
+         * Repack masonry when card content changes.
+         */
+        const resizeObserver = new ResizeObserver(() => {
+            layout();
+        });
+
+        items.forEach((item) => {
+            const card = item.firstElementChild;
+
+            if (card instanceof HTMLElement) {
+                resizeObserver.observe(card);
+            }
+        });
+
+        /*
+         * Responsive widths can change the height of
+         * the full Selected composition.
+         */
+        window.addEventListener("resize", () => {
+            /*
+             * If we're looking at Selected while resizing,
+             * allow the baseline to be recalculated.
+             */
+            if (currentFilter === "selected" && !hasOpenProject()) {
+                stableStageHeight = 0;
+
+                stage.style.minHeight = "";
+            }
+
+            layout();
+        });
+
+        /*
+         * IMPORTANT:
+         * initialize from Selected so the stable height is
+         * measured from the largest normal view.
+         */
+        setFilter("selected");
+
+        /*
+         * Give the first browser layout one extra frame
+         * before capturing the baseline.
+         */
+        requestAnimationFrame(() => {
+            layout();
+        });
+    }
+</script>

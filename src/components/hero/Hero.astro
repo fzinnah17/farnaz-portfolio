@@ -1,0 +1,205 @@
+---
+import { Image } from "astro:assets";
+
+import avatarImage from "../../assets/portfolio/avatar.jpg";
+import ArchitectureField from "./ArchitectureField.astro";
+import IdentityBlock from "./IdentityBlock.astro";
+import NakhwaTransition from "./NakhwaTransition.astro";
+---
+
+<section
+    class="relative isolate mx-auto grid min-h-[72vh] max-w-6xl items-center gap-10 overflow-hidden px-6 py-14 md:grid-cols-[0.92fr_1.08fr] md:gap-16 md:py-20 lg:pr-12"
+    aria-labelledby="hero-title"
+>
+    <!-- ENGINEERING MOTIF -->
+    <ArchitectureField />
+
+    <!-- PERFECT CROWN / NAKHWA MOTIF -->
+    <NakhwaTransition />
+
+    <!-- PORTRAIT -->
+    <div class="relative z-10 order-2 md:order-1">
+        <div class="mx-auto max-w-[350px] md:mx-0">
+            <Image
+                src={avatarImage}
+                alt="Farnaz Zinnah"
+                width={400}
+                height={480}
+                loading="eager"
+                class="hero-portrait aspect-[5/6] w-full object-cover"
+            />
+        </div>
+    </div>
+
+    <!-- IDENTITY -->
+    <div class="relative z-10 order-1 max-w-2xl space-y-6 md:order-2">
+        <div class="space-y-3">
+            <p class="text-[11px] uppercase tracking-[0.2em] text-pewter">
+                AI Systems · Security · Infrastructure
+            </p>
+
+            <h1
+                id="hero-title"
+                class="font-display text-5xl font-normal leading-none tracking-tight text-text md:text-6xl"
+            >
+                Farnaz Zinnah
+            </h1>
+
+            <div class="flex items-center gap-3">
+                <span aria-hidden="true" class="h-px w-8 bg-royal"></span>
+
+                <p class="text-base text-secondary sm:text-lg">
+                    AI Systems Engineer
+                </p>
+            </div>
+        </div>
+
+        <p class="max-w-xl text-lg leading-8 text-text md:text-xl">
+            I build AI systems, break them on purpose to understand failure
+            modes, and help decide which systems are safe to ship.
+        </p>
+
+        <!-- ANIMATED SYSTEM DOSSIER -->
+        <div class="max-w-xl">
+            <IdentityBlock />
+        </div>
+
+        <div class="flex flex-col items-start gap-3">
+            <!--
+        IMPORTANT:
+
+        This button no longer has:
+        data-section-scroll="work"
+        data-nakhwa-trigger
+
+        Instead, it delegates to the Header Work button.
+
+        This gives Hero and Header the exact same
+        working navigation + Nakhwa path.
+      -->
+            <button
+                type="button"
+                data-hero-work-trigger
+                class="group inline-flex min-h-[44px] items-center gap-3 text-sm font-medium text-text"
+                aria-label="View selected work"
+            >
+                <span
+                    class="border-b border-pewter pb-0.5 transition-colors duration-500 group-hover:border-royal"
+                >
+                    Selected work
+                </span>
+
+                <span
+                    aria-hidden="true"
+                    class="text-royal transition-transform duration-500 group-hover:translate-y-0.5"
+                >
+                    ↓
+                </span>
+            </button>
+
+            <!-- ACCESSIBILITY MAKER'S MARK -->
+            <p
+                class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[9px] uppercase tracking-[0.15em] text-muted sm:text-[10px]"
+            >
+                <span> Accessible by design </span>
+
+                <span aria-hidden="true" class="text-border"> · </span>
+
+                <span> Keyboard </span>
+
+                <span aria-hidden="true" class="text-border"> · </span>
+
+                <span> Screen readers </span>
+
+                <span aria-hidden="true" class="text-border"> · </span>
+
+                <span> Reduced motion </span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    /*
+   * LIGHT MODE
+   */
+    .hero-portrait {
+        filter: saturate(0.86) contrast(1.035) brightness(0.985);
+
+        transition: filter 240ms ease;
+    }
+
+    /*
+   * DARK MODE
+   */
+    :global(html.dark) .hero-portrait {
+        filter: grayscale(1) contrast(1.045) brightness(0.96);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-portrait {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    const heroWorkButton = document.querySelector<HTMLButtonElement>(
+        "[data-hero-work-trigger]",
+    );
+
+    /*
+     * Guard against duplicate initialization.
+     */
+    if (heroWorkButton && heroWorkButton.dataset.heroWorkBound !== "true") {
+        heroWorkButton.dataset.heroWorkBound = "true";
+
+        heroWorkButton.addEventListener("click", () => {
+            /*
+             * Delegate to the Header Work button.
+             *
+             * Header Work is already confirmed to:
+             * - trigger Nakhwa correctly
+             * - scroll correctly
+             * - work in light mode
+             * - work in dark mode
+             * - keep the URL clean
+             *
+             * This means there is now only ONE
+             * navigation path to maintain.
+             */
+            const headerWorkButton = document.querySelector<HTMLButtonElement>(
+                'header [data-section-scroll="work"][data-nakhwa-trigger]',
+            );
+
+            if (headerWorkButton) {
+                headerWorkButton.click();
+
+                return;
+            }
+
+            /*
+             * Safety fallback.
+             *
+             * This should almost never run, but if
+             * Header Work cannot be found, Selected Work
+             * still takes the visitor to the correct section.
+             */
+            const workSection = document.getElementById("work");
+
+            if (!workSection) {
+                return;
+            }
+
+            const reducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+            ).matches;
+
+            workSection.scrollIntoView({
+                behavior: reducedMotion ? "auto" : "smooth",
+
+                block: "start",
+            });
+        });
+    }
+</script>

@@ -1,11 +1,48 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: var(--site-background);
-  --color-paper: var(--site-foreground);
+  --color-bg: var(--theme-bg);
+  --color-surface: var(--theme-surface);
+  --color-border: var(--theme-border);
 
-  --color-accent-cyan: #06b6d4;
-  --color-accent-violet: #7c3aed;
+  --color-text: var(--theme-text);
+  --color-secondary: var(--theme-text-secondary);
+  --color-muted: var(--theme-text-muted);
+
+  /*
+   * Technical interaction colors.
+   */
+  --color-accent-cyan: var(--theme-accent-cyan);
+  --color-accent-violet: var(--theme-accent-violet);
+
+  /*
+   * Quiet neutral interaction.
+   */
+  --color-accent: var(--theme-accent);
+  --color-accent-strong: var(--theme-accent-strong);
+
+  --color-ember: var(--theme-ember);
+
+  /*
+   * Perfect Crown visual language.
+   *
+   * royal:
+   * controlled crimson / oxblood disruption
+   *
+   * pewter:
+   * cool architectural structure
+   */
+  --color-royal: var(--theme-royal);
+  --color-pewter: var(--theme-pewter);
+
+  --color-ink: var(--theme-bg);
+  --color-paper: var(--theme-text);
+
+  --font-display:
+    "Newsreader",
+    ui-serif,
+    Georgia,
+    serif;
 
   --font-sans:
     "Inter",
@@ -26,107 +63,408 @@
     monospace;
 }
 
+/*
+ * ==================================================
+ * LIGHT MODE
+ *
+ * Cool ivory / stone / ink / oxblood.
+ *
+ * The page is deliberately darker than the cards so
+ * surfaces remain obvious without looking boxed-in.
+ * ==================================================
+ */
 :root {
-  --site-background: #f7f7f4;
-  --site-foreground: #111827;
+  /*
+   * PAGE
+   */
+  --theme-bg: #eeece6;
+
+  /*
+   * SURFACES
+   *
+   * Crisp ivory rather than beige.
+   */
+  --theme-surface: #fbfaf6;
+
+  /*
+   * ARCHITECTURAL LINES
+   *
+   * Strong enough to remain visible against ivory.
+   */
+  --theme-border: #aaa59d;
+
+  /*
+   * Secondary warm accent.
+   */
+  --theme-ember: #925b46;
+
+  /*
+   * TYPOGRAPHY
+   */
+  --theme-text: #17181b;
+  --theme-text-secondary: #3e4349;
+  --theme-text-muted: #666c73;
+
+  /*
+   * TECHNICAL INTERACTIONS
+   *
+   * Still available for actual engineering-oriented
+   * interface elements, but not the site's main identity.
+   */
+  --theme-accent-cyan: #0b7080;
+  --theme-accent-violet: #64596f;
+
+  /*
+   * NEUTRAL INTERACTION
+   */
+  --theme-accent: #59636d;
+  --theme-accent-strong: #30383f;
+
+  /*
+   * CHARACTER / ROYAL LANGUAGE
+   *
+   * royal:
+   * deep controlled wine
+   *
+   * pewter:
+   * cool tailored structural gray
+   */
+  --theme-royal: #7b2638;
+  --theme-pewter: #59656f;
 
   color-scheme: light;
 }
 
+/*
+ * ==================================================
+ * DARK MODE
+ *
+ * Midnight palace / charcoal tailoring.
+ *
+ * Kept intentionally close to the version that is
+ * already working well visually.
+ * ==================================================
+ */
 :root.dark {
-  --site-background: #0b0e14;
-  --site-foreground: #f6f5f1;
+  --theme-bg: #080b12;
+  --theme-surface: #10141c;
+  --theme-border: #292e38;
+
+  --theme-ember: #c28a68;
+
+  --theme-text: #f1ede6;
+  --theme-text-secondary: #bdb9b2;
+  --theme-text-muted: #89878a;
+
+  --theme-accent-cyan: #43a9ba;
+  --theme-accent-violet: #77658f;
+
+  --theme-accent: #98a1aa;
+  --theme-accent-strong: #d3d7dc;
+
+  --theme-royal: #b64b5b;
+  --theme-pewter: #929aa6;
 
   color-scheme: dark;
 }
+
+/*
+ * ==================================================
+ * BASE
+ * ==================================================
+ */
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
-  background: var(--site-background);
+  background:
+    var(--theme-bg);
+
+  scroll-behavior:
+    smooth;
 }
 
 body {
   min-width: 320px;
+
   margin: 0;
 
-  background: var(--site-background);
-  color: var(--site-foreground);
+  background:
+    var(--theme-bg);
 
-  font-family: var(--font-sans);
+  color:
+    var(--theme-text);
 
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  font-family:
+    var(--font-sans);
+
+  line-height:
+    1.7;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  text-rendering:
+    optimizeLegibility;
 
   transition:
-    background-color 180ms ease,
-    color 180ms ease;
+    background-color 240ms ease,
+    color 240ms ease;
 }
 
-::selection {
-  background: rgb(6 182 212 / 24%);
+/*
+ * ==================================================
+ * TYPOGRAPHY
+ * ==================================================
+ */
+
+h1,
+h2,
+h3 {
+  font-family:
+    var(--font-display);
+
+  letter-spacing:
+    -0.015em;
+
+  line-height:
+    1.15;
+}
+
+button,
+input,
+summary {
+  font:
+    inherit;
 }
 
 a {
-  color: inherit;
+  color:
+    inherit;
 }
+
+/*
+ * ==================================================
+ * SELECTION
+ * ==================================================
+ */
+
+::selection {
+  background:
+    color-mix(in srgb,
+      var(--theme-royal) 23%,
+      transparent);
+
+  color:
+    var(--theme-text);
+}
+
+/*
+ * ==================================================
+ * INTERACTION
+ * ==================================================
+ */
 
 a,
 button,
 summary {
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+button {
+  color:
+    inherit;
+}
+
+summary {
+  cursor:
+    pointer;
 }
 
 summary::-webkit-details-marker {
-  display: none;
+  display:
+    none;
 }
 
+/*
+ * ==================================================
+ * DISPLAY ACCENT
+ * ==================================================
+ */
+
+.text-gradient {
+  background:
+    linear-gradient(135deg,
+      var(--theme-pewter),
+      var(--theme-royal));
+
+  background-clip:
+    text;
+
+  -webkit-background-clip:
+    text;
+
+  color:
+    transparent;
+}
+
+/*
+ * ==================================================
+ * ACCESSIBILITY — SKIP LINK
+ * ==================================================
+ */
+
 .skip-link {
-  position: fixed;
-  left: 1rem;
-  top: 1rem;
-  z-index: 100;
+  position:
+    fixed;
 
-  padding: 0.75rem 1rem;
+  left:
+    1rem;
 
-  border: 1px solid rgb(6 182 212 / 50%);
-  border-radius: 0.375rem;
+  top:
+    1rem;
 
-  background: var(--site-background);
-  color: #06b6d4;
+  z-index:
+    100;
 
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
+  padding:
+    0.75rem 1rem;
 
-  transform: translateY(-200%);
-  transition: transform 150ms ease;
+  border:
+    1px solid var(--theme-pewter);
+
+  border-radius:
+    0.125rem;
+
+  background:
+    var(--theme-surface);
+
+  color:
+    var(--theme-text);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    500;
+
+  transform:
+    translateY(-200%);
+
+  transition:
+    transform 160ms ease;
 }
 
 .skip-link:focus {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 }
+
+/*
+ * ==================================================
+ * ACCESSIBILITY — KEYBOARD FOCUS
+ *
+ * Use royal rather than a pale gray so focus remains
+ * obvious in both light and dark themes.
+ * ==================================================
+ */
 
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
 input:focus-visible {
-  outline: 2px solid #06b6d4;
-  outline-offset: 3px;
+  outline:
+    2px solid var(--theme-royal);
+
+  outline-offset:
+    3px;
 }
+
+/*
+ * Keep keyboard focus highly visible in light mode.
+ */
+:root:not(.dark) a:focus-visible,
+:root:not(.dark) button:focus-visible,
+:root:not(.dark) summary:focus-visible,
+:root:not(.dark) input:focus-visible {
+  outline-color:
+    #7b2638;
+}
+
+/*
+ * ==================================================
+ * LIGHT-MODE GLOBAL SURFACE REFINEMENT
+ *
+ * This gives commonly used surface/border utilities
+ * stronger visual separation without modifying every
+ * component individually.
+ * ==================================================
+ */
+
+:root:not(.dark) body {
+  background:
+    #eeece6;
+}
+
+/*
+ * Thin horizontal rules should remain visible rather
+ * than disappearing into the page.
+ */
+:root:not(.dark) hr {
+  border-color:
+    #aaa59d;
+}
+
+/*
+ * ==================================================
+ * DARK-MODE BASE
+ * ==================================================
+ */
+
+:root.dark body {
+  background:
+    #080b12;
+}
+
+/*
+ * ==================================================
+ * REDUCED MOTION
+ *
+ * ADHD / vestibular / motion-sensitive visitors:
+ *
+ * - no smooth scrolling
+ * - animations effectively removed
+ * - transitions effectively removed
+ *
+ * All functionality remains available.
+ * ==================================================
+ */
 
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior:
+      auto;
   }
 
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    scroll-behavior:
+      auto !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    transition-delay:
+      0ms !important;
   }
 }

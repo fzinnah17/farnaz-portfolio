@@ -1,0 +1,128 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header
+    class="sticky top-0 z-30 border-b border-border bg-bg/95 backdrop-blur-sm"
+>
+    <nav
+        class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:pr-12"
+        aria-label="Primary navigation"
+    >
+        <!-- HOME -->
+        <button
+            type="button"
+            data-section-scroll="main"
+            class="text-sm font-semibold tracking-[0.12em] text-text"
+            aria-label="Back to top"
+        >
+            FZ<span class="text-royal">.</span>
+        </button>
+
+        <div class="flex items-center gap-4 text-sm text-secondary sm:gap-6">
+            <!-- WORK + NAKHWA -->
+            <button
+                type="button"
+                data-section-scroll="work"
+                data-nakhwa-trigger
+                class="transition-colors duration-500 hover:text-text"
+            >
+                Work
+            </button>
+
+            <!-- EXPERIENCE -->
+            <button
+                type="button"
+                data-section-scroll="experience"
+                class="transition-colors duration-500 hover:text-text"
+            >
+                Experience
+            </button>
+
+            <button
+                type="button"
+                data-section-scroll="field-archive"
+                class="transition-colors duration-500 hover:text-text"
+            >
+                Archive
+            </button>
+
+            <!-- COMMAND PALETTE -->
+            <button
+                type="button"
+                data-command-palette-trigger
+                aria-label="Open command palette"
+                aria-controls="command-palette"
+                class="hidden rounded-sm border border-border px-2 py-1 text-xs text-muted transition-colors duration-500 hover:border-pewter hover:text-text lg:inline"
+            >
+                ⌘K
+            </button>
+
+            <ThemeToggle />
+        </div>
+    </nav>
+</header>
+
+<script>
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    /*
+     * Remove a leftover fragment if the browser
+     * was previously sitting at /#work etc.
+     */
+    if (window.location.hash) {
+        window.history.replaceState(
+            null,
+            "",
+            window.location.pathname + window.location.search,
+        );
+    }
+
+    document
+        .querySelectorAll<HTMLElement>("[data-section-scroll]")
+        .forEach((trigger) => {
+            /*
+             * Prevent duplicate listeners if Astro
+             * ever initializes this script again.
+             */
+            if (trigger.dataset.sectionScrollBound === "true") {
+                return;
+            }
+
+            trigger.dataset.sectionScrollBound = "true";
+
+            trigger.addEventListener("click", () => {
+                const targetId = trigger.dataset.sectionScroll;
+
+                if (!targetId) {
+                    return;
+                }
+
+                const behavior = reducedMotion.matches ? "auto" : "smooth";
+
+                /*
+                 * FZ should return all the way
+                 * to the top of the page.
+                 */
+                if (targetId === "main") {
+                    window.scrollTo({
+                        top: 0,
+                        behavior,
+                    });
+
+                    return;
+                }
+
+                const section = document.getElementById(targetId);
+
+                if (!section) {
+                    return;
+                }
+
+                section.scrollIntoView({
+                    behavior,
+                    block: "start",
+                });
+            });
+        });
+</script>

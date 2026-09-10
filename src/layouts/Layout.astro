@@ -1,11 +1,16 @@
 ---
+import "@fontsource/newsreader/400.css";
+import "@fontsource/newsreader/600.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+
 import "../styles/global.css";
 
-import CommandPalette from "../components/CommandPalette.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import ScrollProgress from "../components/ScrollProgress.astro";
-import SocialRail from "../components/SocialRail.astro";
+import CommandPalette from "../components/shell/CommandPalette.astro";
+import Footer from "../components/shell/Footer.astro";
+import Header from "../components/shell/Header.astro";
+import ScrollProgress from "../components/shell/ScrollProgress.astro";
+import SocialRail from "../components/shell/SocialRail.astro";
 
 interface Props {
   title: string;

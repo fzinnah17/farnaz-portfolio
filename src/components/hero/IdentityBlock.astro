@@ -1,0 +1,161 @@
+---
+const fields = [
+    ["role", "AI Systems Engineer"],
+    ["platforms", "Azure + GCP"],
+    ["focus", "AI systems, security, governance"],
+    ["status", "building + reviewing"],
+] as const;
+---
+
+<div data-identity-block class="identity-dossier relative">
+    <span class="sr-only">
+        AI Systems Engineer working across Azure and GCP, focused on AI systems,
+        security, and governance. Status: building and reviewing.
+    </span>
+
+    <div
+        aria-hidden="true"
+        class="relative border border-border bg-bg/80 px-4 py-4 font-mono text-[11px] leading-6 text-text backdrop-blur-sm sm:px-5 sm:py-5 sm:text-xs"
+    >
+        <!-- Small formal document header -->
+        <div
+            class="mb-3 flex items-center justify-between border-b border-border pb-2 text-[9px] uppercase tracking-[0.18em] text-pewter sm:text-[10px]"
+        >
+            <span> System dossier </span>
+
+            <span class="text-royal"> FZ / 01 </span>
+        </div>
+
+        <!-- Thin rank/status line -->
+        <span
+            aria-hidden="true"
+            class="absolute bottom-0 left-0 top-0 w-px bg-royal"></span>
+
+        <div class="text-royal">
+            {"{"}
+        </div>
+
+        {
+            fields.map(([key, value], index) => (
+                <div class="pl-4">
+                    <span class="text-pewter">"{key}"</span>
+
+                    <span class="text-muted">: "</span>
+
+                    <span data-typed-value data-value={value} class="text-text">
+                        {value}
+                    </span>
+
+                    <span data-typed-cursor hidden class="text-royal">
+                        ▍
+                    </span>
+
+                    <span class="text-muted">
+                        "{index < fields.length - 1 ? "," : ""}
+                    </span>
+                </div>
+            ))
+        }
+
+        <div class="text-royal">
+            {"}"}
+        </div>
+    </div>
+</div>
+
+<style>
+    .identity-dossier {
+        box-shadow: 0 18px 45px rgba(31, 35, 40, 0.08);
+    }
+
+    :global(html:not(.dark)) .identity-dossier > div {
+        background: color-mix(in srgb, var(--theme-surface) 94%, white 6%);
+
+        border-color: color-mix(
+            in srgb,
+            var(--theme-pewter) 30%,
+            var(--theme-border)
+        );
+    }
+
+    :global(html.dark) .identity-dossier {
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.25);
+    }
+</style>
+
+<script>
+    const block = document.querySelector<HTMLElement>("[data-identity-block]");
+
+    if (block) {
+        initializeIdentityBlock(block);
+    }
+
+    function sleep(milliseconds: number) {
+        return new Promise<void>((resolve) => {
+            window.setTimeout(resolve, milliseconds);
+        });
+    }
+
+    async function initializeIdentityBlock(block: HTMLElement) {
+        const reducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        );
+
+        const values = Array.from(
+            block.querySelectorAll<HTMLElement>("[data-typed-value]"),
+        );
+
+        const cursors = Array.from(
+            block.querySelectorAll<HTMLElement>("[data-typed-cursor]"),
+        );
+
+        if (reducedMotion.matches) {
+            return;
+        }
+
+        /*
+         * Clear only after JS loads.
+         * If JavaScript is unavailable,
+         * the content remains readable.
+         */
+        for (const value of values) {
+            value.textContent = "";
+        }
+
+        await sleep(420);
+
+        for (let index = 0; index < values.length; index += 1) {
+            const value = values[index];
+
+            const cursor = cursors[index];
+
+            if (!value) {
+                continue;
+            }
+
+            const text = value.dataset.value ?? "";
+
+            if (cursor) {
+                cursor.hidden = false;
+            }
+
+            await sleep(180);
+
+            for (let position = 1; position <= text.length; position += 1) {
+                value.textContent = text.slice(0, position);
+
+                /*
+                 * Deliberately slower.
+                 * The motion should feel measured.
+                 */
+                await sleep(52);
+            }
+
+            if (cursor) {
+                cursor.hidden = true;
+            }
+
+            await sleep(290);
+        }
+    }
+</script>

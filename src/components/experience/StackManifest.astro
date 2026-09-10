@@ -1,0 +1,135 @@
+---
+const groups = [
+  {
+    heading: "ml-security",
+    marker: "01",
+    items: [
+      [
+        "pytorch",
+        "adversarial robustness + model evaluation",
+      ],
+      [
+        "pgd-fgsm",
+        "failure-mode and transferability testing",
+      ],
+      [
+        "imagenet",
+        "held-out classifier evaluation",
+      ],
+    ],
+  },
+  {
+    heading: "systems-performance",
+    marker: "02",
+    items: [
+      [
+        "mojo-cuda",
+        "GPU kernel benchmarking",
+      ],
+      [
+        "roofline",
+        "compute vs memory bottleneck reasoning",
+      ],
+      [
+        "throughput",
+        "pipeline and I/O performance analysis",
+      ],
+    ],
+  },
+  {
+    heading: "cloud-ai",
+    marker: "03",
+    items: [
+      [
+        "azure",
+        "AI Foundry · OpenAI · Key Vault",
+      ],
+      [
+        "gcp",
+        "Vertex AI · Gemini · Vision",
+      ],
+      [
+        "rag-agents",
+        "retrieval and model orchestration",
+      ],
+    ],
+  },
+] as const;
+---
+
+<div
+  class="w-full min-w-0 overflow-hidden border border-border bg-surface/70 font-mono text-xs sm:text-sm"
+>
+  <!-- MANIFEST HEADER -->
+  <div
+    class="flex items-center justify-between gap-4 border-b border-border px-5 py-3"
+  >
+    <span class="min-w-0 truncate text-pewter">
+      stack.manifest
+    </span>
+
+    <span
+      class="shrink-0 text-[10px] uppercase tracking-[0.18em] text-royal"
+    >
+      FZ / RANGE
+    </span>
+  </div>
+
+  <!-- MANIFEST GROUPS -->
+  <div class="divide-y divide-border">
+    {
+      groups.map((group) => (
+        <section
+          class="grid min-w-0 gap-4 px-5 py-4 sm:grid-cols-[8rem_minmax(0,1fr)]"
+          aria-labelledby={`stack-${group.marker}`}
+        >
+          <!-- CATEGORY -->
+          <div class="min-w-0">
+            <p
+              id={`stack-${group.marker}`}
+              class="text-[10px] uppercase tracking-[0.16em] text-pewter"
+            >
+              {group.marker}
+            </p>
+
+            <p
+              class="mt-1 break-words leading-6 text-text"
+            >
+              # {group.heading}
+            </p>
+          </div>
+
+          <!-- ITEMS -->
+          <div class="min-w-0 space-y-1">
+            {
+              group.items.map(([name, note]) => (
+                <div
+                  class="grid min-w-0 gap-x-2 leading-6 sm:grid-cols-[7rem_minmax(0,1fr)]"
+                >
+                  <span
+                    class="break-words text-accent-cyan"
+                  >
+                    {name}
+                  </span>
+
+                  <span
+                    class="min-w-0 break-words text-muted"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="text-border"
+                    >
+                      #
+                    </span>
+                    {" "}
+                    {note}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</div>

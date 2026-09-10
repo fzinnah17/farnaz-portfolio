@@ -1,0 +1,1819 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+import JewelMark from "./JewelMark.astro";
+import RoyalLandscape from "./RoyalLandscape.astro";
+
+import hackathonWorking from "../../assets/portfolio/archive/01-hackathon-working.jpeg";
+import microsoftPhoto from "../../assets/portfolio/archive/02-microsoft.jpeg";
+import sweGroup from "../../assets/portfolio/archive/03-swe-group.jpeg";
+import conferencePanel from "../../assets/portfolio/archive/04-conference-panel.jpeg";
+import hackathonTeam from "../../assets/portfolio/archive/05-hackathon-team.jpeg";
+import mitPhoto from "../../assets/portfolio/archive/06-mit.jpeg";
+import womenTechGroup from "../../assets/portfolio/archive/07-women-tech-group.jpeg";
+import swePhotoStrip from "../../assets/portfolio/archive/08-swe-photo-strip.jpeg";
+import mongodbPhoto from "../../assets/portfolio/archive/09-mongodb.jpeg";
+import hbsPhoto from "../../assets/portfolio/archive/10-harvard-business-school.jpeg";
+
+type ArchiveSize =
+  | "wide"
+  | "standard"
+  | "narrow"
+  | "portrait";
+
+type ImageMode =
+  | "scene"
+  | "portrait"
+  | "record";
+
+interface ArchiveItem {
+  number: string;
+  register: string;
+  title: string;
+  note: string;
+  image: ImageMetadata;
+  alt: string;
+  size: ArchiveSize;
+  imageMode: ImageMode;
+  focalPoint?: string;
+  breakProtocol?: boolean;
+}
+
+const archive: ArchiveItem[] = [
+  {
+    number: "01",
+    register: "Build",
+    title: "In the work",
+    note: "Hackathon build session.",
+    image: hackathonWorking,
+    alt: "Farnaz working with teammates at a hackathon table",
+    size: "wide",
+    imageMode: "scene",
+    focalPoint: "center center",
+  },
+  {
+    number: "02",
+    register: "Industry",
+    title: "Microsoft",
+    note: "Learning beyond the day-to-day.",
+    image: microsoftPhoto,
+    alt: "Farnaz standing in front of a Microsoft sign",
+    size: "standard",
+    imageMode: "record",
+  },
+  {
+    number: "03",
+    register: "Community",
+    title: "SWE",
+    note: "Engineering in company.",
+    image: sweGroup,
+    alt: "Large group photo at a Society of Women Engineers event",
+    size: "wide",
+    imageMode: "scene",
+  },
+  {
+    number: "04",
+    register: "Exchange",
+    title: "Ideas in circulation",
+    note: "Technical conversations beyond the screen.",
+    image: conferencePanel,
+    alt: "Professional conference panel on a blue-lit stage",
+    size: "standard",
+    imageMode: "scene",
+    breakProtocol: true,
+  },
+  {
+    number: "05",
+    register: "Team",
+    title: "From problem to prototype",
+    note: "Building collaboratively under a deadline.",
+    image: hackathonTeam,
+    alt: "Farnaz with a hackathon team beside their project",
+    size: "standard",
+    imageMode: "scene",
+  },
+  {
+    number: "06",
+    register: "Learning",
+    title: "MIT",
+    note: "Curiosity outside the boundaries of work.",
+    image: mitPhoto,
+    alt: "Farnaz seated outside Massachusetts Institute of Technology",
+    size: "portrait",
+    imageMode: "portrait",
+    focalPoint: "center 42%",
+  },
+  {
+    number: "07",
+    register: "Community",
+    title: "In the room",
+    note: "The people behind the technical work.",
+    image: womenTechGroup,
+    alt: "Farnaz with a professional group at an engineering event",
+    size: "wide",
+    imageMode: "scene",
+  },
+  {
+    number: "08",
+    register: "Record",
+    title: "SWE 2025",
+    note: "A small artifact from the larger experience.",
+    image: swePhotoStrip,
+    alt: "SWE 2025 professional event record featuring Farnaz",
+    size: "narrow",
+    imageMode: "record",
+  },
+  {
+    number: "09",
+    register: "Developer",
+    title: "MongoDB",
+    note: "Meeting the broader developer community.",
+    image: mongodbPhoto,
+    alt: "Farnaz at a MongoDB developer event",
+    size: "standard",
+    imageMode: "record",
+  },
+  {
+    number: "10",
+    register: "Learning",
+    title: "Harvard Business School",
+    note: "Looking beyond engineering alone.",
+    image: hbsPhoto,
+    alt: "Farnaz standing outside Harvard Business School",
+    size: "portrait",
+    imageMode: "record",
+  },
+];
+
+const totalRecords =
+  archive.length;
+---
+
+<section
+  id="field-archive"
+  data-field-archive
+  class="field-archive mx-auto max-w-6xl scroll-mt-24 px-6 lg:pr-12"
+  aria-labelledby="field-archive-title"
+>
+  <!-- ==================================================
+       FIELD ARCHIVE / 03
+  ================================================== -->
+  <header class="archive-header">
+    <!-- STATIC SUN / MOON / FIVE PEAKS -->
+    <div
+      class="archive-landscape"
+      aria-hidden="true"
+    >
+      <RoyalLandscape />
+    </div>
+
+    <div
+      class="archive-header-grid grid md:grid-cols-[0.72fr_1.28fr]"
+    >
+      <div
+        class="relative z-10 border-b border-border px-5 py-6 md:border-b-0 md:border-r"
+      >
+        <p
+          class="text-[11px] uppercase tracking-[0.2em] text-royal"
+        >
+          Field Archive / 03
+        </p>
+
+        <h2
+          id="field-archive-title"
+          class="mt-2 font-display text-3xl font-normal text-text md:text-4xl"
+        >
+          Beyond the work.
+        </h2>
+
+        <div
+          class="archive-reflection mt-4"
+          aria-hidden="true"
+        >
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div
+        class="relative z-10 flex items-center justify-between gap-8 px-5 py-6"
+      >
+        <p
+          class="max-w-lg text-[15px] leading-7 text-secondary"
+        >
+          Hackathons, professional communities, workshops, and the rooms where
+          technical work becomes something shared.
+        </p>
+
+        <div
+          class="hidden shrink-0 items-center gap-3 md:flex"
+          aria-hidden="true"
+        >
+          <span class="h-px w-10 bg-border"></span>
+
+          <JewelMark size="sm" />
+
+          <span
+            class="text-[11px] uppercase tracking-[0.18em] text-pewter"
+          >
+            FZ / Field Record
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================================================
+       COURT REGISTER
+  ================================================== -->
+  <div
+    class="archive-controls mt-5 grid gap-4 border-y px-4 py-3 sm:grid-cols-[1fr_auto] sm:items-center"
+  >
+    <div
+      class="flex flex-wrap items-center gap-x-4 gap-y-2"
+    >
+      <p
+        class="text-[11px] font-medium uppercase tracking-[0.18em] text-pewter"
+      >
+        Court Register
+      </p>
+
+      <span
+        aria-hidden="true"
+        class="h-px w-10 bg-border"
+      ></span>
+
+      <p
+  class="flex items-center gap-1.5 font-mono text-[12px] tracking-[0.08em] text-secondary"
+  aria-live="polite"
+  aria-atomic="true"
+>
+  <span>Record</span>
+
+  <span data-archive-current="">
+    01
+  </span>
+
+  <span>of</span>
+
+  <span>{String(totalRecords).padStart(2, "0")}</span>
+</p>
+    </div>
+
+    <div
+      class="flex items-center gap-2"
+      aria-label="Field archive navigation"
+    >
+      <button
+        type="button"
+        data-archive-prev
+        aria-controls="field-archive-scroll"
+        class="archive-control-button"
+      >
+        <span aria-hidden="true">
+          ←
+        </span>
+
+        Previous
+      </button>
+
+      <button
+        type="button"
+        data-archive-next
+        aria-controls="field-archive-scroll"
+        class="archive-control-button"
+      >
+        Next
+
+        <span aria-hidden="true">
+          →
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <p
+    id="field-archive-instructions"
+    class="mt-3 text-[12px] leading-5 text-muted"
+  >
+    Browse with Previous/Next, arrow keys, trackpad, or swipe.
+  </p>
+
+  <!-- ==================================================
+       FOLDING SCREEN
+  ================================================== -->
+  <div class="archive-stage relative mt-4">
+    <div
+      class="archive-ceremonial-line"
+      aria-hidden="true"
+    ></div>
+
+    <div
+      id="field-archive-scroll"
+      data-archive-scroll
+      class="archive-scroll"
+      tabindex="0"
+      role="region"
+      aria-label="Professional field archive"
+      aria-describedby="field-archive-instructions"
+    >
+      <div class="archive-track">
+        {
+          archive.map((item, index) => (
+            <article
+              class="archive-panel"
+              data-archive-panel
+              data-index={index}
+              data-size={item.size}
+              data-image-mode={item.imageMode}
+              data-break={
+                item.breakProtocol
+                  ? "true"
+                  : "false"
+              }
+              role="group"
+              aria-labelledby={`archive-title-${item.number}`}
+              style={`--archive-object-position: ${item.focalPoint ?? "center center"};`}
+            >
+              <!-- RED CORNER -->
+              <span
+                class="archive-corner archive-corner-x"
+                aria-hidden="true"
+              ></span>
+
+              <span
+                class="archive-corner archive-corner-y"
+                aria-hidden="true"
+              ></span>
+
+              <!-- SCREEN HINGES -->
+              <div
+                class="archive-hinges"
+                aria-hidden="true"
+              >
+                <span></span>
+                <span></span>
+              </div>
+
+              <!-- SPECIAL STATIC JEWEL ON PROTOCOL BREAK -->
+              {
+                item.breakProtocol && (
+                  <span
+                    class="archive-protocol-jewel"
+                    aria-hidden="true"
+                  >
+                    <JewelMark size="sm" />
+                  </span>
+                )
+              }
+
+              <div class="archive-image">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  widths={[
+                    420,
+                    640,
+                    840,
+                    1000,
+                  ]}
+                  sizes="(max-width: 640px) 82vw, 22rem"
+                  loading="lazy"
+                  class="archive-photo"
+                />
+
+                <span
+                  class="archive-photo-number"
+                  aria-hidden="true"
+                >
+                  {item.number}
+                </span>
+              </div>
+
+              <div class="archive-caption">
+                <div
+                  class="flex items-start justify-between gap-4"
+                >
+                  <div class="min-w-0">
+                    <p class="archive-category">
+                      {item.number} / {item.register}
+                    </p>
+
+                    <h3
+                      id={`archive-title-${item.number}`}
+                      class="archive-title mt-1"
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <span
+                    class="archive-register-mark"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+
+                <p class="archive-note mt-2">
+                  {item.note}
+                </p>
+
+                <div
+                  class="archive-caption-reflection mt-3"
+                  aria-hidden="true"
+                >
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+
+        <div
+          class="archive-end"
+          aria-hidden="true"
+        >
+          <p>
+            End /
+            {String(totalRecords).padStart(2, "0")}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="archive-edge-right"
+      aria-hidden="true"
+    ></div>
+  </div>
+</section>
+
+<style>
+  .field-archive {
+    position: relative;
+  }
+
+  /*
+   * ==================================================
+   * HEADER + STATIC LANDSCAPE
+   * ==================================================
+   */
+
+  .archive-header {
+    position: relative;
+
+    overflow: hidden;
+
+    border-top:
+      1px solid
+      var(--theme-border);
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
+    background:
+      var(--theme-surface);
+  }
+
+  .archive-landscape {
+    position: absolute;
+
+    right: -2%;
+    bottom: -10px;
+
+    width: 64%;
+    height: 95%;
+
+    opacity: 0.46;
+
+    pointer-events: none;
+  }
+
+  .archive-header-grid {
+    position: relative;
+  }
+
+  .archive-reflection {
+    display: flex;
+
+    width: 8rem;
+
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+  .archive-reflection span:first-child {
+    height: 1px;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-royal) 70%,
+        var(--theme-border)
+      );
+  }
+
+  .archive-reflection span:last-child {
+    width: 64%;
+    height: 1px;
+
+    margin-left: 18%;
+
+    opacity: 0.32;
+
+    background:
+      var(--theme-royal);
+  }
+
+  /*
+   * ==================================================
+   * CONTROLS
+   * ==================================================
+   */
+
+  .archive-controls {
+    border-color:
+      var(--theme-border);
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-surface) 48%,
+        transparent
+      );
+  }
+
+  .archive-control-button {
+    min-height: 44px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    border:
+      1px solid
+      var(--theme-border);
+
+    padding:
+      0.55rem
+      0.85rem;
+
+    background:
+      transparent;
+
+    font-size:
+      0.875rem;
+
+    color:
+      var(--theme-text-secondary);
+  }
+
+  .archive-control-button:hover {
+    border-color:
+      var(--theme-pewter);
+
+    color:
+      var(--theme-text);
+  }
+
+  .archive-control-button:focus-visible {
+    outline:
+      2px solid
+      var(--theme-royal);
+
+    outline-offset:
+      3px;
+  }
+
+  .archive-control-button:disabled {
+    opacity: 0.42;
+
+    cursor: not-allowed;
+  }
+
+  /*
+   * ==================================================
+   * STAGE
+   * ==================================================
+   */
+
+  .archive-stage {
+    height: 30rem;
+
+    overflow: hidden;
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 80%,
+        var(--theme-surface)
+      );
+  }
+
+  .archive-ceremonial-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    z-index: 20;
+
+    height: 2px;
+
+    transform-origin:
+      left center;
+
+    background:
+      linear-gradient(
+        to right,
+        var(--theme-royal),
+        color-mix(
+          in srgb,
+          var(--theme-royal) 50%,
+          var(--theme-pewter)
+        ),
+        transparent
+      );
+  }
+
+  /*
+   * ==================================================
+   * SCROLLER
+   * ==================================================
+   */
+
+  .archive-scroll {
+    height: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type:
+      x mandatory;
+
+    overscroll-behavior-inline:
+      contain;
+
+    scrollbar-width:
+      thin;
+
+    scrollbar-color:
+      var(--theme-pewter)
+      transparent;
+  }
+
+  .archive-scroll:focus-visible {
+    outline:
+      2px solid
+      var(--theme-royal);
+
+    outline-offset:
+      -3px;
+  }
+
+  .archive-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .archive-scroll::-webkit-scrollbar-thumb {
+    background:
+      var(--theme-pewter);
+  }
+
+  .archive-track {
+    display: flex;
+
+    width: max-content;
+    min-width: 100%;
+
+    height: 100%;
+
+    align-items: flex-start;
+
+    padding:
+      1rem
+      4rem
+      1.25rem
+      0;
+  }
+
+  /*
+   * ==================================================
+   * PANELS
+   * ==================================================
+   */
+
+  .archive-panel {
+    position: relative;
+
+    display: flex;
+
+    height: 27rem;
+
+    flex: none;
+    flex-direction: column;
+
+    scroll-snap-align:
+      start;
+
+    border-top:
+      1px solid
+      var(--theme-border);
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
+    border-left:
+      1px solid
+      var(--theme-border);
+
+    background:
+      var(--theme-surface);
+  }
+
+  .archive-panel:last-of-type {
+    border-right:
+      1px solid
+      var(--theme-border);
+  }
+
+  .archive-panel[data-size="wide"] {
+    width: 22rem;
+  }
+
+  .archive-panel[data-size="standard"] {
+    width: 18rem;
+  }
+
+  .archive-panel[data-size="narrow"] {
+    width: 15rem;
+  }
+
+  .archive-panel[data-size="portrait"] {
+    width: 16.5rem;
+  }
+
+  /*
+   * Protocol break.
+   */
+  .archive-panel[data-break="true"] {
+    transform:
+      translateY(
+        8px
+      );
+  }
+
+  /*
+   * ==================================================
+   * HINGES
+   * ==================================================
+   */
+
+  .archive-hinges {
+    position: absolute;
+
+    right: -4px;
+    top: 0;
+    bottom: 0;
+
+    z-index: 15;
+
+    width: 8px;
+
+    pointer-events: none;
+  }
+
+  .archive-hinges::before {
+    content: "";
+
+    position: absolute;
+
+    left: 3px;
+    top: 0;
+    bottom: 0;
+
+    width: 1px;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-pewter) 62%,
+        var(--theme-border)
+      );
+  }
+
+  .archive-hinges span {
+    position: absolute;
+
+    left: 1px;
+
+    width: 6px;
+    height: 6px;
+
+    transform:
+      rotate(
+        45deg
+      );
+
+    border:
+      1px solid
+      var(--theme-pewter);
+
+    background:
+      var(--theme-surface);
+  }
+
+  .archive-hinges span:first-child {
+    top: 28%;
+  }
+
+  .archive-hinges span:last-child {
+    bottom: 28%;
+  }
+
+  /*
+   * ==================================================
+   * RED INTERRUPTION
+   * ==================================================
+   */
+
+  .archive-corner {
+    position: absolute;
+
+    left: -1px;
+    top: -1px;
+
+    z-index: 18;
+
+    background:
+      var(--theme-royal);
+
+    opacity: 0.72;
+  }
+
+  .archive-corner-x {
+    width: 2.35rem;
+    height: 1px;
+  }
+
+  .archive-corner-y {
+    width: 1px;
+    height: 2.35rem;
+  }
+
+  .archive-panel[data-break="true"]
+    .archive-corner {
+    opacity: 1;
+  }
+
+  .archive-protocol-jewel {
+    position: absolute;
+
+    left: 0.75rem;
+    top: 0.7rem;
+
+    z-index: 20;
+  }
+
+  /*
+   * ==================================================
+   * IMAGE
+   * ==================================================
+   */
+
+  .archive-image {
+    position: relative;
+
+    min-height: 0;
+
+    flex: 1;
+
+    overflow: hidden;
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 76%,
+        var(--theme-surface)
+      );
+  }
+
+  .archive-photo {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position:
+      var(
+        --archive-object-position
+      );
+
+    filter:
+      saturate(0.92)
+      contrast(1.018);
+  }
+
+  /*
+   * Signs, logos and record photos:
+   * preserve the whole image.
+   */
+  .archive-panel[data-image-mode="record"]
+    .archive-image {
+    padding:
+      0.7rem;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 64%,
+        var(--theme-surface)
+      );
+  }
+
+  .archive-panel[data-image-mode="record"]
+    .archive-photo {
+    object-fit: contain;
+  }
+
+  /*
+   * ==================================================
+   * PHOTO NUMBER
+   * ==================================================
+   */
+
+  .archive-photo-number {
+    position: absolute;
+
+    right: 0.75rem;
+    top: 0.75rem;
+
+    min-width: 2rem;
+
+    padding:
+      0.28rem
+      0.38rem;
+
+    border:
+      1px solid
+      var(--theme-border);
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 88%,
+        transparent
+      );
+
+    text-align: center;
+
+    font-family:
+      ui-monospace,
+      monospace;
+
+    font-size:
+      0.68rem;
+
+    letter-spacing:
+      0.1em;
+
+    color:
+      var(--theme-text);
+  }
+
+  /*
+   * ==================================================
+   * CAPTION
+   * ==================================================
+   */
+
+  .archive-caption {
+    min-height: 8.4rem;
+
+    padding:
+      0.9rem
+      1rem
+      1rem;
+
+    background:
+      var(--theme-surface);
+  }
+
+  .archive-category {
+    font-size:
+      0.69rem;
+
+    font-weight:
+      500;
+
+    line-height:
+      1rem;
+
+    text-transform:
+      uppercase;
+
+    letter-spacing:
+      0.16em;
+
+    color:
+      var(--theme-pewter);
+  }
+
+  .archive-title {
+    font-family:
+      var(--font-display);
+
+    font-size:
+      1.35rem;
+
+    font-weight:
+      400;
+
+    line-height:
+      1.2;
+
+    color:
+      var(--theme-text);
+  }
+
+  .archive-note {
+    font-size:
+      0.875rem;
+
+    line-height:
+      1.45rem;
+
+    color:
+      var(--theme-text-secondary);
+  }
+
+  .archive-register-mark {
+    width: 7px;
+    height: 7px;
+
+    flex: none;
+
+    transform:
+      rotate(
+        45deg
+      );
+
+    border:
+      1px solid
+      var(--theme-royal);
+  }
+
+  .archive-caption-reflection {
+    display: flex;
+
+    width: 4.25rem;
+
+    flex-direction: column;
+
+    gap: 2px;
+  }
+
+  .archive-caption-reflection
+    span:first-child {
+    height: 1px;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-pewter) 58%,
+        var(--theme-border)
+      );
+  }
+
+  .archive-caption-reflection
+    span:last-child {
+    width: 58%;
+    height: 1px;
+
+    margin-left: 21%;
+
+    opacity: 0.35;
+
+    background:
+      var(--theme-royal);
+  }
+
+  /*
+   * ==================================================
+   * END
+   * ==================================================
+   */
+
+  .archive-end {
+    display: flex;
+
+    width: 8rem;
+    height: 27rem;
+
+    flex: none;
+
+    align-items: center;
+    justify-content: center;
+
+    border-left:
+      1px solid
+      var(--theme-border);
+  }
+
+  .archive-end p {
+    writing-mode:
+      vertical-rl;
+
+    font-family:
+      ui-monospace,
+      monospace;
+
+    font-size:
+      0.68rem;
+
+    text-transform:
+      uppercase;
+
+    letter-spacing:
+      0.18em;
+
+    color:
+      var(--theme-muted);
+  }
+
+  .archive-edge-right {
+    position: absolute;
+
+    right: 0;
+    top: 2px;
+    bottom: 1.25rem;
+
+    z-index: 30;
+
+    width: 2.25rem;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        to left,
+        var(--theme-bg),
+        transparent
+      );
+  }
+
+  /*
+ * ==================================================
+ * LIGHT MODE
+ *
+ * Hanji / stone / ink hierarchy.
+ *
+ * Strong enough to read clearly without
+ * turning the archive into a beige block.
+ * ==================================================
+ */
+
+:global(html:not(.dark))
+  .archive-header {
+  background:
+    #f8f6f1;
+}
+
+:global(html:not(.dark))
+  .archive-landscape {
+  opacity:
+    0.62;
+}
+
+:global(html:not(.dark))
+  .archive-controls {
+  border-color:
+    #99938a;
+
+  background:
+    #dfdad1;
+}
+
+:global(html:not(.dark))
+  .archive-control-button {
+  border-color:
+    #918b82;
+
+  background:
+    #f8f6f1;
+
+  color:
+    #292d32;
+}
+
+:global(html:not(.dark))
+  .archive-control-button:hover {
+  border-color:
+    var(--theme-royal);
+
+  background:
+    #fffdf8;
+
+  color:
+    #17181b;
+}
+
+:global(html:not(.dark))
+  .archive-control-button:disabled {
+  border-color:
+    #bbb5ac;
+
+  background:
+    #e7e3dc;
+
+  color:
+    #77736d;
+
+  opacity:
+    0.72;
+}
+
+:global(html:not(.dark))
+  .archive-stage {
+  border-color:
+    #9d978f;
+
+  background:
+    #e5e0d7;
+}
+
+:global(html:not(.dark))
+  .archive-panel {
+  border-color:
+    #918b83;
+
+  background:
+    #fffdf9;
+}
+
+:global(html:not(.dark))
+  .archive-image {
+  border-color:
+    #99938b;
+
+  background:
+    #e8e4dc;
+}
+
+:global(html:not(.dark))
+  .archive-panel[data-image-mode="record"]
+  .archive-image {
+  background:
+    #dfdbd2;
+}
+
+:global(html:not(.dark))
+  .archive-caption {
+  background:
+    #fffdf9;
+}
+
+:global(html:not(.dark))
+  .archive-category {
+  color:
+    #59636d;
+}
+
+:global(html:not(.dark))
+  .archive-title {
+  color:
+    #17181b;
+}
+
+:global(html:not(.dark))
+  .archive-note {
+  color:
+    #41464c;
+}
+
+:global(html:not(.dark))
+  .archive-hinges::before {
+  background:
+    #716d67;
+}
+
+:global(html:not(.dark))
+  .archive-hinges span {
+  border-color:
+    #65615b;
+
+  background:
+    #f8f6f1;
+}
+
+:global(html:not(.dark))
+  .archive-panel[data-break="true"]
+  .archive-hinges span:first-child {
+  border-color:
+    var(--theme-royal);
+}
+
+:global(html:not(.dark))
+  .archive-photo-number {
+  border-color:
+    #8c867d;
+
+  background:
+    rgba(
+      255,
+      253,
+      249,
+      0.94
+    );
+
+  color:
+    #25282d;
+}
+
+:global(html:not(.dark))
+  .archive-edge-right {
+  background:
+    linear-gradient(
+      to left,
+      #eeece6,
+      transparent
+    );
+}
+
+  /*
+   * ==================================================
+   * DARK MODE
+   * ==================================================
+   */
+
+  :global(html.dark)
+    .archive-header {
+    background:
+      #0b0f16;
+  }
+
+  :global(html.dark)
+    .archive-landscape {
+    opacity: 0.38;
+  }
+
+  :global(html.dark)
+    .archive-stage {
+    background:
+      #090d14;
+  }
+
+  :global(html.dark)
+    .archive-caption {
+    background:
+      #0e131b;
+  }
+
+  :global(html.dark)
+    .archive-photo {
+    filter:
+      saturate(0.8)
+      contrast(1.025)
+      brightness(0.92);
+  }
+
+  /*
+   * ==================================================
+   * ONE-TIME SCREEN ENTRANCE
+   * ==================================================
+   */
+
+  .field-archive[data-motion="ready"]
+    .archive-ceremonial-line {
+    transform:
+      scaleX(
+        0
+      );
+  }
+
+  .field-archive[data-motion="ready"]
+    .archive-panel {
+    translate:
+      0
+      5px;
+  }
+
+  .field-archive[data-motion="ready"][data-entered="true"]
+    .archive-ceremonial-line {
+    transform:
+      scaleX(
+        1
+      );
+
+    transition:
+      transform
+      420ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+  }
+
+  .field-archive[data-motion="ready"][data-entered="true"]
+    .archive-panel {
+    translate:
+      0
+      0;
+
+    transition:
+      translate
+      420ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+  }
+
+  /*
+   * ==================================================
+   * MOBILE
+   * ==================================================
+   */
+
+  @media (
+    max-width: 640px
+  ) {
+    .archive-landscape {
+      width: 100%;
+
+      opacity: 0.28;
+    }
+
+    .archive-stage {
+      height: 29rem;
+    }
+
+    .archive-panel,
+    .archive-end {
+      height: 26rem;
+    }
+
+    .archive-panel[data-size="wide"],
+    .archive-panel[data-size="standard"],
+    .archive-panel[data-size="narrow"],
+    .archive-panel[data-size="portrait"] {
+      width:
+        min(
+          82vw,
+          19rem
+        );
+    }
+
+    .archive-controls {
+      grid-template-columns:
+        1fr;
+    }
+
+    .archive-control-button {
+      flex: 1;
+    }
+  }
+
+  /*
+   * ==================================================
+   * REDUCED MOTION
+   * ==================================================
+   */
+
+  @media (
+    prefers-reduced-motion:
+      reduce
+  ) {
+    .archive-panel,
+    .archive-ceremonial-line {
+      animation:
+        none !important;
+
+      transition:
+        none !important;
+
+      translate:
+        0 0 !important;
+    }
+
+    .archive-ceremonial-line {
+      transform:
+        scaleX(
+          1
+        ) !important;
+    }
+  }
+</style>
+
+<script>
+  const archiveSection =
+    document.querySelector<HTMLElement>(
+      "[data-field-archive]",
+    );
+
+  if (archiveSection) {
+    const scroller =
+      archiveSection.querySelector<HTMLElement>(
+        "[data-archive-scroll]",
+      );
+
+    const panels =
+      Array.from(
+        archiveSection.querySelectorAll<HTMLElement>(
+          "[data-archive-panel]",
+        ),
+      );
+
+    const previousButton =
+      archiveSection.querySelector<HTMLButtonElement>(
+        "[data-archive-prev]",
+      );
+
+    const nextButton =
+      archiveSection.querySelector<HTMLButtonElement>(
+        "[data-archive-next]",
+      );
+
+    const currentLabel =
+      archiveSection.querySelector<HTMLElement>(
+        "[data-archive-current]",
+      );
+
+    const reducedMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+
+    let currentIndex = 0;
+    let scrollFrame = 0;
+
+    function clampIndex(
+      index: number,
+    ) {
+      return Math.max(
+        0,
+        Math.min(
+          index,
+          panels.length - 1,
+        ),
+      );
+    }
+
+    function updateControls(
+      index: number,
+    ) {
+      currentIndex =
+        clampIndex(
+          index,
+        );
+
+      if (currentLabel) {
+        currentLabel.textContent =
+          String(
+            currentIndex + 1,
+          ).padStart(
+            2,
+            "0",
+          );
+      }
+
+      if (previousButton) {
+        previousButton.disabled =
+          currentIndex === 0;
+      }
+
+      if (nextButton) {
+        nextButton.disabled =
+          currentIndex ===
+          panels.length - 1;
+      }
+    }
+
+    function goToPanel(
+      index: number,
+    ) {
+      if (!scroller) {
+        return;
+      }
+
+      const nextIndex =
+        clampIndex(
+          index,
+        );
+
+      const panel =
+        panels[nextIndex];
+
+      if (!panel) {
+        return;
+      }
+
+      scroller.scrollTo({
+        left:
+          panel.offsetLeft,
+
+        behavior:
+          reducedMotion.matches
+            ? "auto"
+            : "smooth",
+      });
+
+      updateControls(
+        nextIndex,
+      );
+    }
+
+    previousButton?.addEventListener(
+      "click",
+      () => {
+        goToPanel(
+          currentIndex - 1,
+        );
+      },
+    );
+
+    nextButton?.addEventListener(
+      "click",
+      () => {
+        goToPanel(
+          currentIndex + 1,
+        );
+      },
+    );
+
+    scroller?.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key ===
+          "ArrowRight"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            currentIndex + 1,
+          );
+
+          return;
+        }
+
+        if (
+          event.key ===
+          "ArrowLeft"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            currentIndex - 1,
+          );
+
+          return;
+        }
+
+        if (
+          event.key ===
+          "Home"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            0,
+          );
+
+          return;
+        }
+
+        if (
+          event.key ===
+          "End"
+        ) {
+          event.preventDefault();
+
+          goToPanel(
+            panels.length - 1,
+          );
+        }
+      },
+    );
+
+    scroller?.addEventListener(
+      "scroll",
+      () => {
+        cancelAnimationFrame(
+          scrollFrame,
+        );
+
+        scrollFrame =
+          requestAnimationFrame(
+            () => {
+              if (!scroller) {
+                return;
+              }
+
+              let closestIndex =
+                0;
+
+              let closestDistance =
+                Number.POSITIVE_INFINITY;
+
+              panels.forEach(
+                (
+                  panel,
+                  index,
+                ) => {
+                  const distance =
+                    Math.abs(
+                      panel.offsetLeft -
+                        scroller.scrollLeft,
+                    );
+
+                  if (
+                    distance <
+                    closestDistance
+                  ) {
+                    closestDistance =
+                      distance;
+
+                    closestIndex =
+                      index;
+                  }
+                },
+              );
+
+              updateControls(
+                closestIndex,
+              );
+            },
+          );
+      },
+      {
+        passive: true,
+      },
+    );
+
+    /*
+     * One short entrance.
+     */
+    if (
+      !reducedMotion.matches
+    ) {
+      archiveSection.dataset.motion =
+        "ready";
+
+      const observer =
+        new IntersectionObserver(
+          (
+            entries,
+            archiveObserver,
+          ) => {
+            if (
+              !entries[0]
+                ?.isIntersecting
+            ) {
+              return;
+            }
+
+            archiveSection.dataset.entered =
+              "true";
+
+            archiveObserver.disconnect();
+          },
+          {
+            threshold:
+              0.2,
+          },
+        );
+
+      observer.observe(
+        archiveSection,
+      );
+    } else {
+      archiveSection.dataset.entered =
+        "true";
+    }
+
+    updateControls(
+      0,
+    );
+  }
+</script>

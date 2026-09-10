@@ -1,0 +1,249 @@
+---
+interface Props {
+    eyebrow?: string;
+    title: string;
+    hook: string;
+    details: string;
+    stack: string[];
+    href?: string;
+}
+
+const { eyebrow, title, hook, details, stack, href } = Astro.props;
+---
+
+<article
+    class="project-card relative h-fit min-w-0 overflow-hidden border border-border"
+>
+    <!--
+    PERFECT CROWN CORNER MARK
+
+    Keep this visible in both themes.
+    It is intentionally stronger in light mode.
+  -->
+    <span
+        aria-hidden="true"
+        class="project-corner project-corner-horizontal absolute left-0 top-0 z-10 h-px w-10 bg-royal"
+    ></span>
+
+    <span
+        aria-hidden="true"
+        class="project-corner project-corner-vertical absolute left-0 top-0 z-10 h-10 w-px bg-royal"
+    ></span>
+
+    <!-- PROJECT FACE -->
+    <div class="project-summary p-5">
+        {
+            eyebrow && (
+                <p class="mb-2 text-[9px] uppercase tracking-[0.19em] text-pewter">
+                    {eyebrow}
+                </p>
+            )
+        }
+
+        <h3 class="font-display text-xl font-semibold tracking-tight text-text">
+            {title}
+        </h3>
+
+        <p class="mt-2 text-sm leading-6 text-secondary">
+            {hook}
+        </p>
+
+        <details data-project-details class="group">
+            <summary
+                class="mt-4 flex w-fit cursor-pointer list-none items-center gap-2 py-1 text-xs text-pewter transition-colors duration-300 hover:text-text"
+            >
+                <span
+                    aria-hidden="true"
+                    class="text-royal transition-transform duration-300 group-open:rotate-90"
+                >
+                    ▸
+                </span>
+
+                details
+            </summary>
+
+            <!-- EXPANDED INNER DOSSIER -->
+            <div
+                class="project-details-panel -mx-5 -mb-5 mt-4 border-t px-5 py-5"
+            >
+                <p class="text-sm leading-6 text-text">
+                    {details}
+                </p>
+
+                <slot name="diagram" />
+
+                <ul
+                    class="mt-4 flex flex-wrap gap-x-3 gap-y-1"
+                    aria-label={`${title} technology stack`}
+                >
+                    {
+                        stack.map((item) => (
+                            <li class="font-mono text-[10px] text-muted">
+                                {item}
+                            </li>
+                        ))
+                    }
+                </ul>
+
+                {
+                    href && (
+                        <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mt-4 inline-flex items-center gap-1 text-xs font-medium text-text transition-colors duration-300 hover:text-royal"
+                        >
+                            View code
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    )
+                }
+            </div>
+        </details>
+    </div>
+</article>
+
+<style>
+    /*
+   * BASE
+   */
+    .project-card {
+        background: var(--theme-surface);
+
+        transition:
+            border-color 300ms ease,
+            box-shadow 300ms ease,
+            background-color 300ms ease;
+    }
+
+    /*
+   * RED CORNER DETAIL
+   *
+   * This stays. It is part of the identity now.
+   */
+    .project-corner {
+        opacity: 0.62;
+
+        transition:
+            opacity 300ms ease,
+            width 300ms ease,
+            height 300ms ease;
+    }
+
+    /*
+   * LIGHT MODE
+   *
+   * Stronger separation:
+   * ivory card over slightly darker page,
+   * cooler border,
+   * clearly visible wine-red corner.
+   */
+    :global(html:not(.dark)) .project-card {
+        background: #faf8f4;
+
+        border-color: color-mix(
+            in srgb,
+            var(--theme-pewter) 38%,
+            var(--theme-border)
+        );
+
+        box-shadow: 0 1px 0 rgba(29, 27, 26, 0.025);
+    }
+
+    :global(html:not(.dark)) .project-corner {
+        opacity: 0.88;
+    }
+
+    /*
+   * DARK MODE
+   *
+   * Preserve the existing darker treatment.
+   */
+    :global(html.dark) .project-card {
+        background: color-mix(in srgb, var(--theme-surface) 58%, transparent);
+    }
+
+    :global(html.dark) .project-corner {
+        opacity: 0.58;
+    }
+
+    /*
+   * HOVER
+   */
+    .project-card:hover {
+        border-color: color-mix(
+            in srgb,
+            var(--theme-pewter) 65%,
+            var(--theme-border)
+        );
+    }
+
+    /*
+   * Open project:
+   * slightly stronger outline.
+   */
+    .project-card:has(details[open]) {
+        border-color: color-mix(
+            in srgb,
+            var(--theme-pewter) 78%,
+            var(--theme-border)
+        );
+    }
+
+    /*
+   * When opened, the red corner quietly extends.
+   */
+    .project-card:has(details[open]) .project-corner-horizontal {
+        width: 3.5rem;
+    }
+
+    .project-card:has(details[open]) .project-corner-vertical {
+        height: 3.5rem;
+    }
+
+    .project-card:has(details[open]) .project-corner {
+        opacity: 1;
+    }
+
+    /*
+   * LIGHT EXPANDED PANEL
+   *
+   * Distinct warm inner folio.
+   * Not pink, just a slight wine undertone.
+   */
+    :global(html:not(.dark)) .project-details-panel {
+        background: color-mix(in srgb, var(--theme-royal) 5%, #f5f1eb);
+
+        border-top-color: color-mix(
+            in srgb,
+            var(--theme-royal) 28%,
+            var(--theme-border)
+        );
+    }
+
+    /*
+   * DARK EXPANDED PANEL
+   *
+   * Slightly darker than the outer card.
+   */
+    :global(html.dark) .project-details-panel {
+        background: color-mix(in srgb, var(--theme-royal) 5%, #0c1018);
+
+        border-top-color: color-mix(
+            in srgb,
+            var(--theme-royal) 28%,
+            var(--theme-border)
+        );
+    }
+
+    /*
+   * OPEN CARD DEPTH
+   */
+    :global(html:not(.dark)) .project-card:has(details[open]) {
+        box-shadow: 0 18px 42px rgba(39, 32, 29, 0.065);
+    }
+
+    :global(html.dark) .project-card:has(details[open]) {
+        box-shadow: 0 22px 55px rgba(0, 0, 0, 0.2);
+    }
+</style>

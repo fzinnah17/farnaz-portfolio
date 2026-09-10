@@ -1,267 +1,244 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ExpandableProjectCard from "../components/ExpandableProjectCard.astro";
-import ExperienceLog from "../components/ExperienceLog.astro";
-import IdentityBlock from "../components/IdentityBlock.astro";
-import ArchitectureField from "../components/ArchitectureField.astro";
-import StackManifest from "../components/StackManifest.astro";
+
+import Hero from "../components/hero/Hero.astro";
+
+import ExperienceLog from "../components/experience/ExperienceLog.astro";
+import StackManifest from "../components/experience/StackManifest.astro";
+
+import ArcheryTransition from "../components/work/ArcheryTransition.astro";
+import ExpandableProjectCard from "../components/work/ExpandableProjectCard.astro";
+import FlowDiagram from "../components/work/FlowDiagram.astro";
+import PerformanceComparison from "../components/work/PerformanceComparison.astro";
+import WorkGallery from "../components/work/WorkGallery.astro";
+
+import FieldArchive from "../components/archive/FieldArchive.astro";
+import WaltzInterlude from "../components/archive/WaltzInterlude.astro";
 ---
 
 <Layout
   title="Farnaz Zinnah — AI Systems Engineer"
-  description="AI Systems Engineer working across AI infrastructure, distributed systems, adversarial machine learning, and AI governance."
+  description="AI systems, adversarial machine learning, systems performance, and AI governance."
 >
-  <main
-    id="main"
-    class="mx-auto max-w-6xl space-y-24 px-6 pt-10 pb-28 md:pt-14 lg:pr-12 lg:pb-20"
-  >
-    <!-- HERO -->
+  <main id="main" class="space-y-20 pb-28 md:space-y-24 lg:pb-20">
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+    <Hero />
+
+    <!-- ==================================================
+         EXPERIENCE / 01
+    ================================================== -->
     <section
-      class="relative isolate grid min-h-[55vh] items-center gap-12 overflow-hidden py-8 md:grid-cols-2"
-      aria-labelledby="hero-title"
+      class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-2 lg:pr-12"
+      aria-label="Experience and technical stack"
     >
-      <ArchitectureField />
+      <!-- CHAPTER REGISTER -->
+      <div
+        class="col-span-full flex items-center gap-4 border-y border-border px-1 py-3"
+      >
+        <span class="text-[11px] uppercase tracking-[0.18em] text-royal">
+          Experience / 01
+        </span>
 
-      <div class="relative z-10 space-y-5">
-        <p
-          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
-        >
-          AI Systems · Security · Infrastructure
-        </p>
+        <span aria-hidden="true" class="h-px flex-1 bg-border"></span>
 
-        <h1
-          id="hero-title"
-          class="text-4xl font-bold leading-tight tracking-tight md:text-5xl"
-        >
-          Farnaz Zinnah
-        </h1>
-
-        <p class="max-w-md text-lg leading-8 text-paper/80">
-          I build AI systems, break them on purpose to see how they fail, and
-          help decide which ones are actually safe to ship.
-        </p>
-
-        <button
-          type="button"
-          data-scroll-target="work"
-          class="inline-flex items-center gap-2 border border-accent-cyan/50 px-4 py-2.5 font-mono text-sm text-accent-cyan transition-colors hover:border-accent-cyan hover:bg-accent-cyan/5"
-        >
-          See selected work
-          <span aria-hidden="true">→</span>
-        </button>
+        <span
+          aria-hidden="true"
+          class="h-1.5 w-1.5 rotate-45 border border-pewter"></span>
       </div>
 
-      <div class="relative z-10">
-        <IdentityBlock />
+      <!-- EXPERIENCE -->
+      <div id="experience" class="scroll-mt-24 space-y-3">
+        <h2
+          class="border-b border-border pb-2 text-2xl font-bold tracking-tight text-text md:text-3xl"
+        >
+          Experience
+        </h2>
+
+        <p class="text-sm text-muted">Work and school, side by side.</p>
+
+        <ExperienceLog />
+      </div>
+
+      <!-- STACK -->
+      <div id="stack" class="scroll-mt-24 space-y-3">
+        <h2
+          class="border-b border-border pb-2 text-2xl font-bold tracking-tight text-text md:text-3xl"
+        >
+          Stack
+        </h2>
+
+        <p class="text-sm text-muted">What I build with.</p>
+
+        <StackManifest />
       </div>
     </section>
 
-    <!-- EXPERIENCE + STACK -->
-    <div class="grid gap-10 lg:grid-cols-2">
-      <section
-        id="experience"
-        class="scroll-mt-24 space-y-5"
-        aria-labelledby="experience-title"
-      >
-        <div class="border-b border-paper/10 pb-3">
-          <p
-            class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-          >
-            Experience
-          </p>
-
-          <h2
-            id="experience-title"
-            class="text-2xl font-semibold tracking-tight"
-          >
-            Building AI systems in production.
-          </h2>
-        </div>
-
-        <ExperienceLog />
-      </section>
+    <!-- ==================================================
+         WORK / 02
+    ================================================== -->
+    <div class="space-y-4">
+      <!-- ONE-TIME ARCHERY TRANSITION -->
+      <ArcheryTransition />
 
       <section
-        id="stack"
-        class="scroll-mt-24 space-y-5"
-        aria-labelledby="stack-title"
+        id="work"
+        class="mx-auto max-w-6xl scroll-mt-24 px-6 lg:pr-12"
+        aria-label="Selected work"
       >
-        <div class="border-b border-paper/10 pb-3">
-          <p
-            class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-          >
-            Stack
-          </p>
+        <WorkGallery>
+          <!-- 01 -->
+          <div data-work-item data-category="ml-security" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="ML · Security / 01"
+              title="Adversarial Robustness Testing"
+              hook="PGD cut classifier accuracy from 76% to 0.2%."
+              details="Tested PGD attacks on an ImageNet classifier. Cross-model transfer reached 90% at ε=8/255 over 20 steps."
+              stack={["PyTorch", "ImageNet-1K", "Security"]}
+              href="https://github.com/fzinnah17/neural-network-jailbreak"
+            />
+          </div>
 
-          <h2 id="stack-title" class="text-2xl font-semibold tracking-tight">
-            The tools behind the systems.
-          </h2>
-        </div>
+          <!-- 02 -->
+          <div data-work-item data-category="systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="Systems · Performance / 02"
+              title="Mojo vs CUDA"
+              hook="Mojo led compute-bound work by 1.7–1.9×; CUDA led memory-bound work."
+              details="The bottleneck changed the winner."
+              stack={["Mojo", "CUDA", "MAX Graph"]}
+            >
+              <PerformanceComparison slot="diagram" />
+            </ExpandableProjectCard>
+          </div>
 
-        <StackManifest />
+          <!-- 03 -->
+          <div data-work-item data-category="ai-systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="AI Systems / 03"
+              title="Agentic SDLC Automation"
+              hook="Backlog → story draft → sync → retrieval."
+              details="Agents draft stories, sync work items, and retrieve answers from sprint documentation."
+              stack={["Azure OpenAI", "RAG", "Azure DevOps", "Python"]}
+            >
+              <FlowDiagram
+                slot="diagram"
+                steps={[
+                  {
+                    label: "Backlog",
+                  },
+                  {
+                    label: "Draft",
+                  },
+                  {
+                    label: "Sync",
+                  },
+                  {
+                    label: "Retrieve",
+                  },
+                ]}
+              />
+            </ExpandableProjectCard>
+          </div>
+
+          <!-- 04 -->
+          <div data-work-item data-category="ai-systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="AI Systems · Review / 04"
+              title="Board Materials Review Agent"
+              hook="Document intake → rules → flagged review."
+              details="Extracts structure, checks explicit rules, and surfaces exceptions for human review."
+              stack={["Azure OpenAI", "Storage", "Key Vault", "Python"]}
+            >
+              <FlowDiagram
+                slot="diagram"
+                steps={[
+                  {
+                    label: "Intake",
+                  },
+                  {
+                    label: "Extract",
+                  },
+                  {
+                    label: "Check",
+                  },
+                  {
+                    label: "Flag",
+                  },
+                  {
+                    label: "Review",
+                  },
+                ]}
+              />
+            </ExpandableProjectCard>
+          </div>
+
+          <!-- 05 -->
+          <div data-work-item data-category="ai-systems" class="min-w-0">
+            <ExpandableProjectCard
+              eyebrow="AI · Governance / 05"
+              title="AI Governance Agent"
+              hook="First-pass risk check before human review."
+              details="Checks data sensitivity, third-party exposure, and access-control risk."
+              stack={["Gemini", "Vertex AI", "Python"]}
+            />
+          </div>
+
+          <!-- PUBLIC -->
+          <div slot="public" class="border-y border-border">
+            <a
+              href="https://github.com/fzinnah17/literature-screening-demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="grid gap-2 border-b border-border px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
+            >
+              <span class="font-mono text-[10px] tracking-[0.12em] text-royal">
+                01
+              </span>
+
+              <span class="font-display text-lg text-text">
+                Literature Screening ↗
+              </span>
+
+              <span class="text-sm text-secondary">
+                Azure · structured outputs
+              </span>
+            </a>
+
+            <a
+              href="https://github.com/fzinnah17/ml-experiment-reporter"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="grid gap-2 px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
+            >
+              <span class="font-mono text-[10px] tracking-[0.12em] text-royal">
+                02
+              </span>
+
+              <span class="font-display text-lg text-text">
+                Experiment Reporter ↗
+              </span>
+
+              <span class="text-sm text-secondary">
+                Vertex AI · experiment analysis
+              </span>
+            </a>
+          </div>
+        </WorkGallery>
       </section>
     </div>
 
-    <!-- SELECTED WORK -->
-    <section
-      id="work"
-      class="scroll-mt-24 space-y-6"
-      aria-labelledby="work-title"
-    >
-      <div class="border-b border-paper/10 pb-3">
-        <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-        >
-          Selected Work
-        </p>
+    <!-- ==================================================
+         QUIET CEREMONIAL INTERLUDE
+         
+         Waltz lives HERE, not in Hero.
+    ================================================== -->
+    <div class="space-y-8">
+      <WaltzInterlude />
 
-        <h2 id="work-title" class="text-2xl font-semibold tracking-tight">
-          Things I have built, measured, and tried to break.
-        </h2>
-      </div>
-
-      <p class="font-mono text-xs leading-5 text-paper/65">
-        Most of my day-to-day work lives in private enterprise repos. The public
-        projects below are personal or academic work.
-      </p>
-
-      <div class="grid items-start gap-4 md:grid-cols-3">
-        <ExpandableProjectCard
-          size="large"
-          title="Adversarial Robustness Testing"
-          hook="Dropped top-1 accuracy from 76% → 0.2% with perturbations too small to see."
-          metric="76% → 0.2%"
-          details="I wanted to know how easily a production-grade image classifier could be fooled. Turns out: very. A PGD attack dropped accuracy from 76% to 0.2%, and the attack transferred to a completely different architecture more than 90% of the time. Built solo in PyTorch and evaluated on ImageNet-1K."
-          stack={["PyTorch", "ImageNet-1K", "FGSM", "PGD", "Security"]}
-          href="https://github.com/fzinnah17/neural-network-jailbreak"
-        />
-
-        <ExpandableProjectCard
-          title="Mojo vs CUDA"
-          hook="Mojo's compiler-generated kernels beat cuBLAS by 1.7–1.9x on compute-heavy GEMM workloads."
-          metric="1.7–1.9x"
-          details="Mojo is still young, so I wanted to see how its compiler-generated GPU kernels actually stack up against CUDA's mature optimization stack. On compute-heavy operations, Mojo won by 1.7–1.9x. On memory-bound operations, CUDA still had the edge. Co-built for HPML coursework; my contribution focused on the MAX Graph baseline and PyTorch-to-MAX weight extraction pipeline."
-          stack={["Mojo", "CUDA", "MAX Graph", "Transformer inference"]}
-        />
-
-        <ExpandableProjectCard
-          title="Call Analytics Pipeline"
-          hook="Cut manager review time from 6 hours → 1 hour per 100 calls."
-          metric="6 hours → 1 hour"
-          details="Managers were spending about six hours reviewing 100 customer service calls by hand. I built a speech-to-text and LLM pipeline that reduced that review time to about one hour and shortened feedback turnaround. The processing path is intentionally in-memory so audio and transcripts do not persist after processing."
-          stack={["Python", "Azure Whisper", "GPT-4", "Concurrency"]}
-        />
-
-        <ExpandableProjectCard
-          title="Cloud-to-On-Prem Gateway"
-          hook="Replaced a 25-endpoint cap → unlimited code-based routing."
-          metric="25-endpoint cap → unlimited"
-          details="The previous method for connecting cloud applications to on-prem systems topped out at 25 endpoints. I built a code-based relay that can route to as many destinations as needed, handles more than one million requests a day, and stores routing rules separately so new routes can be added without changing application code."
-          stack={["C# / .NET", "Azure Relay", "Table Storage", "Security"]}
-        />
-      </div>
-    </section>
-
-    <!-- GOVERNANCE -->
-    <section
-      id="governance"
-      class="scroll-mt-24 border-y border-paper/10 py-10"
-      aria-labelledby="governance-title"
-    >
-      <div class="max-w-3xl space-y-4">
-        <p
-          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
-        >
-          Architecture &amp; Governance
-        </p>
-
-        <h2 id="governance-title" class="text-2xl font-semibold tracking-tight">
-          The other side of the table.
-        </h2>
-
-        <p class="leading-8 text-paper/80">
-          Part of my job is reviewing AI and automation systems before they
-          ship, checking things like data sensitivity, PII exposure, third-party
-          integrations, and access controls. The adversarial attacks work above
-          feeds into this directly. It is hard to judge whether a model is safe
-          to deploy if you have never tried to break one.
-        </p>
-      </div>
-    </section>
-
-    <!-- OTHER WORK -->
-    <section class="space-y-5" aria-labelledby="other-work-title">
-      <div class="border-b border-paper/10 pb-3">
-        <p
-          class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-        >
-          Other Work
-        </p>
-
-        <h2 id="other-work-title" class="text-2xl font-semibold tracking-tight">
-          Smaller systems, same curiosity.
-        </h2>
-      </div>
-
-      <ul class="divide-y divide-paper/10">
-        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
-          <span class="font-mono text-sm text-accent-violet">
-            SDLC automation
-          </span>
-
-          <span class="leading-7 text-paper/75">
-            Multi-agent workflow for SharePoint ↔ ADO synchronization,
-            AI-assisted story elaboration, and RAG-based QA.
-          </span>
-        </li>
-
-        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
-          <span class="font-mono text-sm text-accent-violet">
-            Infrastructure risk
-          </span>
-
-          <span class="leading-7 text-paper/75">
-            Drone-imagery pipeline combining computer vision with weather data
-            for infrastructure risk scoring on GCP.
-          </span>
-        </li>
-
-        <li class="grid gap-2 py-4 md:grid-cols-[12rem_1fr] md:gap-6">
-          <span class="font-mono text-sm text-accent-cyan">
-            AI governance agent
-          </span>
-
-          <span class="leading-7 text-paper/75">
-            Enterprise risk-classification tooling built with Gemini and Vertex
-            AI.
-          </span>
-        </li>
-      </ul>
-    </section>
-
-    <!-- TEACHING -->
-    <section
-      class="border-y border-paper/10 py-10"
-      aria-labelledby="mentorship-title"
-    >
-      <div class="max-w-3xl space-y-4">
-        <p
-          class="font-mono text-xs uppercase tracking-[0.18em] text-accent-violet"
-        >
-          Teaching &amp; Mentorship
-        </p>
-
-        <h2 id="mentorship-title" class="text-2xl font-semibold tracking-tight">
-          Technical depth is better when it is shared.
-        </h2>
-
-        <p class="leading-8 text-paper/80">
-          I've taught 50+ students data structures and clean code as a CodePath
-          Tech Fellow, keeping a 94 NPS and getting renewed four semesters in a
-          row. These days I mentor for CUNY Tech Prep's AI Ethics program, plus
-          hackathons at HackMIT and Columbia DevFest.
-        </p>
-      </div>
-    </section>
+      <!-- FIELD ARCHIVE / 03 -->
+      <FieldArchive />
+    </div>
   </main>
 </Layout>

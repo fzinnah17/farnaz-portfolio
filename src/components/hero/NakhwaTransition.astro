@@ -1,0 +1,542 @@
+---
+const sparks = [
+    { x: 3, delay: 60, duration: 1820, drift: -5, length: 20, opacity: 0.52 },
+    { x: 6, delay: 310, duration: 2110, drift: 7, length: 34, opacity: 0.72 },
+    { x: 9, delay: 120, duration: 1940, drift: -3, length: 17, opacity: 0.5 },
+    { x: 12, delay: 470, duration: 2200, drift: 5, length: 29, opacity: 0.66 },
+    { x: 15, delay: 220, duration: 1860, drift: -8, length: 38, opacity: 0.74 },
+    { x: 18, delay: 650, duration: 2080, drift: 4, length: 22, opacity: 0.54 },
+
+    { x: 22, delay: 90, duration: 2180, drift: -4, length: 31, opacity: 0.78 },
+    { x: 25, delay: 380, duration: 1920, drift: 7, length: 18, opacity: 0.52 },
+    { x: 28, delay: 560, duration: 2250, drift: -6, length: 36, opacity: 0.7 },
+    { x: 31, delay: 180, duration: 2010, drift: 4, length: 25, opacity: 0.64 },
+    { x: 34, delay: 720, duration: 2160, drift: -3, length: 16, opacity: 0.48 },
+    { x: 37, delay: 280, duration: 1900, drift: 8, length: 33, opacity: 0.8 },
+
+    { x: 40, delay: 40, duration: 2240, drift: -4, length: 21, opacity: 0.6 },
+    { x: 43, delay: 520, duration: 2020, drift: 6, length: 40, opacity: 0.82 },
+    { x: 46, delay: 250, duration: 1870, drift: -5, length: 27, opacity: 0.58 },
+    { x: 49, delay: 790, duration: 2150, drift: 4, length: 19, opacity: 0.52 },
+    { x: 52, delay: 130, duration: 2280, drift: -7, length: 35, opacity: 0.84 },
+    { x: 55, delay: 440, duration: 1980, drift: 5, length: 23, opacity: 0.62 },
+
+    { x: 58, delay: 670, duration: 2120, drift: -3, length: 39, opacity: 0.76 },
+    { x: 61, delay: 210, duration: 1880, drift: 7, length: 17, opacity: 0.5 },
+    { x: 64, delay: 500, duration: 2210, drift: -5, length: 30, opacity: 0.72 },
+    { x: 67, delay: 70, duration: 2040, drift: 4, length: 24, opacity: 0.62 },
+    { x: 70, delay: 740, duration: 1940, drift: -7, length: 37, opacity: 0.8 },
+    { x: 73, delay: 330, duration: 2190, drift: 5, length: 20, opacity: 0.54 },
+
+    { x: 76, delay: 160, duration: 2030, drift: -4, length: 32, opacity: 0.74 },
+    { x: 79, delay: 590, duration: 2260, drift: 6, length: 18, opacity: 0.5 },
+    { x: 82, delay: 260, duration: 1890, drift: -5, length: 36, opacity: 0.78 },
+    { x: 85, delay: 820, duration: 2100, drift: 4, length: 22, opacity: 0.56 },
+    { x: 88, delay: 110, duration: 2230, drift: -8, length: 41, opacity: 0.84 },
+    { x: 91, delay: 420, duration: 1960, drift: 6, length: 25, opacity: 0.62 },
+    { x: 94, delay: 680, duration: 2140, drift: -4, length: 33, opacity: 0.7 },
+    { x: 97, delay: 230, duration: 1910, drift: 5, length: 19, opacity: 0.52 },
+] as const;
+
+const distantSparks = [
+    { x: 8, delay: 200 },
+    { x: 14, delay: 820 },
+    { x: 20, delay: 480 },
+    { x: 27, delay: 1100 },
+    { x: 35, delay: 370 },
+    { x: 42, delay: 920 },
+    { x: 50, delay: 610 },
+    { x: 57, delay: 1200 },
+    { x: 65, delay: 270 },
+    { x: 72, delay: 760 },
+    { x: 80, delay: 1030 },
+    { x: 87, delay: 430 },
+    { x: 93, delay: 900 },
+] as const;
+---
+
+<div
+    data-nakhwa-transition
+    data-active="false"
+    class="nakhwa-transition"
+    aria-hidden="true"
+>
+    <div class="nakhwa-field">
+        <!-- Suspended source -->
+        <div class="nakhwa-source">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Main falling trails -->
+        {
+            sparks.map((spark) => (
+                <span
+                    class="nakhwa-spark"
+                    style={`
+            --spark-x: ${spark.x}%;
+            --spark-delay: ${spark.delay}ms;
+            --spark-duration: ${spark.duration}ms;
+            --spark-drift: ${spark.drift}px;
+            --spark-length: ${spark.length}px;
+            --spark-opacity: ${spark.opacity};
+          `}
+                />
+            ))
+        }
+
+        <!-- Fainter depth layer -->
+        {
+            distantSparks.map((spark) => (
+                <span
+                    class="nakhwa-distant"
+                    style={`
+            --spark-x: ${spark.x}%;
+            --spark-delay: ${spark.delay}ms;
+          `}
+                />
+            ))
+        }
+
+        <!-- Quiet reflection -->
+        <div class="nakhwa-reflection"></div>
+    </div>
+</div>
+
+<style>
+    /*
+   * Fixed decorative layer.
+   * It never affects page layout or clicks.
+   */
+    .nakhwa-transition {
+        position: fixed;
+
+        inset-inline: 0;
+        bottom: 0;
+
+        height: clamp(15rem, 42vh, 27rem);
+
+        z-index: 25;
+
+        overflow: hidden;
+
+        pointer-events: none;
+
+        /*
+     * Keep the animation isolated from the rest
+     * of the portfolio while scrolling.
+     */
+        contain: paint;
+        transform: translateZ(0);
+
+        visibility: hidden;
+        opacity: 0;
+
+        transition:
+            opacity 220ms ease,
+            visibility 220ms ease;
+    }
+
+    .nakhwa-transition[data-active="true"] {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /*
+   * Atmospheric grounding.
+   */
+    .nakhwa-field {
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+            to top,
+            color-mix(in srgb, var(--theme-bg) 34%, transparent),
+            transparent 68%
+        );
+    }
+
+    /*
+   * Suspended source line.
+   *
+   * Helps the falling fire read as a hanging
+   * Nakhwa-style display instead of random particles.
+   */
+    .nakhwa-source {
+        position: absolute;
+
+        left: 5%;
+        right: 5%;
+        top: 4%;
+
+        height: 1px;
+
+        opacity: 0;
+
+        background: linear-gradient(
+            to right,
+            transparent,
+            color-mix(in srgb, var(--theme-ember) 34%, transparent) 15%,
+            color-mix(in srgb, var(--theme-ember) 62%, transparent) 50%,
+            color-mix(in srgb, var(--theme-ember) 34%, transparent) 85%,
+            transparent
+        );
+    }
+
+    .nakhwa-source span {
+        position: absolute;
+
+        top: -2px;
+
+        width: 4px;
+        height: 4px;
+
+        border-radius: 50%;
+
+        background: var(--theme-ember);
+
+        box-shadow: 0 0 8px
+            color-mix(in srgb, var(--theme-ember) 48%, transparent);
+    }
+
+    .nakhwa-source span:nth-child(1) {
+        left: 28%;
+    }
+
+    .nakhwa-source span:nth-child(2) {
+        left: 50%;
+    }
+
+    .nakhwa-source span:nth-child(3) {
+        left: 72%;
+    }
+
+    .nakhwa-transition[data-active="true"] .nakhwa-source {
+        animation: nakhwa-source-reveal 2200ms ease both;
+    }
+
+    /*
+   * Main falling trails.
+   */
+    .nakhwa-spark {
+        position: absolute;
+
+        left: var(--spark-x);
+        top: 2%;
+
+        width: 1.5px;
+        height: var(--spark-length);
+
+        opacity: 0;
+
+        transform-origin: top center;
+
+        /*
+     * Tell the browser exactly what will animate.
+     */
+        will-change: transform, opacity;
+
+        background: linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--theme-ember) 10%, transparent),
+            var(--theme-ember) 35%,
+            color-mix(in srgb, var(--theme-ember) 86%, white) 64%,
+            color-mix(in srgb, var(--theme-royal) 48%, var(--theme-ember))
+        );
+
+        box-shadow: 0 0 7px
+            color-mix(in srgb, var(--theme-ember) 46%, transparent);
+    }
+
+    .nakhwa-transition[data-active="true"] .nakhwa-spark {
+        animation: nakhwa-fall var(--spark-duration)
+            cubic-bezier(0.22, 1, 0.36, 1) var(--spark-delay) both;
+    }
+
+    /*
+   * Secondary distant embers.
+   */
+    .nakhwa-distant {
+        position: absolute;
+
+        left: var(--spark-x);
+        top: 8%;
+
+        width: 3px;
+        height: 3px;
+
+        border-radius: 50%;
+
+        opacity: 0;
+
+        will-change: transform, opacity;
+
+        background: var(--theme-ember);
+
+        box-shadow: 0 0 5px
+            color-mix(in srgb, var(--theme-ember) 35%, transparent);
+    }
+
+    .nakhwa-transition[data-active="true"] .nakhwa-distant {
+        animation: nakhwa-distant-fall 2100ms ease-out var(--spark-delay) both;
+    }
+
+    /*
+   * Quiet water/reflection hint.
+   */
+    .nakhwa-reflection {
+        position: absolute;
+
+        left: 15%;
+        right: 15%;
+        bottom: 6%;
+
+        height: 1px;
+
+        opacity: 0;
+
+        background: linear-gradient(
+            to right,
+            transparent,
+            color-mix(in srgb, var(--theme-ember) 48%, transparent),
+            transparent
+        );
+
+        box-shadow: 0 2px 10px
+            color-mix(in srgb, var(--theme-ember) 12%, transparent);
+    }
+
+    .nakhwa-transition[data-active="true"] .nakhwa-reflection {
+        animation: nakhwa-reflection 2400ms ease 300ms both;
+    }
+
+    /*
+   * MAIN FALL
+   */
+    @keyframes nakhwa-fall {
+        0% {
+            opacity: 0;
+
+            transform: translate3d(0, -10px, 0) scaleY(0.35);
+        }
+
+        10% {
+            opacity: var(--spark-opacity);
+        }
+
+        62% {
+            opacity: var(--spark-opacity);
+        }
+
+        100% {
+            opacity: 0;
+
+            transform: translate3d(var(--spark-drift), 300px, 0) scaleY(1.15);
+        }
+    }
+
+    /*
+   * DEPTH LAYER
+   */
+    @keyframes nakhwa-distant-fall {
+        0% {
+            opacity: 0;
+
+            transform: translateY(0);
+        }
+
+        18% {
+            opacity: 0.55;
+        }
+
+        75% {
+            opacity: 0.38;
+        }
+
+        100% {
+            opacity: 0;
+
+            transform: translateY(245px);
+        }
+    }
+
+    /*
+   * SOURCE LINE
+   */
+    @keyframes nakhwa-source-reveal {
+        0% {
+            opacity: 0;
+
+            transform: scaleX(0.86);
+        }
+
+        20% {
+            opacity: 0.72;
+        }
+
+        78% {
+            opacity: 0.54;
+        }
+
+        100% {
+            opacity: 0;
+
+            transform: scaleX(1);
+        }
+    }
+
+    /*
+   * REFLECTION
+   */
+    @keyframes nakhwa-reflection {
+        0% {
+            opacity: 0;
+
+            transform: scaleX(0.65);
+        }
+
+        35% {
+            opacity: 0.58;
+        }
+
+        100% {
+            opacity: 0;
+
+            transform: scaleX(1);
+        }
+    }
+
+    /*
+   * LIGHT MODE
+   *
+   * Keep this essentially unchanged because
+   * this is the version you already like.
+   */
+    :global(html:not(.dark)) .nakhwa-transition[data-active="true"] {
+        opacity: 0.94;
+    }
+
+    :global(html:not(.dark)) .nakhwa-spark {
+        filter: saturate(1.18) contrast(1.08);
+    }
+
+    /*
+   * DARK MODE
+   *
+   * Same Nakhwa visual language, but without
+   * the heavier filter compositing that was
+   * interfering with smooth scrolling.
+   */
+    :global(html.dark) .nakhwa-transition[data-active="true"] {
+        opacity: 0.9;
+    }
+
+    :global(html.dark) .nakhwa-field {
+        background: linear-gradient(
+            to top,
+            rgba(8, 11, 18, 0.16),
+            transparent 55%
+        );
+    }
+
+    :global(html.dark) .nakhwa-spark {
+        filter: none;
+
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            color-mix(in srgb, var(--theme-ember) 58%, transparent) 22%,
+            var(--theme-ember) 68%,
+            color-mix(in srgb, var(--theme-royal) 38%, var(--theme-ember))
+        );
+
+        box-shadow: 0 0 4px
+            color-mix(in srgb, var(--theme-ember) 26%, transparent);
+    }
+
+    :global(html.dark) .nakhwa-distant {
+        box-shadow: 0 0 3px
+            color-mix(in srgb, var(--theme-ember) 22%, transparent);
+    }
+
+    /*
+   * Accessibility:
+   * this transition is purely decorative.
+   */
+    @media (prefers-reduced-motion: reduce) {
+        .nakhwa-transition {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    const transition = document.querySelector<HTMLElement>(
+        "[data-nakhwa-transition]",
+    );
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let hideTimer = 0;
+
+    function playNakhwaTransition() {
+        if (!transition || reducedMotion.matches) {
+            return;
+        }
+
+        window.clearTimeout(hideTimer);
+
+        /*
+         * Reset so every click can replay
+         * the complete transition.
+         */
+        transition.dataset.active = "false";
+
+        /*
+         * Force the browser to register the reset
+         * before restarting the animation.
+         */
+        void transition.offsetWidth;
+
+        transition.dataset.active = "true";
+
+        hideTimer = window.setTimeout(() => {
+            transition.dataset.active = "false";
+        }, 3100);
+    }
+
+    /*
+     * Any element carrying data-nakhwa-trigger
+     * can play the same transition.
+     *
+     * This includes:
+     * - Hero Selected Work
+     * - Header Work
+     */
+    document.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) {
+            return;
+        }
+
+        const trigger = target.closest("[data-nakhwa-trigger]");
+
+        if (!trigger) {
+            return;
+        }
+
+        playNakhwaTransition();
+    });
+
+    window.addEventListener(
+        "pagehide",
+        () => {
+            window.clearTimeout(hideTimer);
+        },
+        {
+            once: true,
+        },
+    );
+</script>
