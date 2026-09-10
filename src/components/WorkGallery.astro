@@ -28,8 +28,11 @@ const filters = [
 ] as const;
 ---
 
-<div data-work-gallery>
-    <div class="grid border-y border-border md:grid-cols-[0.72fr_1.28fr]">
+<div data-work-gallery class="work-gallery">
+    <!-- REGISTER HEADER -->
+    <div
+        class="work-register-header grid border-y border-border md:grid-cols-[0.72fr_1.28fr]"
+    >
         <div class="border-b border-border px-5 py-6 md:border-b-0 md:border-r">
             <p class="text-[10px] uppercase tracking-[0.2em] text-royal">
                 Work / 01
@@ -56,8 +59,9 @@ const filters = [
         </div>
     </div>
 
+    <!-- FILTER REGISTER -->
     <div
-        class="overflow-x-auto border-b border-border"
+        class="work-filter-register overflow-x-auto border-b border-border"
         aria-label="Filter selected work"
     >
         <div class="flex min-w-max">
@@ -68,7 +72,7 @@ const filters = [
                         data-work-filter={filter.id}
                         data-active={index === 0 ? "true" : "false"}
                         aria-pressed={index === 0 ? "true" : "false"}
-                        class="group relative flex items-center gap-2 border-r border-border px-4 py-3 text-sm text-secondary transition-colors duration-300 last:border-r-0 hover:text-text data-[active=true]:text-text"
+                        class="work-filter group relative flex items-center gap-2 border-r border-border px-4 py-3 text-sm text-secondary transition-colors duration-300 last:border-r-0 hover:text-text data-[active=true]:text-text"
                     >
                         <span class="font-mono text-[9px] tracking-[0.12em] text-pewter group-data-[active=true]:text-royal">
                             {filter.number}
@@ -86,17 +90,59 @@ const filters = [
         </div>
     </div>
 
-    <div
-        data-work-grid
-        class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 md:[grid-auto-rows:8px] xl:grid-cols-3"
-    >
-        <slot />
-    </div>
+    <!--
+    STABLE WORK STAGE
 
-    <div data-public-panel hidden class="mt-6">
-        <slot name="public" />
+    This wrapper keeps the footprint of the Selected view
+    even when a filter contains only one project.
+  -->
+    <div data-work-stage class="relative">
+        <!-- PROJECT MASONRY -->
+        <div
+            data-work-grid
+            class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 md:[grid-auto-rows:8px] xl:grid-cols-3"
+        >
+            <slot />
+        </div>
+
+        <!-- PUBLIC VIEW -->
+        <div data-public-panel hidden class="mt-6">
+            <slot name="public" />
+        </div>
     </div>
 </div>
+
+<style>
+    /*
+   * LIGHT MODE:
+   * make the register feel like a clean folio sitting over
+   * the slightly darker ivory page.
+   */
+    :global(html:not(.dark)) .work-register-header,
+    :global(html:not(.dark)) .work-filter-register {
+        background: color-mix(in srgb, var(--theme-surface) 58%, transparent);
+    }
+
+    /*
+   * Give the active light-mode filter just enough tonal
+   * distinction without turning it into a conventional tab.
+   */
+    :global(html:not(.dark)) .work-filter[data-active="true"] {
+        background: color-mix(
+            in srgb,
+            var(--theme-royal) 3%,
+            var(--theme-surface)
+        );
+    }
+
+    /*
+   * Dark mode stays visually transparent/minimal.
+   */
+    :global(html.dark) .work-register-header,
+    :global(html.dark) .work-filter-register {
+        background: transparent;
+    }
+</style>
 
 <script>
     document
@@ -113,6 +159,9 @@ const filters = [
             "[data-public-panel]",
         );
 
+        const stageElement =
+            gallery.querySelector<HTMLElement>("[data-work-stage]");
+
         const title = gallery.querySelector<HTMLElement>("[data-work-title]");
 
         const buttons = Array.from(
@@ -123,26 +172,36 @@ const filters = [
             gallery.querySelectorAll<HTMLElement>("[data-work-item]"),
         );
 
-        /*
-         * Stop initialization if the required
-         * gallery elements are missing.
-         */
-        if (!gridElement || !publicPanelElement) {
+        if (!gridElement || !publicPanelElement || !stageElement) {
             return;
         }
 
-        /*
-         * These aliases are now guaranteed HTMLElement values.
-         * Using them inside nested functions keeps TypeScript
-         * from treating them as HTMLElement | null.
-         */
         const grid = gridElement;
+
         const publicPanel = publicPanelElement;
+
+        const stage = stageElement;
 
         const rowHeight = 8;
         const gap = 16;
 
         let layoutFrame = 0;
+
+        let currentFilter = "selected";
+
+        /*
+         * Height of the normal collapsed Selected view.
+         *
+         * We keep this when switching to categories with
+         * fewer projects.
+         */
+        let stableStageHeight = 0;
+
+        function hasOpenProject() {
+            return Boolean(
+                gallery.querySelector("[data-project-details][open]"),
+            );
+        }
 
         function closeProjects() {
             gallery
@@ -156,8 +215,8 @@ const filters = [
             item.style.gridRowEnd = "auto";
 
             /*
-             * Normal document flow on smaller screens.
-             * Masonry packing begins at md.
+             * Mobile:
+             * normal document flow.
              */
             if (item.hidden || window.innerWidth < 768) {
                 return;
@@ -176,15 +235,39 @@ const filters = [
             item.style.gridRowEnd = `span ${span}`;
         }
 
+        function captureSelectedHeight() {
+            /*
+             * Do not let an expanded card redefine our
+             * baseline height.
+             */
+            if (currentFilter !== "selected" || hasOpenProject()) {
+                return;
+            }
+
+            requestAnimationFrame(() => {
+                const height = grid.getBoundingClientRect().height;
+
+                if (height > stableStageHeight) {
+                    stableStageHeight = Math.ceil(height);
+
+                    stage.style.minHeight = `${stableStageHeight}px`;
+                }
+            });
+        }
+
         function layout() {
             cancelAnimationFrame(layoutFrame);
 
             layoutFrame = requestAnimationFrame(() => {
                 items.forEach(resizeItem);
+
+                captureSelectedHeight();
             });
         }
 
         function setFilter(filter: string) {
+            currentFilter = filter;
+
             closeProjects();
 
             buttons.forEach((button) => {
@@ -197,10 +280,6 @@ const filters = [
 
             const publicMode = filter === "public";
 
-            /*
-             * These are now guaranteed elements,
-             * so TypeScript no longer complains.
-             */
             grid.hidden = publicMode;
 
             publicPanel.hidden = !publicMode;
@@ -232,6 +311,14 @@ const filters = [
                 item.hidden = filter !== "selected" && category !== filter;
             });
 
+            /*
+             * Keep the selected baseline even when this
+             * filter has only one project.
+             */
+            if (stableStageHeight > 0) {
+                stage.style.minHeight = `${stableStageHeight}px`;
+            }
+
             layout();
         }
 
@@ -246,7 +333,7 @@ const filters = [
         });
 
         /*
-         * Only one project may be expanded.
+         * Exactly one expanded card.
          */
         gallery.addEventListener(
             "toggle",
@@ -272,18 +359,13 @@ const filters = [
                         });
                 }
 
-                /*
-                 * Repack after the details element
-                 * finishes changing height.
-                 */
                 requestAnimationFrame(layout);
             },
             true,
         );
 
         /*
-         * Repack whenever an individual card
-         * changes height.
+         * Repack masonry when card content changes.
          */
         const resizeObserver = new ResizeObserver(() => {
             layout();
@@ -297,11 +379,37 @@ const filters = [
             }
         });
 
-        window.addEventListener("resize", layout);
+        /*
+         * Responsive widths can change the height of
+         * the full Selected composition.
+         */
+        window.addEventListener("resize", () => {
+            /*
+             * If we're looking at Selected while resizing,
+             * allow the baseline to be recalculated.
+             */
+            if (currentFilter === "selected" && !hasOpenProject()) {
+                stableStageHeight = 0;
+
+                stage.style.minHeight = "";
+            }
+
+            layout();
+        });
 
         /*
-         * Initial state.
+         * IMPORTANT:
+         * initialize from Selected so the stable height is
+         * measured from the largest normal view.
          */
         setFilter("selected");
+
+        /*
+         * Give the first browser layout one extra frame
+         * before capturing the baseline.
+         */
+        requestAnimationFrame(() => {
+            layout();
+        });
     }
 </script>
