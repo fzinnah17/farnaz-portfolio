@@ -1,0 +1,1002 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+import hackathonWorking from "../assets/portfolio/archive/01-hackathon-working.jpeg";
+import microsoftPhoto from "../assets/portfolio/archive/02-microsoft.jpeg";
+import sweGroup from "../assets/portfolio/archive/03-swe-group.jpeg";
+import conferencePanel from "../assets/portfolio/archive/04-conference-panel.jpeg";
+import hackathonTeam from "../assets/portfolio/archive/05-hackathon-team.jpeg";
+import mitPhoto from "../assets/portfolio/archive/06-mit.jpeg";
+import womenTechGroup from "../assets/portfolio/archive/07-women-tech-group.jpeg";
+import swePhotoStrip from "../assets/portfolio/archive/08-swe-photo-strip.jpeg";
+import mongodbPhoto from "../assets/portfolio/archive/09-mongodb.jpeg";
+import hbsPhoto from "../assets/portfolio/archive/10-harvard-business-school.jpeg";
+
+type ArchiveSize =
+  | "feature"
+  | "portrait"
+  | "wide"
+  | "medium"
+  | "strip";
+
+interface ArchiveItem {
+  number: string;
+  register: string;
+  title: string;
+  note: string;
+  image: ImageMetadata;
+  alt: string;
+  size: ArchiveSize;
+  breakProtocol?: boolean;
+}
+
+const archive: ArchiveItem[] = [
+  {
+    number: "01",
+    register: "Build",
+    title: "In the work",
+    note: "Hackathon build session.",
+    image: hackathonWorking,
+    alt: "Farnaz working with teammates at a hackathon table",
+    size: "feature",
+  },
+  {
+    number: "02",
+    register: "Industry",
+    title: "Microsoft",
+    note: "Learning beyond the day-to-day.",
+    image: microsoftPhoto,
+    alt: "Farnaz standing in front of a Microsoft sign",
+    size: "portrait",
+  },
+  {
+    number: "03",
+    register: "Community",
+    title: "SWE",
+    note: "Engineering in company.",
+    image: sweGroup,
+    alt: "Large group photo at a Society of Women Engineers event",
+    size: "wide",
+  },
+  {
+    number: "04",
+    register: "Exchange",
+    title: "Ideas in circulation",
+    note: "Technical conversations beyond the screen.",
+    image: conferencePanel,
+    alt: "Professional conference panel on a blue-lit stage",
+    size: "medium",
+    breakProtocol: true,
+  },
+  {
+    number: "05",
+    register: "Team",
+    title: "From problem to prototype",
+    note: "Building collaboratively under a deadline.",
+    image: hackathonTeam,
+    alt: "Farnaz with a hackathon team beside their Clarity Care project",
+    size: "medium",
+  },
+  {
+    number: "06",
+    register: "Learning",
+    title: "MIT",
+    note: "Curiosity outside the boundaries of work.",
+    image: mitPhoto,
+    alt: "Farnaz seated outside Massachusetts Institute of Technology",
+    size: "portrait",
+  },
+  {
+    number: "07",
+    register: "Community",
+    title: "In the room",
+    note: "The people behind the technical work.",
+    image: womenTechGroup,
+    alt: "Farnaz with a professional group at an engineering event",
+    size: "wide",
+  },
+  {
+    number: "08",
+    register: "Record",
+    title: "SWE 2025",
+    note: "A small artifact from the larger experience.",
+    image: swePhotoStrip,
+    alt: "SWE 2025 photo booth strip featuring Farnaz",
+    size: "strip",
+  },
+  {
+    number: "09",
+    register: "Developer",
+    title: "MongoDB",
+    note: "Meeting the broader developer community.",
+    image: mongodbPhoto,
+    alt: "Farnaz at a MongoDB developer event",
+    size: "medium",
+  },
+  {
+    number: "10",
+    register: "Learning",
+    title: "Harvard Business School",
+    note: "Looking beyond engineering alone.",
+    image: hbsPhoto,
+    alt: "Farnaz standing outside Harvard Business School",
+    size: "portrait",
+  },
+];
+---
+
+<section
+  id="field-archive"
+  class="field-archive mx-auto max-w-6xl px-6 lg:pr-12"
+  aria-labelledby="field-archive-title"
+>
+  <!-- CEREMONIAL REGISTER -->
+  <header
+    class="archive-header grid border-y border-border md:grid-cols-[0.72fr_1.28fr]"
+  >
+    <div
+      class="relative border-b border-border px-5 py-7 md:border-b-0 md:border-r"
+    >
+      <p
+        class="text-[10px] uppercase tracking-[0.22em] text-royal"
+      >
+        Field Archive / 03
+      </p>
+
+      <h2
+        id="field-archive-title"
+        class="mt-2 font-display text-3xl font-normal text-text md:text-4xl"
+      >
+        Beyond the work.
+      </h2>
+
+      <!-- REFLECTION -->
+      <div
+        class="archive-reflection mt-4"
+        aria-hidden="true"
+      >
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div
+      class="flex items-center justify-between gap-8 px-5 py-7"
+    >
+      <p
+        class="max-w-md text-sm leading-6 text-secondary"
+      >
+        Hackathons, professional communities, workshops, and the rooms where
+        technical work becomes something shared.
+      </p>
+
+      <div
+        class="hidden shrink-0 items-center gap-3 md:flex"
+        aria-hidden="true"
+      >
+        <span class="h-px w-12 bg-border"></span>
+
+        <span
+          class="h-1.5 w-1.5 rotate-45 border border-royal"
+        ></span>
+
+        <span
+          class="text-[9px] uppercase tracking-[0.2em] text-pewter"
+        >
+          FZ / Field Record
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- FOLDING-SCREEN FRAME -->
+  <div class="archive-frame relative mt-6">
+    <!-- CHEOLLIK / PLEAT RHYTHM -->
+    <div
+      class="archive-pleats"
+      aria-hidden="true"
+    ></div>
+
+    <div class="archive-grid">
+      {
+        archive.map((item) => (
+          <article
+            class="archive-card"
+            data-size={item.size}
+            data-break={item.breakProtocol ? "true" : "false"}
+          >
+            <!-- CONTROLLED RED DISRUPTION -->
+            <span
+              aria-hidden="true"
+              class="archive-corner archive-corner-x"
+            ></span>
+
+            <span
+              aria-hidden="true"
+              class="archive-corner archive-corner-y"
+            ></span>
+
+            <!-- PHOTO -->
+            <div class="archive-image">
+              <Image
+                src={item.image}
+                alt={item.alt}
+                widths={[480, 720, 960, 1200]}
+                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 40vw"
+                class="archive-photo"
+              />
+
+              <!-- archival folio number -->
+              <span
+                class="archive-photo-number"
+                aria-hidden="true"
+              >
+                {item.number}
+              </span>
+            </div>
+
+            <!-- CAPTION REGISTER -->
+            <div class="archive-caption">
+              <div
+                class="flex items-start justify-between gap-4"
+              >
+                <div class="min-w-0">
+                  <p
+                    class="text-[9px] uppercase tracking-[0.2em] text-pewter"
+                  >
+                    {item.register}
+                  </p>
+
+                  <h3
+                    class="mt-1 font-display text-xl font-normal leading-tight text-text"
+                  >
+                    {item.title}
+                  </h3>
+                </div>
+
+                <span
+                  class="shrink-0 font-mono text-[9px] tracking-[0.12em] text-royal"
+                >
+                  {item.number}
+                </span>
+              </div>
+
+              <p
+                class="mt-3 text-sm leading-6 text-secondary"
+              >
+                {item.note}
+              </p>
+
+              <!-- quiet reflected rule -->
+              <div
+                class="archive-caption-rule mt-4"
+                aria-hidden="true"
+              >
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /*
+   * --------------------------------------------------
+   * FIELD ARCHIVE
+   *
+   * Perfect Crown visual grammar:
+   *
+   * - ceremonial numbering
+   * - palace-bay framing
+   * - pleated vertical rhythm
+   * - controlled oxblood interruptions
+   * - quiet reflections
+   * - one deliberate protocol break
+   * --------------------------------------------------
+   */
+
+  .field-archive {
+    position: relative;
+  }
+
+  /*
+   * HEADER
+   */
+  .archive-header {
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-surface) 24%,
+        transparent
+      );
+  }
+
+  /*
+   * REFLECTION MOTIF
+   */
+  .archive-reflection {
+    display: flex;
+    width: 7rem;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .archive-reflection span:first-child {
+    width: 100%;
+    height: 1px;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-royal) 58%,
+        var(--theme-border)
+      );
+  }
+
+  .archive-reflection span:last-child {
+    width: 68%;
+    height: 1px;
+
+    margin-left: 16%;
+
+    opacity: 0.32;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-royal) 30%,
+        transparent
+      );
+  }
+
+  /*
+   * OUTER PALACE / SCREEN FRAME
+   */
+  .archive-frame {
+    border-top:
+      1px solid
+      var(--theme-border);
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
+    padding:
+      1rem 0;
+  }
+
+  /*
+   * PLEATED RHYTHM
+   *
+   * These lines sit behind the photographs.
+   * They should register structurally rather
+   * than read as a pattern.
+   */
+  .archive-pleats {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.25;
+
+    background:
+      repeating-linear-gradient(
+        to right,
+        transparent 0,
+        transparent calc(8.333% - 1px),
+        var(--theme-border)
+          calc(8.333% - 1px),
+        var(--theme-border)
+          8.333%
+      );
+  }
+
+  /*
+   * FOLDING-SCREEN GRID
+   */
+  .archive-grid {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(
+        12,
+        minmax(0, 1fr)
+      );
+
+    grid-auto-rows:
+      3.15rem;
+
+    grid-auto-flow:
+      dense;
+
+    gap: 1rem;
+  }
+
+  /*
+   * ARCHIVE FOLIO
+   */
+  .archive-card {
+    position: relative;
+
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border:
+      1px solid
+      var(--theme-border);
+
+    background:
+      var(--theme-surface);
+
+    transition:
+      border-color 300ms ease,
+      transform 400ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        ),
+      box-shadow 300ms ease;
+  }
+
+  /*
+   * PHOTO PROPORTIONS
+   */
+  .archive-card[data-size="feature"] {
+    grid-column:
+      span 6;
+
+    grid-row:
+      span 11;
+  }
+
+  .archive-card[data-size="portrait"] {
+    grid-column:
+      span 3;
+
+    grid-row:
+      span 11;
+  }
+
+  .archive-card[data-size="wide"] {
+    grid-column:
+      span 6;
+
+    grid-row:
+      span 7;
+  }
+
+  .archive-card[data-size="medium"] {
+    grid-column:
+      span 3;
+
+    grid-row:
+      span 7;
+  }
+
+  .archive-card[data-size="strip"] {
+    grid-column:
+      span 3;
+
+    grid-row:
+      span 11;
+  }
+
+  /*
+   * PROTOCOL BREAK
+   *
+   * Exactly one archive record disobeys the
+   * otherwise rigid vertical alignment.
+   */
+  .archive-card[data-break="true"] {
+    transform:
+      translateY(
+        12px
+      );
+  }
+
+  .archive-card:hover {
+    border-color:
+      color-mix(
+        in srgb,
+        var(--theme-pewter) 68%,
+        var(--theme-border)
+      );
+
+    box-shadow:
+      0 18px 42px
+      rgba(
+        18,
+        18,
+        20,
+        0.055
+      );
+  }
+
+  .archive-card[data-break="true"]:hover {
+    transform:
+      translateY(
+        8px
+      );
+  }
+
+  /*
+   * RED CORNER REGISTER
+   */
+  .archive-corner {
+    position: absolute;
+
+    left: -1px;
+    top: -1px;
+
+    z-index: 5;
+
+    display: block;
+
+    background:
+      var(--theme-royal);
+
+    opacity: 0.68;
+
+    pointer-events: none;
+  }
+
+  .archive-corner-x {
+    width: 2.4rem;
+    height: 1px;
+  }
+
+  .archive-corner-y {
+    width: 1px;
+    height: 2.4rem;
+  }
+
+  /*
+   * The single protocol break carries
+   * the strongest oxblood mark.
+   */
+  .archive-card[data-break="true"]
+    .archive-corner {
+    opacity: 1;
+  }
+
+  .archive-card[data-break="true"]
+    .archive-corner-x {
+    width: 3.6rem;
+  }
+
+  .archive-card[data-break="true"]
+    .archive-corner-y {
+    height: 3.6rem;
+  }
+
+  /*
+   * PHOTO AREA
+   */
+  .archive-image {
+    position: relative;
+
+    min-height: 0;
+    flex: 1;
+
+    overflow: hidden;
+
+    border-bottom:
+      1px solid
+      var(--theme-border);
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 72%,
+        var(--theme-surface)
+      );
+  }
+
+  .archive-photo {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    /*
+     * Your actual photographs already have
+     * useful color. Don't erase it.
+     */
+    filter:
+      saturate(0.92)
+      contrast(1.018);
+
+    transition:
+      transform 700ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        ),
+      filter 500ms ease;
+  }
+
+  .archive-card:hover
+    .archive-photo {
+    transform:
+      scale(
+        1.012
+      );
+
+    filter:
+      saturate(1)
+      contrast(1.018);
+  }
+
+  /*
+   * Folio number floating over the photograph.
+   */
+  .archive-photo-number {
+    position: absolute;
+
+    right: 0.8rem;
+    top: 0.8rem;
+
+    padding:
+      0.22rem
+      0.36rem;
+
+    border:
+      1px solid
+      color-mix(
+        in srgb,
+        var(--theme-border) 55%,
+        transparent
+      );
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-bg) 72%,
+        transparent
+      );
+
+    backdrop-filter:
+      blur(
+        6px
+      );
+
+    font-family:
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      monospace;
+
+    font-size:
+      0.52rem;
+
+    letter-spacing:
+      0.14em;
+
+    color:
+      var(--theme-text);
+
+    opacity: 0.9;
+  }
+
+  /*
+   * CAPTION REGISTER
+   */
+  .archive-caption {
+    padding:
+      1rem;
+  }
+
+  /*
+   * Reflection detail repeated beneath captions.
+   */
+  .archive-caption-rule {
+    display: flex;
+
+    width: 4.5rem;
+
+    flex-direction: column;
+
+    gap: 2px;
+  }
+
+  .archive-caption-rule span:first-child {
+    width: 100%;
+    height: 1px;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-pewter) 42%,
+        var(--theme-border)
+      );
+  }
+
+  .archive-caption-rule span:last-child {
+    width: 62%;
+    height: 1px;
+
+    margin-left: 19%;
+
+    opacity: 0.22;
+
+    background:
+      var(--theme-royal);
+  }
+
+  /*
+   * --------------------------------------------------
+   * LIGHT
+   * --------------------------------------------------
+   */
+
+  :global(html:not(.dark))
+    .archive-card {
+    background:
+      #faf8f4;
+
+    border-color:
+      color-mix(
+        in srgb,
+        var(--theme-pewter) 36%,
+        var(--theme-border)
+      );
+  }
+
+  :global(html:not(.dark))
+    .archive-image {
+    background:
+      #ece9e2;
+  }
+
+  :global(html:not(.dark))
+    .archive-pleats {
+    opacity: 0.34;
+  }
+
+  :global(html:not(.dark))
+    .archive-card:hover {
+    box-shadow:
+      0 18px 42px
+      rgba(
+        45,
+        38,
+        33,
+        0.065
+      );
+  }
+
+  /*
+   * --------------------------------------------------
+   * DARK
+   * --------------------------------------------------
+   */
+
+  :global(html.dark)
+    .archive-card {
+    background:
+      color-mix(
+        in srgb,
+        var(--theme-surface) 60%,
+        transparent
+      );
+  }
+
+  :global(html.dark)
+    .archive-image {
+    background:
+      #0c1017;
+  }
+
+  /*
+   * Do NOT grayscale the archive.
+   *
+   * Hero portrait = restrained monochrome.
+   * Field Archive = lived professional color.
+   */
+  :global(html.dark)
+    .archive-photo {
+    filter:
+      saturate(0.78)
+      contrast(1.025)
+      brightness(0.92);
+  }
+
+  :global(html.dark)
+    .archive-card:hover
+    .archive-photo {
+    filter:
+      saturate(0.9)
+      contrast(1.025)
+      brightness(0.95);
+  }
+
+  :global(html.dark)
+    .archive-card:hover {
+    box-shadow:
+      0 22px 52px
+      rgba(
+        0,
+        0,
+        0,
+        0.18
+      );
+  }
+
+  /*
+   * --------------------------------------------------
+   * TABLET
+   * --------------------------------------------------
+   */
+
+  @media (
+    max-width: 1023px
+  ) {
+    .archive-grid {
+      grid-template-columns:
+        repeat(
+          6,
+          minmax(0, 1fr)
+        );
+    }
+
+    .archive-card[data-size="feature"] {
+      grid-column:
+        span 4;
+    }
+
+    .archive-card[data-size="portrait"],
+    .archive-card[data-size="strip"] {
+      grid-column:
+        span 2;
+    }
+
+    .archive-card[data-size="wide"] {
+      grid-column:
+        span 6;
+    }
+
+    .archive-card[data-size="medium"] {
+      grid-column:
+        span 3;
+    }
+
+    .archive-pleats {
+      background:
+        repeating-linear-gradient(
+          to right,
+          transparent 0,
+          transparent
+            calc(
+              16.666% - 1px
+            ),
+          var(--theme-border)
+            calc(
+              16.666% - 1px
+            ),
+          var(--theme-border)
+            16.666%
+        );
+    }
+  }
+
+  /*
+   * --------------------------------------------------
+   * MOBILE
+   * --------------------------------------------------
+   *
+   * Folding screen becomes a vertical archive.
+   */
+
+  @media (
+    max-width: 767px
+  ) {
+    .archive-grid {
+      grid-template-columns:
+        1fr;
+
+      grid-auto-rows:
+        auto;
+
+      gap:
+        0.9rem;
+    }
+
+    .archive-card,
+    .archive-card[data-size="feature"],
+    .archive-card[data-size="portrait"],
+    .archive-card[data-size="wide"],
+    .archive-card[data-size="medium"],
+    .archive-card[data-size="strip"] {
+      grid-column:
+        auto;
+
+      grid-row:
+        auto;
+    }
+
+    .archive-image {
+      min-height:
+        17rem;
+    }
+
+    .archive-card[data-size="feature"]
+      .archive-image {
+      min-height:
+        20rem;
+    }
+
+    .archive-card[data-size="portrait"]
+      .archive-image {
+      min-height:
+        25rem;
+    }
+
+    .archive-card[data-size="strip"]
+      .archive-image {
+      min-height:
+        28rem;
+    }
+
+    /*
+     * Preserve the protocol break on mobile,
+     * but change it from vertical to horizontal.
+     */
+    .archive-card[data-break="true"] {
+      width:
+        calc(
+          100% - 8px
+        );
+
+      transform:
+        translateX(
+          8px
+        );
+    }
+
+    .archive-card[data-break="true"]:hover {
+      transform:
+        translateX(
+          8px
+        );
+    }
+
+    .archive-pleats {
+      display: none;
+    }
+  }
+
+  /*
+   * ACCESSIBILITY
+   */
+  @media (
+    prefers-reduced-motion:
+      reduce
+  ) {
+    .archive-card,
+    .archive-photo {
+      transition: none;
+    }
+
+    .archive-card:hover
+      .archive-photo {
+      transform: none;
+    }
+  }
+</style>
