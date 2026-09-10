@@ -1,0 +1,116 @@
+<div class="royal-landscape" aria-hidden="true">
+    <svg viewBox="0 0 1200 240" preserveAspectRatio="none">
+        <!-- SUN -->
+        <circle class="royal-sun" cx="165" cy="66" r="18"></circle>
+
+        <!-- MOON -->
+        <circle class="royal-moon" cx="1035" cy="66" r="18"></circle>
+
+        <!-- FIVE PEAKS -->
+        <path
+            class="royal-peaks"
+            d="
+        M 40 195
+        L 190 118
+        L 300 195
+        L 395 91
+        L 490 195
+        L 600 65
+        L 710 195
+        L 815 98
+        L 920 195
+        L 1035 126
+        L 1160 195
+      "
+        ></path>
+
+        <!-- GROUND / WATER -->
+        <path class="royal-ground" d="
+        M 25 196
+        H 1175
+      "
+        ></path>
+
+        <!-- QUIET REFLECTION -->
+        <path
+            class="royal-reflection"
+            d="
+        M 180 211
+        C 360 204, 480 218, 600 210
+        C 760 201, 890 218, 1040 210
+      "
+        ></path>
+    </svg>
+</div>
+
+<style>
+    .royal-landscape {
+        width: 100%;
+        height: 100%;
+
+        pointer-events: none;
+    }
+
+    .royal-landscape svg {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        overflow: visible;
+    }
+
+    .royal-peaks {
+        fill: none;
+
+        stroke: color-mix(in srgb, var(--theme-pewter) 54%, transparent);
+
+        stroke-width: 1.15;
+
+        vector-effect: non-scaling-stroke;
+    }
+
+    .royal-ground {
+        fill: none;
+
+        stroke: color-mix(in srgb, var(--theme-pewter) 34%, transparent);
+
+        stroke-width: 1;
+
+        vector-effect: non-scaling-stroke;
+    }
+
+    .royal-reflection {
+        fill: none;
+
+        stroke: color-mix(in srgb, var(--theme-royal) 25%, transparent);
+
+        stroke-width: 1;
+
+        vector-effect: non-scaling-stroke;
+    }
+
+    .royal-sun {
+        fill: color-mix(in srgb, var(--theme-royal) 26%, transparent);
+
+        stroke: color-mix(in srgb, var(--theme-royal) 56%, transparent);
+
+        stroke-width: 1;
+    }
+
+    .royal-moon {
+        fill: none;
+
+        stroke: color-mix(in srgb, var(--theme-pewter) 62%, transparent);
+
+        stroke-width: 1;
+    }
+
+    :global(html:not(.dark)) .royal-landscape {
+        opacity: 0.7;
+    }
+
+    :global(html.dark) .royal-landscape {
+        opacity: 0.48;
+    }
+</style>
