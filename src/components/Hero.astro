@@ -18,8 +18,8 @@ import NakhwaTransition from "./NakhwaTransition.astro";
     <!--
     PERFECT CROWN MOTIF
 
-    This renders nothing visible until
-    Selected Work is clicked.
+    The Nakhwa effect remains invisible until
+    Selected work or Header Work is triggered.
   -->
     <NakhwaTransition />
 
@@ -71,8 +71,16 @@ import NakhwaTransition from "./NakhwaTransition.astro";
         </div>
 
         <div class="flex flex-col items-start gap-3">
-            <a
-                href="#work"
+            <!--
+        No href="#work":
+        keeps the browser URL clean.
+
+        data-section-scroll handles navigation.
+        data-nakhwa-trigger plays the Nakhwa effect.
+      -->
+            <button
+                type="button"
+                data-section-scroll="work"
                 data-nakhwa-trigger
                 class="group inline-flex min-h-[44px] items-center gap-3 text-sm font-medium text-text"
             >
@@ -88,8 +96,9 @@ import NakhwaTransition from "./NakhwaTransition.astro";
                 >
                     ↓
                 </span>
-            </a>
+            </button>
 
+            <!-- ACCESSIBILITY MAKER'S MARK -->
             <p
                 class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[9px] uppercase tracking-[0.15em] text-muted sm:text-[10px]"
             >
@@ -113,8 +122,10 @@ import NakhwaTransition from "./NakhwaTransition.astro";
 
 <style>
     /*
-   * Light = color portrait,
-   * but slightly editorial rather than oversaturated.
+   * LIGHT MODE
+   *
+   * Keep the portrait in color but slightly restrained
+   * so it fits the tailored editorial treatment.
    */
     .hero-portrait {
         filter: saturate(0.86) contrast(1.035) brightness(0.985);
@@ -123,12 +134,17 @@ import NakhwaTransition from "./NakhwaTransition.astro";
     }
 
     /*
-   * Dark = restrained monochrome.
+   * DARK MODE
+   *
+   * Restrained monochrome portrait.
    */
     :global(html.dark) .hero-portrait {
         filter: grayscale(1) contrast(1.045) brightness(0.96);
     }
 
+    /*
+   * Accessibility.
+   */
     @media (prefers-reduced-motion: reduce) {
         .hero-portrait {
             transition: none;
