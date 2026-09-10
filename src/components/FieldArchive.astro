@@ -245,15 +245,20 @@ const totalRecords =
       ></span>
 
       <p
-        class="font-mono text-[12px] tracking-[0.1em] text-secondary"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        Record
-        <span data-archive-current>01</span>
-        of
-        {String(totalRecords).padStart(2, "0")}
-      </p>
+  class="flex items-center gap-1.5 font-mono text-[12px] tracking-[0.08em] text-secondary"
+  aria-live="polite"
+  aria-atomic="true"
+>
+  <span>Record</span>
+
+  <span data-archive-current="">
+    01
+  </span>
+
+  <span>of</span>
+
+  <span>{String(totalRecords).padStart(2, "0")}</span>
+</p>
     </div>
 
     <div
@@ -1174,78 +1179,182 @@ const totalRecords =
   }
 
   /*
-   * ==================================================
-   * LIGHT MODE
-   * ==================================================
-   */
+ * ==================================================
+ * LIGHT MODE
+ *
+ * Hanji / stone / ink hierarchy.
+ *
+ * Strong enough to read clearly without
+ * turning the archive into a beige block.
+ * ==================================================
+ */
 
-  :global(html:not(.dark))
-    .archive-header {
-    background:
-      #f4f1ea;
-  }
+:global(html:not(.dark))
+  .archive-header {
+  background:
+    #f8f6f1;
+}
 
-  :global(html:not(.dark))
-    .archive-landscape {
-    opacity: 0.56;
-  }
+:global(html:not(.dark))
+  .archive-landscape {
+  opacity:
+    0.62;
+}
 
-  :global(html:not(.dark))
-    .archive-controls {
-    border-color:
-      #9f988e;
+:global(html:not(.dark))
+  .archive-controls {
+  border-color:
+    #99938a;
 
-    background:
-      #e5e0d7;
-  }
+  background:
+    #dfdad1;
+}
 
-  :global(html:not(.dark))
-    .archive-control-button {
-    border-color:
-      #989188;
+:global(html:not(.dark))
+  .archive-control-button {
+  border-color:
+    #918b82;
 
-    background:
-      #f8f6f1;
+  background:
+    #f8f6f1;
 
-    color:
-      #292d33;
-  }
+  color:
+    #292d32;
+}
 
-  :global(html:not(.dark))
-    .archive-stage {
-    background:
-      #e8e3da;
-  }
+:global(html:not(.dark))
+  .archive-control-button:hover {
+  border-color:
+    var(--theme-royal);
 
-  :global(html:not(.dark))
-    .archive-panel {
-    border-color:
-      #989188;
+  background:
+    #fffdf8;
 
-    background:
-      #fbfaf6;
-  }
+  color:
+    #17181b;
+}
 
-  :global(html:not(.dark))
-    .archive-caption {
-    background:
-      #fbfaf6;
-  }
+:global(html:not(.dark))
+  .archive-control-button:disabled {
+  border-color:
+    #bbb5ac;
 
-  :global(html:not(.dark))
-    .archive-hinges span {
-    border-color:
-      #716b63;
+  background:
+    #e7e3dc;
 
-    background:
-      #f5f2ec;
-  }
+  color:
+    #77736d;
 
-  :global(html:not(.dark))
-    .archive-hinges::before {
-    background:
-      #817a72;
-  }
+  opacity:
+    0.72;
+}
+
+:global(html:not(.dark))
+  .archive-stage {
+  border-color:
+    #9d978f;
+
+  background:
+    #e5e0d7;
+}
+
+:global(html:not(.dark))
+  .archive-panel {
+  border-color:
+    #918b83;
+
+  background:
+    #fffdf9;
+}
+
+:global(html:not(.dark))
+  .archive-image {
+  border-color:
+    #99938b;
+
+  background:
+    #e8e4dc;
+}
+
+:global(html:not(.dark))
+  .archive-panel[data-image-mode="record"]
+  .archive-image {
+  background:
+    #dfdbd2;
+}
+
+:global(html:not(.dark))
+  .archive-caption {
+  background:
+    #fffdf9;
+}
+
+:global(html:not(.dark))
+  .archive-category {
+  color:
+    #59636d;
+}
+
+:global(html:not(.dark))
+  .archive-title {
+  color:
+    #17181b;
+}
+
+:global(html:not(.dark))
+  .archive-note {
+  color:
+    #41464c;
+}
+
+:global(html:not(.dark))
+  .archive-hinges::before {
+  background:
+    #716d67;
+}
+
+:global(html:not(.dark))
+  .archive-hinges span {
+  border-color:
+    #65615b;
+
+  background:
+    #f8f6f1;
+}
+
+:global(html:not(.dark))
+  .archive-panel[data-break="true"]
+  .archive-hinges span:first-child {
+  border-color:
+    var(--theme-royal);
+}
+
+:global(html:not(.dark))
+  .archive-photo-number {
+  border-color:
+    #8c867d;
+
+  background:
+    rgba(
+      255,
+      253,
+      249,
+      0.94
+    );
+
+  color:
+    #25282d;
+}
+
+:global(html:not(.dark))
+  .archive-edge-right {
+  background:
+    linear-gradient(
+      to left,
+      #eeece6,
+      transparent
+    );
+}
 
   /*
    * ==================================================
