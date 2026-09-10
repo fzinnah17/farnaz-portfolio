@@ -1,0 +1,336 @@
+---
+import JewelMark from "./JewelMark.astro";
+---
+
+<div
+    data-waltz-interlude
+    data-paused="false"
+    class="waltz-interlude mx-auto max-w-6xl px-6 lg:pr-12"
+>
+    <div class="waltz-rule">
+        <span class="waltz-rule-line" aria-hidden="true"></span>
+
+        <!-- DECORATIVE WALTZ MOTIF -->
+        <div class="waltz-motif" aria-hidden="true">
+            <span class="waltz-track"></span>
+
+            <span class="waltz-dot waltz-dot-a"></span>
+            <span class="waltz-dot waltz-dot-b"></span>
+
+            <span class="waltz-jewel">
+                <JewelMark size="sm" />
+            </span>
+        </div>
+
+        <span class="waltz-rule-line" aria-hidden="true"></span>
+
+        <button
+            type="button"
+            data-waltz-toggle
+            class="waltz-toggle"
+            aria-label="Pause ambient motion"
+        >
+            <span data-waltz-label> Pause ambient motion </span>
+        </button>
+    </div>
+</div>
+
+<style>
+    /*
+   * A tiny paired orbit.
+   *
+   * 36 seconds per cycle.
+   * Small travel distance.
+   * No flashing.
+   * No scale pulsing.
+   */
+
+    .waltz-interlude {
+        min-height: 60px;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .waltz-rule {
+        display: grid;
+
+        width: 100%;
+
+        grid-template-columns:
+            minmax(2rem, 1fr)
+            76px
+            minmax(2rem, 1fr)
+            auto;
+
+        align-items: center;
+
+        gap: 1rem;
+    }
+
+    .waltz-rule-line {
+        height: 1px;
+
+        background: color-mix(
+            in srgb,
+            var(--theme-pewter) 34%,
+            var(--theme-border)
+        );
+    }
+
+    .waltz-motif {
+        position: relative;
+
+        width: 76px;
+        height: 38px;
+    }
+
+    .waltz-track {
+        position: absolute;
+
+        left: 10px;
+        right: 10px;
+        top: 9px;
+        bottom: 9px;
+
+        border: 1px solid
+            color-mix(in srgb, var(--theme-pewter) 30%, transparent);
+
+        border-radius: 50%;
+    }
+
+    .waltz-jewel {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        opacity: 0.62;
+    }
+
+    .waltz-dot {
+        position: absolute;
+
+        left: calc(50% - 2px);
+
+        top: calc(50% - 2px);
+
+        width: 4px;
+        height: 4px;
+
+        border-radius: 50%;
+
+        will-change: transform;
+    }
+
+    .waltz-dot-a {
+        background: var(--theme-royal);
+
+        animation: waltz-a 36s linear infinite;
+    }
+
+    .waltz-dot-b {
+        background: var(--theme-pewter);
+
+        animation: waltz-b 36s linear infinite;
+    }
+
+    /*
+   * Very small ellipse.
+   */
+
+    @keyframes waltz-a {
+        0% {
+            transform: translate(27px, 0);
+        }
+
+        25% {
+            transform: translate(0, 10px);
+        }
+
+        50% {
+            transform: translate(-27px, 0);
+        }
+
+        75% {
+            transform: translate(0, -10px);
+        }
+
+        100% {
+            transform: translate(27px, 0);
+        }
+    }
+
+    @keyframes waltz-b {
+        0% {
+            transform: translate(-27px, 0);
+        }
+
+        25% {
+            transform: translate(0, -10px);
+        }
+
+        50% {
+            transform: translate(27px, 0);
+        }
+
+        75% {
+            transform: translate(0, 10px);
+        }
+
+        100% {
+            transform: translate(-27px, 0);
+        }
+    }
+
+    .waltz-toggle {
+        min-height: 36px;
+
+        border: 1px solid var(--theme-border);
+
+        padding: 0.35rem 0.6rem;
+
+        background: transparent;
+
+        font-size: 0.68rem;
+
+        line-height: 1rem;
+
+        letter-spacing: 0.04em;
+
+        color: var(--theme-muted);
+
+        transition:
+            border-color 180ms ease,
+            color 180ms ease;
+    }
+
+    .waltz-toggle:hover {
+        border-color: var(--theme-pewter);
+
+        color: var(--theme-text);
+    }
+
+    .waltz-toggle:focus-visible {
+        outline: 2px solid var(--theme-royal);
+
+        outline-offset: 3px;
+    }
+
+    .waltz-interlude[data-paused="true"] .waltz-dot {
+        animation-play-state: paused;
+    }
+
+    :global(html:not(.dark)) .waltz-motif {
+        opacity: 0.68;
+    }
+
+    :global(html.dark) .waltz-motif {
+        opacity: 0.56;
+    }
+
+    /*
+   * Reduced-motion:
+   * fully static and no useless Pause button.
+   */
+
+    @media (prefers-reduced-motion: reduce) {
+        .waltz-dot {
+            animation: none !important;
+        }
+
+        .waltz-dot-a {
+            transform: translate(27px, 0);
+        }
+
+        .waltz-dot-b {
+            transform: translate(-27px, 0);
+        }
+
+        .waltz-toggle {
+            display: none;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .waltz-rule {
+            grid-template-columns:
+                1fr
+                70px
+                1fr;
+        }
+
+        .waltz-toggle {
+            grid-column: 1 / -1;
+
+            justify-self: center;
+        }
+    }
+</style>
+
+<script>
+    document
+        .querySelectorAll<HTMLElement>("[data-waltz-interlude]")
+        .forEach((interlude) => {
+            if (interlude.dataset.waltzBound === "true") {
+                return;
+            }
+
+            interlude.dataset.waltzBound = "true";
+
+            const button = interlude.querySelector<HTMLButtonElement>(
+                "[data-waltz-toggle]",
+            );
+
+            const label =
+                interlude.querySelector<HTMLElement>("[data-waltz-label]");
+
+            let paused = false;
+
+            try {
+                paused =
+                    localStorage.getItem("fz-ambient-motion-paused") === "true";
+            } catch {
+                paused = false;
+            }
+
+            function renderState() {
+                interlude.dataset.paused = String(paused);
+
+                if (!button || !label) {
+                    return;
+                }
+
+                label.textContent = paused
+                    ? "Resume ambient motion"
+                    : "Pause ambient motion";
+
+                button.setAttribute(
+                    "aria-label",
+                    paused ? "Resume ambient motion" : "Pause ambient motion",
+                );
+            }
+
+            button?.addEventListener("click", () => {
+                paused = !paused;
+
+                try {
+                    localStorage.setItem(
+                        "fz-ambient-motion-paused",
+                        String(paused),
+                    );
+                } catch {
+                    /*
+                     * Motion control still works
+                     * even if storage is unavailable.
+                     */
+                }
+
+                renderState();
+            });
+
+            renderState();
+        });
+</script>

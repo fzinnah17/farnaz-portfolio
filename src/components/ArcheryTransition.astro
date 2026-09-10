@@ -1,0 +1,184 @@
+---
+import JewelMark from "./JewelMark.astro";
+---
+
+<div
+    data-archery-transition
+    class="archery-transition mx-auto max-w-6xl px-6 lg:pr-12"
+    aria-hidden="true"
+>
+    <div class="archery-register">
+        <span class="archery-origin"></span>
+
+        <span class="archery-line"></span>
+
+        <span class="archery-arrow"></span>
+
+        <span class="archery-target">
+            <JewelMark size="sm" />
+        </span>
+    </div>
+</div>
+
+<style>
+    /*
+   * One controlled gesture.
+   *
+   * No bounce.
+   * No repeated arrow.
+   * No sound.
+   */
+
+    .archery-transition {
+        height: 44px;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .archery-register {
+        position: relative;
+
+        width: 100%;
+        height: 18px;
+    }
+
+    .archery-origin {
+        position: absolute;
+
+        left: 0;
+        top: 8px;
+
+        width: 4px;
+        height: 4px;
+
+        transform: rotate(45deg);
+
+        border: 1px solid var(--theme-pewter);
+    }
+
+    .archery-line {
+        position: absolute;
+
+        left: 12px;
+        right: 30px;
+        top: 9px;
+
+        height: 1px;
+
+        transform-origin: left center;
+
+        background: linear-gradient(
+            to right,
+            var(--theme-pewter),
+            color-mix(in srgb, var(--theme-royal) 60%, var(--theme-pewter))
+        );
+    }
+
+    .archery-arrow {
+        position: absolute;
+
+        right: 23px;
+        top: 5px;
+
+        width: 7px;
+        height: 7px;
+
+        transform: rotate(45deg);
+
+        border-top: 1px solid var(--theme-royal);
+
+        border-right: 1px solid var(--theme-royal);
+    }
+
+    .archery-target {
+        position: absolute;
+
+        right: 0;
+        top: 2px;
+    }
+
+    /*
+   * Progressive enhancement:
+   * everything is visible if JS fails.
+   */
+
+    .archery-transition[data-motion="ready"] .archery-line {
+        transform: scaleX(0);
+    }
+
+    .archery-transition[data-motion="ready"] .archery-arrow {
+        opacity: 0;
+    }
+
+    .archery-transition[data-motion="ready"][data-entered="true"]
+        .archery-line {
+        transform: scaleX(1);
+
+        transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .archery-transition[data-motion="ready"][data-entered="true"]
+        .archery-arrow {
+        opacity: 1;
+
+        transition: opacity 160ms ease 520ms;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .archery-line {
+            transform: scaleX(1) !important;
+
+            transition: none !important;
+        }
+
+        .archery-arrow {
+            opacity: 1 !important;
+
+            transition: none !important;
+        }
+    }
+</style>
+
+<script>
+    document
+        .querySelectorAll<HTMLElement>("[data-archery-transition]")
+        .forEach((transition) => {
+            if (transition.dataset.archeryBound === "true") {
+                return;
+            }
+
+            transition.dataset.archeryBound = "true";
+
+            const reducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+            );
+
+            if (reducedMotion.matches) {
+                transition.dataset.entered = "true";
+
+                return;
+            }
+
+            transition.dataset.motion = "ready";
+
+            const observer = new IntersectionObserver(
+                (entries, archiveObserver) => {
+                    const entry = entries[0];
+
+                    if (!entry?.isIntersecting) {
+                        return;
+                    }
+
+                    transition.dataset.entered = "true";
+
+                    archiveObserver.disconnect();
+                },
+                {
+                    threshold: 0.65,
+                },
+            );
+
+            observer.observe(transition);
+        });
+</script>
