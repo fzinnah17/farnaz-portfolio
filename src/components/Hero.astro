@@ -15,12 +15,7 @@ import NakhwaTransition from "./NakhwaTransition.astro";
     <!-- ENGINEERING MOTIF -->
     <ArchitectureField />
 
-    <!--
-    PERFECT CROWN MOTIF
-
-    The Nakhwa effect remains invisible until
-    Selected work or Header Work is triggered.
-  -->
+    <!-- PERFECT CROWN / NAKHWA MOTIF -->
     <NakhwaTransition />
 
     <!-- PORTRAIT -->
@@ -72,17 +67,22 @@ import NakhwaTransition from "./NakhwaTransition.astro";
 
         <div class="flex flex-col items-start gap-3">
             <!--
-        No href="#work":
-        keeps the browser URL clean.
+        IMPORTANT:
 
-        data-section-scroll handles navigation.
-        data-nakhwa-trigger plays the Nakhwa effect.
+        This button no longer has:
+        data-section-scroll="work"
+        data-nakhwa-trigger
+
+        Instead, it delegates to the Header Work button.
+
+        This gives Hero and Header the exact same
+        working navigation + Nakhwa path.
       -->
             <button
                 type="button"
-                data-section-scroll="work"
-                data-nakhwa-trigger
+                data-hero-work-trigger
                 class="group inline-flex min-h-[44px] items-center gap-3 text-sm font-medium text-text"
+                aria-label="View selected work"
             >
                 <span
                     class="border-b border-pewter pb-0.5 transition-colors duration-500 group-hover:border-royal"
@@ -123,9 +123,6 @@ import NakhwaTransition from "./NakhwaTransition.astro";
 <style>
     /*
    * LIGHT MODE
-   *
-   * Keep the portrait in color but slightly restrained
-   * so it fits the tailored editorial treatment.
    */
     .hero-portrait {
         filter: saturate(0.86) contrast(1.035) brightness(0.985);
@@ -135,19 +132,75 @@ import NakhwaTransition from "./NakhwaTransition.astro";
 
     /*
    * DARK MODE
-   *
-   * Restrained monochrome portrait.
    */
     :global(html.dark) .hero-portrait {
         filter: grayscale(1) contrast(1.045) brightness(0.96);
     }
 
-    /*
-   * Accessibility.
-   */
     @media (prefers-reduced-motion: reduce) {
         .hero-portrait {
             transition: none;
         }
     }
 </style>
+
+<script>
+    const heroWorkButton = document.querySelector<HTMLButtonElement>(
+        "[data-hero-work-trigger]",
+    );
+
+    /*
+     * Guard against duplicate initialization.
+     */
+    if (heroWorkButton && heroWorkButton.dataset.heroWorkBound !== "true") {
+        heroWorkButton.dataset.heroWorkBound = "true";
+
+        heroWorkButton.addEventListener("click", () => {
+            /*
+             * Delegate to the Header Work button.
+             *
+             * Header Work is already confirmed to:
+             * - trigger Nakhwa correctly
+             * - scroll correctly
+             * - work in light mode
+             * - work in dark mode
+             * - keep the URL clean
+             *
+             * This means there is now only ONE
+             * navigation path to maintain.
+             */
+            const headerWorkButton = document.querySelector<HTMLButtonElement>(
+                'header [data-section-scroll="work"][data-nakhwa-trigger]',
+            );
+
+            if (headerWorkButton) {
+                headerWorkButton.click();
+
+                return;
+            }
+
+            /*
+             * Safety fallback.
+             *
+             * This should almost never run, but if
+             * Header Work cannot be found, Selected Work
+             * still takes the visitor to the correct section.
+             */
+            const workSection = document.getElementById("work");
+
+            if (!workSection) {
+                return;
+            }
+
+            const reducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+            ).matches;
+
+            workSection.scrollIntoView({
+                behavior: reducedMotion ? "auto" : "smooth",
+
+                block: "start",
+            });
+        });
+    }
+</script>
