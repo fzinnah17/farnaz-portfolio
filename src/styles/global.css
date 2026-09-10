@@ -24,13 +24,13 @@
   --color-ember: var(--theme-ember);
 
   /*
-   * Character language.
+   * Perfect Crown visual language.
    *
    * royal:
-   *   Hui-ju — controlled power / oxblood
+   * controlled crimson / oxblood disruption
    *
    * pewter:
-   *   Ian — cool tailoring / composure
+   * cool architectural structure
    */
   --color-royal: var(--theme-royal);
   --color-pewter: var(--theme-pewter);
@@ -63,54 +63,88 @@
     monospace;
 }
 
-/* LIGHT — cool ivory, stronger editorial contrast */
+/*
+ * ==================================================
+ * LIGHT MODE
+ *
+ * Cool ivory / stone / ink / oxblood.
+ *
+ * The page is deliberately darker than the cards so
+ * surfaces remain obvious without looking boxed-in.
+ * ==================================================
+ */
 :root {
   /*
-   * Page:
-   * slightly cooler and darker than the cards.
+   * PAGE
    */
-  --theme-bg: #f1efea;
+  --theme-bg: #eeece6;
 
   /*
-   * Surfaces:
-   * cleaner ivory so cards actually separate from the page.
-   */
-  --theme-surface: #faf9f6;
-
-  /*
-   * Architectural lines:
-   * substantially more visible than before without becoming harsh.
-   */
-  --theme-border: #bdb8af;
-
-  --theme-ember: #9a6048;
-
-  --theme-text: #151519;
-  --theme-text-secondary: #3f434a;
-  --theme-text-muted: #68707a;
-
-  /*
-   * Technical interaction colors.
-   */
-  --theme-accent-cyan: #087486;
-  --theme-accent-violet: #62566e;
-
-  --theme-accent: #56616a;
-  --theme-accent-strong: #2e363d;
-
-  /*
-   * Controlled Perfect Crown-inspired accents.
+   * SURFACES
    *
-   * royal = deep wine
-   * pewter = tailored cool gray
+   * Crisp ivory rather than beige.
    */
-  --theme-royal: #7b2233;
-  --theme-pewter: #55616d;
+  --theme-surface: #fbfaf6;
+
+  /*
+   * ARCHITECTURAL LINES
+   *
+   * Strong enough to remain visible against ivory.
+   */
+  --theme-border: #aaa59d;
+
+  /*
+   * Secondary warm accent.
+   */
+  --theme-ember: #925b46;
+
+  /*
+   * TYPOGRAPHY
+   */
+  --theme-text: #17181b;
+  --theme-text-secondary: #3e4349;
+  --theme-text-muted: #666c73;
+
+  /*
+   * TECHNICAL INTERACTIONS
+   *
+   * Still available for actual engineering-oriented
+   * interface elements, but not the site's main identity.
+   */
+  --theme-accent-cyan: #0b7080;
+  --theme-accent-violet: #64596f;
+
+  /*
+   * NEUTRAL INTERACTION
+   */
+  --theme-accent: #59636d;
+  --theme-accent-strong: #30383f;
+
+  /*
+   * CHARACTER / ROYAL LANGUAGE
+   *
+   * royal:
+   * deep controlled wine
+   *
+   * pewter:
+   * cool tailored structural gray
+   */
+  --theme-royal: #7b2638;
+  --theme-pewter: #59656f;
 
   color-scheme: light;
 }
 
-/* DARK — midnight palace / charcoal tailoring */
+/*
+ * ==================================================
+ * DARK MODE
+ *
+ * Midnight palace / charcoal tailoring.
+ *
+ * Kept intentionally close to the version that is
+ * already working well visually.
+ * ==================================================
+ */
 :root.dark {
   --theme-bg: #080b12;
   --theme-surface: #10141c;
@@ -134,122 +168,303 @@
   color-scheme: dark;
 }
 
+/*
+ * ==================================================
+ * BASE
+ * ==================================================
+ */
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
-  background: var(--theme-bg);
+  background:
+    var(--theme-bg);
+
+  scroll-behavior:
+    smooth;
 }
 
 body {
   min-width: 320px;
+
   margin: 0;
 
-  background: var(--theme-bg);
-  color: var(--theme-text);
+  background:
+    var(--theme-bg);
 
-  font-family: var(--font-sans);
-  line-height: 1.7;
+  color:
+    var(--theme-text);
 
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  font-family:
+    var(--font-sans);
+
+  line-height:
+    1.7;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  text-rendering:
+    optimizeLegibility;
 
   transition:
     background-color 240ms ease,
     color 240ms ease;
 }
 
+/*
+ * ==================================================
+ * TYPOGRAPHY
+ * ==================================================
+ */
+
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
-  letter-spacing: -0.015em;
-  line-height: 1.15;
+  font-family:
+    var(--font-display);
+
+  letter-spacing:
+    -0.015em;
+
+  line-height:
+    1.15;
 }
 
 button,
 input,
 summary {
-  font: inherit;
-}
-
-::selection {
-  background: color-mix(in srgb,
-      var(--theme-royal) 23%,
-      transparent);
+  font:
+    inherit;
 }
 
 a {
-  color: inherit;
+  color:
+    inherit;
 }
+
+/*
+ * ==================================================
+ * SELECTION
+ * ==================================================
+ */
+
+::selection {
+  background:
+    color-mix(in srgb,
+      var(--theme-royal) 23%,
+      transparent);
+
+  color:
+    var(--theme-text);
+}
+
+/*
+ * ==================================================
+ * INTERACTION
+ * ==================================================
+ */
 
 a,
 button,
 summary {
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+button {
+  color:
+    inherit;
+}
+
+summary {
+  cursor:
+    pointer;
 }
 
 summary::-webkit-details-marker {
-  display: none;
+  display:
+    none;
 }
 
+/*
+ * ==================================================
+ * DISPLAY ACCENT
+ * ==================================================
+ */
+
 .text-gradient {
-  background: linear-gradient(135deg,
+  background:
+    linear-gradient(135deg,
       var(--theme-pewter),
       var(--theme-royal));
 
-  background-clip: text;
-  -webkit-background-clip: text;
+  background-clip:
+    text;
 
-  color: transparent;
+  -webkit-background-clip:
+    text;
+
+  color:
+    transparent;
 }
 
+/*
+ * ==================================================
+ * ACCESSIBILITY — SKIP LINK
+ * ==================================================
+ */
+
 .skip-link {
-  position: fixed;
-  left: 1rem;
-  top: 1rem;
+  position:
+    fixed;
 
-  z-index: 100;
+  left:
+    1rem;
 
-  padding: 0.75rem 1rem;
+  top:
+    1rem;
 
-  border: 1px solid var(--theme-pewter);
-  border-radius: 0.125rem;
+  z-index:
+    100;
 
-  background: var(--theme-bg);
-  color: var(--theme-text);
+  padding:
+    0.75rem 1rem;
 
-  font-size: 0.875rem;
+  border:
+    1px solid var(--theme-pewter);
 
-  transform: translateY(-200%);
+  border-radius:
+    0.125rem;
 
-  transition: transform 160ms ease;
+  background:
+    var(--theme-surface);
+
+  color:
+    var(--theme-text);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    500;
+
+  transform:
+    translateY(-200%);
+
+  transition:
+    transform 160ms ease;
 }
 
 .skip-link:focus {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 }
+
+/*
+ * ==================================================
+ * ACCESSIBILITY — KEYBOARD FOCUS
+ *
+ * Use royal rather than a pale gray so focus remains
+ * obvious in both light and dark themes.
+ * ==================================================
+ */
 
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
 input:focus-visible {
-  outline: 2px solid var(--theme-pewter);
-  outline-offset: 3px;
+  outline:
+    2px solid var(--theme-royal);
+
+  outline-offset:
+    3px;
 }
+
+/*
+ * Keep keyboard focus highly visible in light mode.
+ */
+:root:not(.dark) a:focus-visible,
+:root:not(.dark) button:focus-visible,
+:root:not(.dark) summary:focus-visible,
+:root:not(.dark) input:focus-visible {
+  outline-color:
+    #7b2638;
+}
+
+/*
+ * ==================================================
+ * LIGHT-MODE GLOBAL SURFACE REFINEMENT
+ *
+ * This gives commonly used surface/border utilities
+ * stronger visual separation without modifying every
+ * component individually.
+ * ==================================================
+ */
+
+:root:not(.dark) body {
+  background:
+    #eeece6;
+}
+
+/*
+ * Thin horizontal rules should remain visible rather
+ * than disappearing into the page.
+ */
+:root:not(.dark) hr {
+  border-color:
+    #aaa59d;
+}
+
+/*
+ * ==================================================
+ * DARK-MODE BASE
+ * ==================================================
+ */
+
+:root.dark body {
+  background:
+    #080b12;
+}
+
+/*
+ * ==================================================
+ * REDUCED MOTION
+ *
+ * ADHD / vestibular / motion-sensitive visitors:
+ *
+ * - no smooth scrolling
+ * - animations effectively removed
+ * - transitions effectively removed
+ *
+ * All functionality remains available.
+ * ==================================================
+ */
 
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior:
+      auto;
   }
 
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    scroll-behavior:
+      auto !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    transition-delay:
+      0ms !important;
   }
 }
