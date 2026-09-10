@@ -1,0 +1,307 @@
+---
+const filters = [
+    {
+        id: "selected",
+        label: "Selected",
+        number: "01",
+    },
+    {
+        id: "ml-security",
+        label: "ML + Security",
+        number: "02",
+    },
+    {
+        id: "systems",
+        label: "Systems",
+        number: "03",
+    },
+    {
+        id: "ai-systems",
+        label: "AI Systems",
+        number: "04",
+    },
+    {
+        id: "public",
+        label: "Public",
+        number: "05",
+    },
+] as const;
+---
+
+<div data-work-gallery>
+    <div class="grid border-y border-border md:grid-cols-[0.72fr_1.28fr]">
+        <div class="border-b border-border px-5 py-6 md:border-b-0 md:border-r">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-royal">
+                Work / 01
+            </p>
+
+            <h2
+                data-work-title
+                class="mt-2 font-display text-3xl font-normal text-text"
+            >
+                Selected Work
+            </h2>
+        </div>
+
+        <div class="flex items-center justify-end px-5 py-6" aria-hidden="true">
+            <div class="flex items-center gap-3">
+                <span class="hidden h-px w-12 bg-border sm:block"></span>
+
+                <span class="h-1.5 w-1.5 rotate-45 border border-royal"></span>
+
+                <span class="text-[9px] uppercase tracking-[0.2em] text-pewter">
+                    FZ / Project Register
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="overflow-x-auto border-b border-border"
+        aria-label="Filter selected work"
+    >
+        <div class="flex min-w-max">
+            {
+                filters.map((filter, index) => (
+                    <button
+                        type="button"
+                        data-work-filter={filter.id}
+                        data-active={index === 0 ? "true" : "false"}
+                        aria-pressed={index === 0 ? "true" : "false"}
+                        class="group relative flex items-center gap-2 border-r border-border px-4 py-3 text-sm text-secondary transition-colors duration-300 last:border-r-0 hover:text-text data-[active=true]:text-text"
+                    >
+                        <span class="font-mono text-[9px] tracking-[0.12em] text-pewter group-data-[active=true]:text-royal">
+                            {filter.number}
+                        </span>
+
+                        <span>{filter.label}</span>
+
+                        <span
+                            aria-hidden="true"
+                            class="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-royal transition-transform duration-300 group-data-[active=true]:scale-x-100"
+                        />
+                    </button>
+                ))
+            }
+        </div>
+    </div>
+
+    <div
+        data-work-grid
+        class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 md:[grid-auto-rows:8px] xl:grid-cols-3"
+    >
+        <slot />
+    </div>
+
+    <div data-public-panel hidden class="mt-6">
+        <slot name="public" />
+    </div>
+</div>
+
+<script>
+    document
+        .querySelectorAll<HTMLElement>("[data-work-gallery]")
+        .forEach((gallery) => {
+            initializeWorkGallery(gallery);
+        });
+
+    function initializeWorkGallery(gallery: HTMLElement) {
+        const gridElement =
+            gallery.querySelector<HTMLElement>("[data-work-grid]");
+
+        const publicPanelElement = gallery.querySelector<HTMLElement>(
+            "[data-public-panel]",
+        );
+
+        const title = gallery.querySelector<HTMLElement>("[data-work-title]");
+
+        const buttons = Array.from(
+            gallery.querySelectorAll<HTMLButtonElement>("[data-work-filter]"),
+        );
+
+        const items = Array.from(
+            gallery.querySelectorAll<HTMLElement>("[data-work-item]"),
+        );
+
+        /*
+         * Stop initialization if the required
+         * gallery elements are missing.
+         */
+        if (!gridElement || !publicPanelElement) {
+            return;
+        }
+
+        /*
+         * These aliases are now guaranteed HTMLElement values.
+         * Using them inside nested functions keeps TypeScript
+         * from treating them as HTMLElement | null.
+         */
+        const grid = gridElement;
+        const publicPanel = publicPanelElement;
+
+        const rowHeight = 8;
+        const gap = 16;
+
+        let layoutFrame = 0;
+
+        function closeProjects() {
+            gallery
+                .querySelectorAll<HTMLDetailsElement>("[data-project-details]")
+                .forEach((details) => {
+                    details.open = false;
+                });
+        }
+
+        function resizeItem(item: HTMLElement) {
+            item.style.gridRowEnd = "auto";
+
+            /*
+             * Normal document flow on smaller screens.
+             * Masonry packing begins at md.
+             */
+            if (item.hidden || window.innerWidth < 768) {
+                return;
+            }
+
+            const card = item.firstElementChild;
+
+            if (!(card instanceof HTMLElement)) {
+                return;
+            }
+
+            const height = card.getBoundingClientRect().height;
+
+            const span = Math.ceil((height + gap) / (rowHeight + gap));
+
+            item.style.gridRowEnd = `span ${span}`;
+        }
+
+        function layout() {
+            cancelAnimationFrame(layoutFrame);
+
+            layoutFrame = requestAnimationFrame(() => {
+                items.forEach(resizeItem);
+            });
+        }
+
+        function setFilter(filter: string) {
+            closeProjects();
+
+            buttons.forEach((button) => {
+                const active = button.dataset.workFilter === filter;
+
+                button.dataset.active = String(active);
+
+                button.setAttribute("aria-pressed", String(active));
+            });
+
+            const publicMode = filter === "public";
+
+            /*
+             * These are now guaranteed elements,
+             * so TypeScript no longer complains.
+             */
+            grid.hidden = publicMode;
+
+            publicPanel.hidden = !publicMode;
+
+            if (title) {
+                const activeButton = buttons.find(
+                    (button) => button.dataset.workFilter === filter,
+                );
+
+                const label = activeButton?.textContent
+                    ?.replace(/^\s*\d+\s*/, "")
+                    .trim();
+
+                title.textContent =
+                    filter === "selected"
+                        ? "Selected Work"
+                        : label || "Selected Work";
+            }
+
+            items.forEach((item) => {
+                if (publicMode) {
+                    item.hidden = true;
+
+                    return;
+                }
+
+                const category = item.dataset.category ?? "";
+
+                item.hidden = filter !== "selected" && category !== filter;
+            });
+
+            layout();
+        }
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const filter = button.dataset.workFilter;
+
+                if (filter) {
+                    setFilter(filter);
+                }
+            });
+        });
+
+        /*
+         * Only one project may be expanded.
+         */
+        gallery.addEventListener(
+            "toggle",
+            (event) => {
+                const opened = event.target;
+
+                if (
+                    !(opened instanceof HTMLDetailsElement) ||
+                    !opened.matches("[data-project-details]")
+                ) {
+                    return;
+                }
+
+                if (opened.open) {
+                    gallery
+                        .querySelectorAll<HTMLDetailsElement>(
+                            "[data-project-details]",
+                        )
+                        .forEach((details) => {
+                            if (details !== opened) {
+                                details.open = false;
+                            }
+                        });
+                }
+
+                /*
+                 * Repack after the details element
+                 * finishes changing height.
+                 */
+                requestAnimationFrame(layout);
+            },
+            true,
+        );
+
+        /*
+         * Repack whenever an individual card
+         * changes height.
+         */
+        const resizeObserver = new ResizeObserver(() => {
+            layout();
+        });
+
+        items.forEach((item) => {
+            const card = item.firstElementChild;
+
+            if (card instanceof HTMLElement) {
+                resizeObserver.observe(card);
+            }
+        });
+
+        window.addEventListener("resize", layout);
+
+        /*
+         * Initial state.
+         */
+        setFilter("selected");
+    }
+</script>

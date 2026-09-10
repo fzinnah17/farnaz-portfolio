@@ -5,66 +5,45 @@ interface Props {
     hook: string;
     details: string;
     stack: string[];
-    metric?: string;
     href?: string;
-    size?: "large" | "small";
 }
 
-const {
-    eyebrow,
-    title,
-    hook,
-    details,
-    stack,
-    metric,
-    href,
-    size = "small",
-} = Astro.props;
-
-const spanClass = size === "large" ? "md:col-span-2" : "";
-
-const metricIndex = metric ? hook.indexOf(metric) : -1;
-
-const hookBefore =
-    metric && metricIndex >= 0 ? hook.slice(0, metricIndex) : hook;
-
-const hookAfter =
-    metric && metricIndex >= 0 ? hook.slice(metricIndex + metric.length) : "";
+const { eyebrow, title, hook, details, stack, href } = Astro.props;
 ---
 
 <article
-    class:list={[
-        "self-start h-fit min-w-0 border border-border bg-surface/60 p-5 transition-colors duration-500 hover:border-pewter",
-        spanClass,
-    ]}
+    class="project-card relative h-fit min-w-0 border border-border bg-surface/55 p-5"
 >
+    <!-- restrained formal corner mark -->
+    <span
+        aria-hidden="true"
+        class="project-corner absolute -left-px -top-px h-px w-8 bg-royal"
+    ></span>
+
+    <span
+        aria-hidden="true"
+        class="project-corner absolute -left-px -top-px h-8 w-px bg-royal"
+    ></span>
+
     {
         eyebrow && (
-            <p class="mb-2 text-[9px] uppercase tracking-[0.17em] text-pewter">
+            <p class="mb-2 text-[9px] uppercase tracking-[0.19em] text-pewter">
                 {eyebrow}
             </p>
         )
     }
 
-    <h3 class="text-lg font-semibold tracking-tight text-text">
+    <h3 class="font-display text-xl font-semibold tracking-tight text-text">
         {title}
     </h3>
 
     <p class="mt-2 text-sm leading-6 text-secondary">
-        {hookBefore}
-
-        {
-            metric && metricIndex >= 0 && (
-                <strong class="font-semibold text-text">{metric}</strong>
-            )
-        }
-
-        {hookAfter}
+        {hook}
     </p>
 
-    <details name="portfolio-project" data-project-details class="group mt-4">
+    <details data-project-details class="group mt-4">
         <summary
-            class="flex cursor-pointer list-none items-center gap-2 text-xs text-pewter transition-colors hover:text-text"
+            class="flex w-fit cursor-pointer list-none items-center gap-2 py-1 text-xs text-pewter transition-colors duration-300 hover:text-text"
         >
             <span
                 aria-hidden="true"
@@ -76,7 +55,7 @@ const hookAfter =
             details
         </summary>
 
-        <div class="mt-4 border-t border-border pt-4">
+        <div class="mt-3 border-t border-border pt-4">
             <p class="text-sm leading-6 text-text">
                 {details}
             </p>
@@ -100,9 +79,10 @@ const hookAfter =
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="mt-4 inline-flex items-center gap-1 text-xs font-medium text-text transition-colors hover:text-royal"
+                        class="mt-4 inline-flex items-center gap-1 text-xs font-medium text-text transition-colors duration-300 hover:text-royal"
                     >
-                        View code ↗
+                        View code
+                        <span aria-hidden="true">↗</span>
                     </a>
                 )
             }
@@ -110,32 +90,46 @@ const hookAfter =
     </details>
 </article>
 
-<script>
-    /*
-     * Keep project expansion exclusive even in browsers where
-     * named <details> accordion behavior differs.
-     */
-    document.addEventListener(
-        "toggle",
-        (event) => {
-            const opened = event.target;
+<style>
+    .project-card {
+        transition:
+            border-color 300ms ease,
+            background-color 300ms ease,
+            box-shadow 300ms ease;
+    }
 
-            if (
-                !(opened instanceof HTMLDetailsElement) ||
-                !opened.matches("[data-project-details]") ||
-                !opened.open
-            ) {
-                return;
-            }
+    .project-corner {
+        opacity: 0.32;
 
-            document
-                .querySelectorAll<HTMLDetailsElement>("[data-project-details]")
-                .forEach((details) => {
-                    if (details !== opened) {
-                        details.open = false;
-                    }
-                });
-        },
-        true,
-    );
-</script>
+        transition:
+            opacity 300ms ease,
+            width 300ms ease,
+            height 300ms ease;
+    }
+
+    .project-card:hover {
+        border-color: color-mix(
+            in srgb,
+            var(--theme-pewter) 58%,
+            var(--theme-border)
+        );
+    }
+
+    .project-card:has(details[open]) {
+        border-color: color-mix(
+            in srgb,
+            var(--theme-pewter) 75%,
+            var(--theme-border)
+        );
+
+        box-shadow: 0 18px 50px rgba(16, 20, 28, 0.06);
+    }
+
+    .project-card:has(details[open]) .project-corner {
+        opacity: 0.85;
+    }
+
+    :global(html.dark) .project-card:has(details[open]) {
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.2);
+    }
+</style>
