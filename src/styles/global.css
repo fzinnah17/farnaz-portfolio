@@ -21,6 +21,8 @@
   --color-accent: var(--theme-accent);
   --color-accent-strong: var(--theme-accent-strong);
 
+  --color-ember: var(--theme-ember);
+
   /*
    * Character language.
    *
@@ -81,6 +83,8 @@
    */
   --theme-border: #bdb8af;
 
+  --theme-ember: #9a6048;
+
   --theme-text: #151519;
   --theme-text-secondary: #3f434a;
   --theme-text-muted: #68707a;
@@ -111,6 +115,8 @@
   --theme-bg: #080b12;
   --theme-surface: #10141c;
   --theme-border: #292e38;
+
+  --theme-ember: #c28a68;
 
   --theme-text: #f1ede6;
   --theme-text-secondary: #bdb9b2;

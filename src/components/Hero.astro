@@ -5,19 +5,23 @@ import avatarImage from "../assets/portfolio/avatar.jpg";
 
 import ArchitectureField from "./ArchitectureField.astro";
 import IdentityBlock from "./IdentityBlock.astro";
+import NakhwaTransition from "./NakhwaTransition.astro";
 ---
 
 <section
     class="relative isolate mx-auto grid min-h-[72vh] max-w-6xl items-center gap-10 overflow-hidden px-6 py-14 md:grid-cols-[0.92fr_1.08fr] md:gap-16 md:py-20 lg:pr-12"
     aria-labelledby="hero-title"
 >
-    <!--
-    Dynamic architecture lives behind the hero.
-
-    It is deliberately faded from the portrait side,
-    so the photograph remains the dominant human element.
-  -->
+    <!-- ENGINEERING MOTIF -->
     <ArchitectureField />
+
+    <!--
+    PERFECT CROWN MOTIF
+
+    This renders nothing visible until
+    Selected Work is clicked.
+  -->
+    <NakhwaTransition />
 
     <!-- PORTRAIT -->
     <div class="relative z-10 order-2 md:order-1">
@@ -61,12 +65,7 @@ import IdentityBlock from "./IdentityBlock.astro";
             modes, and help decide which systems are safe to ship.
         </p>
 
-        <!--
-      The old static Platforms / Focus / Experience strip is replaced
-      by the animated system dossier.
-
-      This is where the typing block belongs.
-    -->
+        <!-- ANIMATED SYSTEM DOSSIER -->
         <div class="max-w-xl">
             <IdentityBlock />
         </div>
@@ -74,8 +73,8 @@ import IdentityBlock from "./IdentityBlock.astro";
         <div class="flex flex-col items-start gap-3">
             <button
                 type="button"
-                data-scroll-target="worklab"
-                data-activate-tab="work"
+                data-scroll-target="work"
+                data-nakhwa-trigger
                 class="group inline-flex min-h-[44px] items-center gap-3 text-sm font-medium text-text"
             >
                 <span
@@ -92,10 +91,6 @@ import IdentityBlock from "./IdentityBlock.astro";
                 </span>
             </button>
 
-            <!--
-        Visible craftsmanship mark.
-        Noticeable, but tiny.
-      -->
             <p
                 class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[9px] uppercase tracking-[0.15em] text-muted sm:text-[10px]"
             >
@@ -119,18 +114,17 @@ import IdentityBlock from "./IdentityBlock.astro";
 
 <style>
     /*
-   * Light mode = full color.
+   * Light = color portrait,
+   * but slightly editorial rather than oversaturated.
    */
     .hero-portrait {
-        filter: none;
+        filter: saturate(0.86) contrast(1.035) brightness(0.985);
 
-        transition:
-            filter 240ms ease,
-            opacity 240ms ease;
+        transition: filter 240ms ease;
     }
 
     /*
-   * Dark mode = monochrome / formal.
+   * Dark = restrained monochrome.
    */
     :global(html.dark) .hero-portrait {
         filter: grayscale(1) contrast(1.045) brightness(0.96);
