@@ -14,6 +14,59 @@ import WorkGallery from "../components/work/WorkGallery.astro";
 
 import FieldArchive from "../components/archive/FieldArchive.astro";
 import WaltzInterlude from "../components/archive/WaltzInterlude.astro";
+
+const publicProjects = [
+  {
+    title: "Adversarial Robustness Testing",
+    href: "https://github.com/fzinnah17/neural-network-jailbreak",
+    meta: "PyTorch · FGSM / PGD / patch robustness",
+  },
+  {
+    title: "RoBERTa LoRA Fine-Tuning",
+    href: "https://github.com/fzinnah17/LoRA-finetune-2025",
+    meta: "RoBERTa · LoRA · 95.625% evaluation accuracy",
+  },
+  {
+    title: "CIFAR-10 ResNet",
+    href: "https://github.com/fzinnah17/cifar10-resnet-classification",
+    meta: "Custom ResNet · SE · 92.72% validation",
+  },
+  {
+    title: "Literature Screening",
+    href: "https://github.com/fzinnah17/literature-screening-demo",
+    meta: "Azure OpenAI · Entra ID · Pydantic",
+  },
+  {
+    title: "ML Experiment Reporter",
+    href: "https://github.com/fzinnah17/ml-experiment-reporter",
+    meta: "Vertex AI · Gemini · structured analysis",
+  },
+  {
+    title: "CapSure",
+    href: "https://github.com/fzinnah17/CapSure",
+    meta: "React · Vite · ApiFlash screenshot capture",
+  },
+  {
+    title: "CodeFM",
+    href: "https://github.com/fzinnah17/CodeFM",
+    meta: "React · Express · PostgreSQL · GitHub OAuth",
+  },
+  {
+    title: "MileMarker",
+    href: "https://github.com/fzinnah17/MileMarker",
+    meta: "React · Express · PostgreSQL · CRUD",
+  },
+  {
+    title: "HackMapConnect",
+    href: "https://github.com/fzinnah17/HackMapConnect",
+    meta: "React · Express · PostgreSQL · event discovery",
+  },
+  {
+    title: "UsageManagerApp",
+    href: "https://github.com/fzinnah17/UsageManagerApp",
+    meta: "Android · Java · usage analytics",
+  },
+] as const;
 ---
 
 <Layout
@@ -93,9 +146,9 @@ import WaltzInterlude from "../components/archive/WaltzInterlude.astro";
             <ExpandableProjectCard
               eyebrow="ML · Security / 01"
               title="Adversarial Robustness Testing"
-              hook="PGD cut classifier accuracy from 76% to 0.2%."
-              details="Tested PGD attacks on an ImageNet classifier. Cross-model transfer reached 90% at ε=8/255 over 20 steps."
-              stack={["PyTorch", "ImageNet-1K", "Security"]}
+              hook="PGD reduced ResNet-34 top-1 accuracy from 76.0% to 0.2%."
+              details="Generated FGSM, PGD, and localized-patch adversarial examples against ResNet-34 on a 500-image ImageNet subset, then evaluated the same perturbed inputs on DenseNet-121. PGD used ε=0.02 for 10 iterations and produced a 90.50% cross-model degradation ratio."
+              stack={["PyTorch", "ResNet-34", "DenseNet-121", "ImageNet"]}
               href="https://github.com/fzinnah17/neural-network-jailbreak"
             />
           </div>
@@ -185,53 +238,45 @@ import WaltzInterlude from "../components/archive/WaltzInterlude.astro";
             />
           </div>
 
-          <!-- PUBLIC -->
-          <div slot="public" class="border-y border-border">
-            <a
-              href="https://github.com/fzinnah17/literature-screening-demo"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="grid gap-2 border-b border-border px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
-            >
-              <span class="font-mono text-[10px] tracking-[0.12em] text-royal">
-                01
-              </span>
+          <!-- ==================================================
+               PUBLIC PROJECT REGISTER
+          ================================================== -->
+          <ol
+            slot="public"
+            class="border-y border-border"
+            aria-label="Public project repositories"
+          >
+            {
+              publicProjects.map((project, index) => (
+                <li class="border-b border-border last:border-b-0">
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title} GitHub repository`}
+                    class="grid gap-2 px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_18rem_1fr]"
+                  >
+                    <span class="font-mono text-[10px] tracking-[0.12em] text-royal">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
 
-              <span class="font-display text-lg text-text">
-                Literature Screening ↗
-              </span>
+                    <span class="font-display text-lg text-text">
+                      {project.title} ↗
+                    </span>
 
-              <span class="text-sm text-secondary">
-                Azure · structured outputs
-              </span>
-            </a>
-
-            <a
-              href="https://github.com/fzinnah17/ml-experiment-reporter"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="grid gap-2 px-5 py-5 transition-colors duration-300 hover:bg-surface/40 sm:grid-cols-[3rem_15rem_1fr]"
-            >
-              <span class="font-mono text-[10px] tracking-[0.12em] text-royal">
-                02
-              </span>
-
-              <span class="font-display text-lg text-text">
-                Experiment Reporter ↗
-              </span>
-
-              <span class="text-sm text-secondary">
-                Vertex AI · experiment analysis
-              </span>
-            </a>
-          </div>
+                    <span class="text-sm text-secondary">{project.meta}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
         </WorkGallery>
       </section>
     </div>
 
     <!-- ==================================================
          QUIET CEREMONIAL INTERLUDE
-         
+
          Waltz lives HERE, not in Hero.
     ================================================== -->
     <div class="space-y-8">
