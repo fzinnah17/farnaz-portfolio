@@ -22,6 +22,11 @@ const publicProjects = [
     meta: "PyTorch · FGSM / PGD / patch robustness",
   },
   {
+    title: "MAX (Mojo) vs CUDA",
+    href: "https://github.com/fzinnah17/mojo-cuda-transformer-benchmark",
+    meta: "PyTorch · CUDA · Mojo/MAX · GPU performance",
+  },
+  {
     title: "RoBERTa LoRA Fine-Tuning",
     href: "https://github.com/fzinnah17/LoRA-finetune-2025",
     meta: "RoBERTa · LoRA · 95.625% evaluation accuracy",
@@ -154,13 +159,22 @@ const publicProjects = [
           </div>
 
           <!-- 02 -->
+          <!-- 02 -->
           <div data-work-item data-category="systems" class="min-w-0">
             <ExpandableProjectCard
-              eyebrow="Systems · Performance / 02"
-              title="Mojo vs CUDA"
-              hook="Mojo led compute-bound work by 1.7–1.9×; CUDA led memory-bound work."
-              details="The bottleneck changed the winner."
-              stack={["Mojo", "CUDA", "MAX Graph"]}
+              eyebrow="ML Systems · GPU Performance / 02"
+              title="MAX (Mojo) vs CUDA"
+              hook="MAX cut large-model GEMM latency from 3.49 ms to 1.83 ms."
+              details="Joint NYU High Performance Machine Learning project benchmarking PyTorch/CUDA, custom CUDA kernels, and Modular MAX on Transformer inference. MAX reached ~1.9× faster GEMM and ~1.12× faster end-to-end inference on the representative large model, while PyTorch remained faster on LogSoftmax and LayerNorm. My work included Mojo/MAX integration, experimental GEMM, Softmax, and LayerNorm kernel development, compatibility debugging, and benchmark analysis."
+              stack={[
+                "PyTorch",
+                "CUDA",
+                "C++",
+                "Mojo",
+                "MAX Graph",
+                "GPU Performance",
+              ]}
+              href="https://github.com/fzinnah17/mojo-cuda-transformer-benchmark"
             >
               <PerformanceComparison slot="diagram" />
             </ExpandableProjectCard>

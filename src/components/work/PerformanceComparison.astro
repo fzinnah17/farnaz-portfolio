@@ -1,4 +1,7 @@
-<div class="mt-4 border-y border-border" aria-label="Mojo and CUDA comparison">
+<div
+    class="mt-4 border-y border-border"
+    aria-label="MAX and PyTorch CUDA performance comparison"
+>
     <div
         class="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-border py-4"
     >
@@ -7,14 +10,34 @@
                 01 · Compute-bound
             </p>
 
-            <p class="mt-1 text-sm text-secondary">GEMM</p>
+            <p class="mt-1 text-sm text-secondary">GEMM · large model</p>
         </div>
 
         <div class="text-right">
-            <p class="font-display text-2xl text-text">1.7–1.9×</p>
+            <p class="font-display text-xl text-text">3.49 → 1.83 ms</p>
 
             <p class="text-[9px] uppercase tracking-[0.16em] text-royal">
-                Mojo
+                MAX · ~1.9× faster
+            </p>
+        </div>
+    </div>
+
+    <div
+        class="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-border py-4"
+    >
+        <div>
+            <p class="text-[9px] uppercase tracking-[0.18em] text-pewter">
+                02 · Reduction-bound
+            </p>
+
+            <p class="mt-1 text-sm text-secondary">LogSoftmax · LayerNorm</p>
+        </div>
+
+        <div class="text-right">
+            <p class="font-display text-xl text-text">PyTorch</p>
+
+            <p class="text-[9px] uppercase tracking-[0.16em] text-pewter">
+                Faster
             </p>
         </div>
     </div>
@@ -22,17 +45,17 @@
     <div class="grid grid-cols-[1fr_auto] items-center gap-4 py-4">
         <div>
             <p class="text-[9px] uppercase tracking-[0.18em] text-pewter">
-                02 · Memory-bound
+                03 · End-to-end
             </p>
 
-            <p class="mt-1 text-sm text-secondary">LayerNorm</p>
+            <p class="mt-1 text-sm text-secondary">Large-model inference</p>
         </div>
 
         <div class="text-right">
-            <p class="font-display text-2xl text-text">CUDA</p>
+            <p class="font-display text-xl text-text">134.5 → 120.0 ms</p>
 
-            <p class="text-[9px] uppercase tracking-[0.16em] text-pewter">
-                Ahead
+            <p class="text-[9px] uppercase tracking-[0.16em] text-royal">
+                MAX · ~1.12× faster
             </p>
         </div>
     </div>
