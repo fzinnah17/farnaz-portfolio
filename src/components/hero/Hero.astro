@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
-import avatarImage from "../../assets/portfolio/avatar.jpg";
+import avatarImage from "../../assets/portfolio/farnaz-ferry.jpeg";
 import ArchitectureField from "./ArchitectureField.astro";
 import IdentityBlock from "./IdentityBlock.astro";
 import NakhwaTransition from "./NakhwaTransition.astro";
@@ -22,11 +22,11 @@ import NakhwaTransition from "./NakhwaTransition.astro";
         <div class="mx-auto max-w-[350px] md:mx-0">
             <Image
                 src={avatarImage}
-                alt="Farnaz Zinnah"
+                alt="Farnaz Zinnah seated aboard a New York ferry"
                 width={400}
                 height={480}
                 loading="eager"
-                class="hero-portrait aspect-[5/6] w-full object-cover"
+                class="hero-portrait aspect-[5/6] w-full object-cover object-[50%_48%]"
             />
         </div>
     </div>
@@ -121,19 +121,28 @@ import NakhwaTransition from "./NakhwaTransition.astro";
 
 <style>
     /*
-   * LIGHT MODE
-   */
+     * LIGHT MODE
+     *
+     * Preserve the natural color of the photograph while
+     * slightly tempering the very warm ferry lighting.
+     */
     .hero-portrait {
-        filter: saturate(0.86) contrast(1.035) brightness(0.985);
+        filter: saturate(0.94) contrast(1.025) brightness(0.99);
 
         transition: filter 240ms ease;
     }
 
     /*
-   * DARK MODE
-   */
+     * DARK MODE
+     *
+     * Keep the photograph in color.
+     *
+     * Dark mode should feel like the same portrait viewed
+     * within the midnight palette — not a separate grayscale
+     * version of Farnaz.
+     */
     :global(html.dark) .hero-portrait {
-        filter: grayscale(1) contrast(1.045) brightness(0.96);
+        filter: saturate(0.9) contrast(1.04) brightness(0.9);
     }
 
     @media (prefers-reduced-motion: reduce) {
