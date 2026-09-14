@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0B0E14"></rect>
-
-  <text x="16" y="21" font-family="monospace" font-size="13" font-weight="600" fill="#06B6D4" text-anchor="middle">
-    FZ
-  </text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#0B0E14" rx="6"/><text x="16" y="21" fill="#06B6D4" font-family="monospace" font-size="13" font-weight="600" text-anchor="middle">FZ</text></svg>
